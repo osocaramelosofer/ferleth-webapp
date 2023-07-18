@@ -5,36 +5,48 @@ import {
   BookOutline as BookIcon,
   CreateOutline as Create,
   PersonOutline as PersonIcon,
-  WineOutline as WineIcon
+  WineOutline as WineIcon,
+  Add
 } from "@vicons/ionicons5";
 function renderIcon (icon: Component) {
   return () => h(NIcon, null, { default: () => h(icon) })
 }
 export const menuOptions: MenuOption[] = [
+
   {
-    label: () =>
-      h(
-        MyNuxtLink,
-        {
-          to: {
-            name: 'order',
-          }
-        },
-        { default: () => 'Create Order' }
-      ),
-    key: 'hear-the-wind-sing',
-    icon: renderIcon(Create)
-  },
-  {
-    label: 'Pinball 1973',
-    key: 'pinball-1973',
-    icon: renderIcon(BookIcon),
+    label: 'Order',
+    key: 'order-main',
+    icon: renderIcon(Create),
     disabled: false,
     children: [
       {
-        label: 'Rat',
-        key: 'rat'
-      }
+        label: () =>
+          h(
+            MyNuxtLink,
+            {
+              to: {
+                name: 'order',
+              }
+            },
+            { default: () => 'Create Order' }
+          ),
+        key: 'create-order',
+        icon: renderIcon(Add)
+      },
+      {
+        label: () =>
+          h(
+            MyNuxtLink,
+            {
+              to: {
+                name: 'about',
+              }
+            },
+            { default: () => 'View Order' }
+          ),
+        key: 'view-orders',
+        icon: renderIcon(BookIcon)
+      },
     ]
   },
   {
