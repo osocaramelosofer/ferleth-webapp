@@ -6,13 +6,25 @@ import {
   CreateOutline as Create,
   PersonOutline as PersonIcon,
   WineOutline as WineIcon,
-  Add
+  Add,
+  HomeOutline as home
 } from "@vicons/ionicons5";
 function renderIcon (icon: Component) {
   return () => h(NIcon, null, { default: () => h(icon) })
 }
 export const menuOptions: MenuOption[] = [
-
+  {
+    label: () =>
+      h(
+        MyNuxtLink,
+        {
+          to: '/',
+        },
+        { default: () => 'Home' }
+      ),
+    key: 'home',
+    icon: renderIcon(home)
+  },
   {
     label: 'Order',
     key: 'order-main',
@@ -24,9 +36,8 @@ export const menuOptions: MenuOption[] = [
           h(
             MyNuxtLink,
             {
-              to: {
-                name: 'order',
-              }
+              to: '/order',
+              // name: 'order'
             },
             { default: () => 'Create Order' }
           ),
@@ -38,9 +49,7 @@ export const menuOptions: MenuOption[] = [
           h(
             MyNuxtLink,
             {
-              to: {
-                name: 'about',
-              }
+              to: '/order/view',
             },
             { default: () => 'View Order' }
           ),
@@ -48,12 +57,6 @@ export const menuOptions: MenuOption[] = [
         icon: renderIcon(BookIcon)
       },
     ]
-  },
-  {
-    label: 'A Wild Sheep Chase',
-    key: 'a-wild-sheep-chase',
-    disabled: false,
-    icon: renderIcon(BookIcon)
   },
   {
     label: 'Dance Dance Dance',

@@ -167,7 +167,11 @@ const handleValidateClick = (e: MouseEvent) => {
               clearable
           />
         </n-form-item>
-        <!--          TODO: Lettering Specifications lado izquierdo o derecho y arriba o abajo-->
+        <!--
+              TODO: Lettering Specifications lado izquierdo o derecho y arriba o abajo
+              TODO: Add inputs for images
+              TODO: Add store to save a form
+        -->
         <n-form-item>
           <n-button @click="handleValidateClick">
             Validate
@@ -178,8 +182,6 @@ const handleValidateClick = (e: MouseEvent) => {
 
       <n-space vertical>
         <pre>{{ formValue }}</pre>
-        <pre>{{ timestamp }}</pre>
-        <pre>{{ convertDate }}</pre>
       </n-space>
 
     </n-form>
