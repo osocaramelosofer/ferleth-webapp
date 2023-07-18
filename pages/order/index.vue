@@ -75,7 +75,7 @@ const handleValidateClick = (e: MouseEvent) => {
       <n-space vertical>
 
         <n-form-item label="Order Number" path="orderNumber">
-          <!-- TODO: Change for a input number -->
+          <!-- TODO: Change for a input number(maybe not, could be a good idea generate a custom num order base on schoolName and date) -->
           <n-input v-model:value="formValue.orderNumber" clearable placeholder="Order Number">
             <template #suffix>#</template>
           </n-input>
