@@ -3,7 +3,7 @@ export interface Order{
   schoolName: String,
   timestampCreation: Number,
   dueTimestamp: Number,
-
+  tags: String[] | null,
   stole: {
     pieces: Number | null,
     type: String,

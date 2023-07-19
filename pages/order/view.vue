@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // naive ui imports
 import { h, defineComponent } from 'vue'
-import { NSpace, NDataTable,useMessage, DataTableColumns, NButton } from "naive-ui"
+import { NSpace, NDataTable,useMessage, DataTableColumns, NButton, NTag, NScrollbar} from "naive-ui"
 // firebase imports
 import { collection, getDocs } from "firebase/firestore";
 import {db} from "@/firebase"
@@ -38,7 +38,7 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
       key: 'orderNumber'
     },
     {
-      title: 'Name',
+      title: 'School Name',
       key: 'schoolName'
     },
     {
@@ -48,6 +48,22 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
     {
       title: 'Stole Color',
       key: 'stole.color'
+    },
+    {
+      title: 'Stole Type',
+      key: 'stole.type'
+    },
+    {
+      title: 'Stole Lettering',
+      key: 'stole.lettering'
+    },
+    {
+      title: 'Stole logoColor1',
+      key: 'stole.logoColor1'
+    },
+    {
+      title: 'Stole logoColor2',
+      key: 'stole.logoColor2'
     },
     {
       title: 'Action',
@@ -64,7 +80,38 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
             { default: () => 'Play' }
         )
       }
-    }
+    },
+    {
+      title: 'Tags',
+      key: 'tags',
+      render (row) {
+        const tags = row.tags.map((tagKey) => {
+          let tagType = ''
+          switch (tagKey){
+            case "important":
+              tagType = 'error'
+              break;
+            case "info":
+              tagType = 'warning'
+              break;
+          }
+          return h(
+              NTag,
+              {
+                style: {
+                  marginRight: '6px'
+                },
+                type: tagType,
+                bordered: false
+              },
+              {
+                default: () => tagKey
+              }
+          )
+        })
+        return tags
+      }
+    },
   ]
 }
 const message = useMessage()
@@ -114,7 +161,24 @@ const pagination = reactive({
 <template>
   <div>
     <h1>view orders</h1>
-    <n-data-table :columns="columns2" :data="ordersData" :pagination="pagination" />
+    <n-scrollbar x-scrollable>
+      <n-data-table trigger="none" :x-scrollable="true" :columns="columns2" :data="ordersData" :pagination="pagination" />
+    </n-scrollbar>
+    <n-scrollbar x-scrollable>
+      <div style="white-space: nowrap; padding: 12px">
+        And as I sat there, brooding on the old unknown world, I thought of
+        Gatsby’s wonder when he first picked out the green light at the end of
+        Daisy’s dock. He had come a long way to this blue lawn and his dream must
+        have seemed so close that he could hardly fail to grasp it. He did not
+        know that it was already behind him, somewhere back in that vast obscurity
+        beyond the city, where the dark fields of the republic rolled on under the
+        night. Gatsby believed in the green light, the orgastic future that year
+        by year recedes before us. It eluded us then, but that’s no
+        matter—tomorrow we will run faster, stretch out our arms farther. . . .
+        And one fine morning—— So we beat on, boats against the current, borne
+        back ceaselessly into the past.
+      </div>
+    </n-scrollbar>
 
     <n-space>
       <pre>{{ordersData}}</pre>
