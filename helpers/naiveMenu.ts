@@ -56,6 +56,18 @@ export const menuOptions: MenuOption[] = [
         key: 'view-orders',
         icon: renderIcon(BookIcon)
       },
+      {
+        label: () =>
+          h(
+            MyNuxtLink,
+            {
+              to: '/about',
+            },
+            { default: () => 'TEST STOLE' }
+          ),
+        key: 'test-stole',
+        icon: renderIcon(BookIcon)
+      },
     ]
   },
   {
