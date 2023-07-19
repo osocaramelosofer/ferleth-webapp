@@ -1,32 +1,58 @@
-<script setup>
-import {NSpace} from "naive-ui"
+<script setup lang="ts">
+import { NSpace, NDataTable } from "naive-ui"
+
+import { collection, getDocs } from "firebase/firestore";
+import {db} from "@/firebase"
+
+const querySnapshot = await getDocs(collection(db, "orders"));
+querySnapshot.forEach((doc) => {
+  console.log(`${doc.id} => ${ JSON.stringify( doc.data() ) }`);
+});
+
+
+
+const columns = [
+  {
+    title: 'Name',
+    key: 'name'
+  },
+  {
+    title: 'Age',
+    key: 'age'
+  },
+  {
+    title: 'Address',
+    key: 'address'
+  }
+]
+
+const data = Array.from({ length: 46 }).map((_, index) => ({
+  key: index,
+  name: `Edward King ${index}`,
+  age: 32,
+  address: `London, Park Lane no. ${index}`
+}))
+
+const pagination = reactive({
+  page: 2,
+  pageSize: 5,
+  showSizePicker: true,
+  pageSizes: [3, 5, 7],
+  onChange: (page: number) => {
+    pagination.page = page
+  },
+  onUpdatePageSize: (pageSize: number) => {
+    pagination.pageSize = pageSize
+    pagination.page = 1
+  }
+})
+console.log("Query snapshot=>",querySnapshot)
 </script>
 
 <template>
   <div>
     <h1>view orders</h1>
-    <n-space vertical>
-      <NuxtLink to="https://twitter.com/nuxt_js" target="_blank">
-        Nuxt Twitter
-      </NuxtLink>
-      <!-- <a href="https://twitter.com/nuxt_js" target="_blank" rel="noopener noreferrer">...</a> -->
-
-      <NuxtLink to="https://discord.nuxtjs.org" target="_blank" rel="noopener">
-        Nuxt Discord
-      </NuxtLink>
-      <!-- <a href="https://discord.nuxtjs.org" target="_blank" rel="noopener">...</a> -->
-
-      <NuxtLink to="https://github.com/nuxt" no-rel>
-        Nuxt GitHub
-      </NuxtLink>
-      <!-- <a href="https://github.com/nuxt">...</a> -->
-
-      <NuxtLink to="/contact" target="_blank">
-        Contact page opens in another tab
-      </NuxtLink>
-      <!-- <a href="/contact" target="_blank" rel="noopener noreferrer">...</a> -->
-
-    </n-space>
+    <n-data-table :columns="columns" :data="data" :pagination="pagination" />
 
 
   </div>
