@@ -70,8 +70,11 @@ const handleValidateClick = (e: MouseEvent) => {
         :label-width="80"
         :model="formValue"
         :rules="orderFormRules"
-        size="large"
+        size="medium"
     >
+
+
+<!--  todo: center this shit of n-space  style=" background-color: blue; width: 1000px; align-content: center; justify-content: center; align-items: center; justify-items: center"-->
       <n-space vertical>
 
         <n-form-item label="Order Number" path="orderNumber">
@@ -86,11 +89,11 @@ const handleValidateClick = (e: MouseEvent) => {
         </n-form-item>
 
         <n-form-item label="Date of Order Creation" path="timestampCreation">
-          <n-date-picker v-model:value="formValue.timestampCreation" type="date" clearable/>
+          <n-date-picker v-model:value="formValue.timestampCreation" type="date" clearable size="large"/>
         </n-form-item>
 
         <n-form-item label="Due Date" path="dueTimestamp">
-          <n-date-picker v-model:value="formValue.dueTimestamp" type="date" clearable/>
+          <n-date-picker v-model:value="formValue.dueTimestamp" type="date" clearable size="large"/>
         </n-form-item>
 
 
@@ -172,17 +175,20 @@ const handleValidateClick = (e: MouseEvent) => {
               TODO: Add inputs for images
               TODO: Add store to save a form
         -->
-        <n-form-item>
-          <n-button @click="handleValidateClick">
-            Validate
-          </n-button>
-        </n-form-item>
+        <n-space justify="center">
+          <n-form-item>
+            <n-button @click="handleValidateClick">
+              Validate
+            </n-button>
+          </n-form-item>
+        </n-space>
+
       </n-space>
 
 
-      <n-space vertical>
-        <pre>{{ formValue }}</pre>
-      </n-space>
+<!--      <n-space vertical>-->
+<!--        <pre>{{ formValue }}</pre>-->
+<!--      </n-space>-->
 
     </n-form>
   </BaseWrapper>

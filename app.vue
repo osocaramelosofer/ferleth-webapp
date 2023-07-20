@@ -3,7 +3,8 @@ import {NMessageProvider} from 'naive-ui'
 </script>
 
 <template>
-  <n-message-provider>
+
+  <n-message-provider h-full>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

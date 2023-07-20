@@ -1,40 +1,31 @@
-<script setup>
-definePageMeta({
-  pageTransition: {
-    name: 'ferras'
-  }
-})
-
-const show = ref(false)
+<script setup lang="ts">
+import {NInput} from "naive-ui"
+// const { onLoop } = useRenderLoop()
+// const geometry = new THREE.TorusGeometry(1, 0.5, 16, 32)
+// const material = new THREE.MeshBasicMaterial({ color: 'orange' })
+// const donut = new THREE.Mesh(geometry, material)
+// scene.add(donut)
+const colorValue = ref('blue')
 </script>
 
 <template>
-  <div class=" bg-slate-900">
-    <h2 text-2xl text-white font-bold>Test Transitions</h2>
-    <NuxtLink to="/" text-white text-5xl>Home page</NuxtLink>
-    <br>
-    <NuxtLink to="/about" text-white text-5xl list-none >About page</NuxtLink>
-    <div bg-yellow-200>
-
-      <button @click="show = !show">Toggle</button>
-      <Transition>
-        <p v-if="show">hello</p>
-      </Transition>
+  <div w-full h-full>
+    <div m-3>
+      <n-input v-model:value="colorValue" type="text" placeholder="Input the color value for the mesh" />
     </div>
+    <TresCanvas clear-color="#82DBC5" >
+      <TresPerspectiveCamera
+          :position="[3, 3, 3]"
+          :fov="45"
+          :look-at="[0, 0, 0]"
+      />
+      <TresMesh
+      >
+        <TresTorusGeometry :args="[1, 0.5, 16, 32]" />
+        <TresMeshBasicMaterial :color="colorValue" />
+      </TresMesh>
+      <TresAmbientLight :intensity="1" />
+    </TresCanvas>
   </div>
+
 </template>
-<style scoped>
-.remove{
-  color: inherit;
-}
-
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-</style>

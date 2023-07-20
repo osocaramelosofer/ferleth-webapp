@@ -68,6 +68,18 @@ export const menuOptions: MenuOption[] = [
         key: 'test-stole',
         icon: renderIcon(BookIcon)
       },
+      {
+        label: () =>
+          h(
+            MyNuxtLink,
+            {
+              to: '/test',
+            },
+            { default: () => 'TRES' }
+          ),
+        key: 'tres',
+        icon: renderIcon(home)
+      },
     ]
   },
   {

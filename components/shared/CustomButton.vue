@@ -1,14 +1,13 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
-  onClick: {
-    type: Function
-  },
+  onClick: Function,
+  text: String
 })
 
 </script>
 <template>
   <button class="push-button" @click="onClick">
-    <slot />
+    {{ text }}
   </button>
 </template>
 

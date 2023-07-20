@@ -8,30 +8,36 @@ const inverted = ref(false)
 </script>
 
 <template>
-  <n-space vertical>
-    <n-space>
-      <n-switch v-model:value="inverted" />
-<!--      <NaiveSwitchDarkMode />-->
-      inverted</n-space>
-    <n-layout has-sider>
-      <n-layout-sider
-          bordered
-          collapse-mode="width"
-          :collapsed-width="64"
-          :width="240"
-          show-trigger
-          :inverted="inverted"
-      >
-        <n-menu
-            :inverted="inverted"
+  <div h-full >
+    <div h-full flex flex-col>
+
+      <n-layout has-sider>
+
+        <n-layout-sider
+            bordered
+            collapse-mode="width"
             :collapsed-width="64"
-            :collapsed-icon-size="22"
-            :options="menuOptions"
-        />
-      </n-layout-sider>
-      <n-layout>
-        <slot />
+            :width="240"
+            show-trigger
+            :inverted="inverted"
+            style="height: 100%;"
+        >
+          <n-space>
+<!--            <n-switch v-model:value="inverted" />inverted-->
+<!--            todo add logic to the same we do with inverted but with naiveswtchdarkmode-->
+            <NaiveSwitchDarkMode />
+          </n-space>
+          <n-menu
+              :inverted="inverted"
+              :collapsed-width="64"
+              :collapsed-icon-size="22"
+              :options="menuOptions"
+          />
+        </n-layout-sider>
+        <n-layout style="height: 100%">
+          <slot />
+        </n-layout>
       </n-layout>
-    </n-layout>
-  </n-space>
+    </div>
+  </div>
 </template>

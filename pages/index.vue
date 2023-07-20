@@ -1,31 +1,29 @@
 <script setup lang="ts">
 import {  NButton } from 'naive-ui'
-
+const showAlert = ()=>{
+  alert("ji")
+}
 </script>
 
 <template>
-  <div>
+  <BaseWrapper>
     <section class="hero">
       <div class="hero ">
         <div>
-          <h1 text-5xl>Valiente: Your App Development Partner</h1>
-          <SharedCustomButton class="rounded-full ">
-            GET IN TOUCH
-          </SharedCustomButton>
+          <h1 text-5xl m-none text-center>Valiente: Your App Development Partner</h1>
         </div>
       </div>
 
       <SharedSection
           title="First section"
           text="Why would you work with us? Well we are an excellent parte since we have experience building mobile and web apps that are the common apps in these days, we can help you to break down all your needs and create a road map in order to acomplish with you goal."
-      />
-
-
-
+      >
+        <SharedCustomButton class="rounded-full cursor-pointer" :onClick="showAlert" text="GET IN TOUCH" />
+      </SharedSection>
 
     </section>
     <router-view />
-  </div>
+  </BaseWrapper>
 </template>
 
 <style scoped>

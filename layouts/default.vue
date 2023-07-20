@@ -17,6 +17,8 @@ import {onMounted} from "vue";
     <NaiveMenu>
       <slot />
     </NaiveMenu>
+
+
 <!--    <header>-->
 <!--      <div class="header-bg"></div>-->
 <!--      <BaseNavbar />-->
