@@ -3,26 +3,19 @@ import { SunnyOutline, MoonOutline } from '@vicons/ionicons5'
 import {NSwitch, NIcon} from "naive-ui";
 import {useDark, useToggle} from "@vueuse/core/index";
 
-const props = defineProps({
-  onClick: Function,
-  text: String
-})
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
-// const active = ref(false)
 
 const railStyle = ({focused,checked}) => {
   const style = {};
   if (checked) {
     style.background = "rgba(77,77,77,0.76)";
     if (focused) {
-      style.boxShadow = "0 0 0 1px #d0e3e3e3";
+      style.boxShadow = "0 0 0 1px #ababab8f";
     }
   } else {
     style.background = "rgba(222,222,222,0.76)";
     if (focused) {
-      style.boxShadow = "0 0 0 1px #696969CC";
+      style.boxShadow = "0 0 0 1px #ababab8f";
     }
   }
   return style
@@ -31,8 +24,8 @@ const railStyle = ({focused,checked}) => {
 </script>
 
 <template>
-  <n-switch @click="toggleDark()" size="medium" :rail-style="railStyle">
-    <template #checked-icon>
+  <n-switch @click="$emit('switchDark')" size="small" :rail-style="railStyle" >
+    <template #checked-icon >
       <n-icon :component="MoonOutline" />
     </template>
     <template #unchecked-icon>
@@ -41,4 +34,7 @@ const railStyle = ({focused,checked}) => {
   </n-switch>
 </template>
 <style scoped>
+.n-switch__button{
+  background-color: black;
+}
 </style>

@@ -2,9 +2,11 @@
 import { ref } from 'vue'
 import { NIcon, NLayout, NLayoutSider, NMenu, NSwitch, NSpace } from 'naive-ui'
 import {menuOptions} from "~/helpers/naiveMenu";
+import { useToggle} from "@vueuse/core";
+import { isDark } from "@/composables/useDark"
 
-const inverted = ref(false)
 
+const toggleDark = useToggle(isDark)
 </script>
 
 <template>
@@ -19,25 +21,30 @@ const inverted = ref(false)
             :collapsed-width="64"
             :width="240"
             show-trigger
-            :inverted="inverted"
+            :inverted="isDark"
             style="height: 100%;"
         >
-          <n-space>
-<!--            <n-switch v-model:value="inverted" />inverted-->
-<!--            todo add logic to the same we do with inverted but with naiveswtchdarkmode-->
-            <NaiveSwitchDarkMode />
+          <n-space justify="center">
+<!--            <n-switch  @click="toggleDark()" />-->
+<!--            todo start with pinia for state managment -->
+            <NaiveSwitchMenu @switch-dark="toggleDark()"/>
           </n-space>
           <n-menu
-              :inverted="inverted"
+              :inverted="isDark"
               :collapsed-width="64"
               :collapsed-icon-size="22"
               :options="menuOptions"
           />
         </n-layout-sider>
-        <n-layout style="height: 100%">
+        <n-layout dark:text-w dark:bg-b>
           <slot />
         </n-layout>
       </n-layout>
     </div>
   </div>
 </template>
+<style scoped>
+.dark{
+  background: #1e1e20;
+}
+</style>
