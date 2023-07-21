@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { NIcon, NLayout, NLayoutSider, NMenu, NSwitch, NSpace } from 'naive-ui'
+import {  NLayout, NLayoutSider, NMenu, NSpace } from 'naive-ui'
 import {menuOptions} from "~/helpers/naiveMenu";
 import { useToggle} from "@vueuse/core";
 import { isDark } from "@/composables/useDark"

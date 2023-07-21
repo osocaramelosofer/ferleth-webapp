@@ -1,7 +1,6 @@
 <script setup>
 import { SunnyOutline, MoonOutline } from '@vicons/ionicons5'
 import {NSwitch, NIcon} from "naive-ui";
-import {useDark, useToggle} from "@vueuse/core/index";
 
 
 
