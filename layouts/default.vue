@@ -13,26 +13,9 @@ import {onMounted} from "vue";
 </script>
 
 <template>
-<!--  <BaseWrapper>-->
     <NaiveMenu>
       <slot />
     </NaiveMenu>
-
-
-<!--    <header>-->
-<!--      <div class="header-bg"></div>-->
-<!--      <BaseNavbar />-->
-<!--    </header>-->
-
-<!--    <div>-->
-
-<!--    </div>-->
-<!--    <main>-->
-<!--      <slot />-->
-<!--    </main>-->
-
-<!--    <BaseFooter />-->
-<!--  </BaseWrapper>-->
 </template>
 <style scoped>
 .header-bg{
