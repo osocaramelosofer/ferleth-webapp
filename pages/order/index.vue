@@ -64,12 +64,14 @@ const switchThemeOverrides= {
   railColorActive: '#0000FF',
   background: 'red'
 }
+// const formThemeOverrides =  {
+//   asteriskColor: "#8CE671FF"
+// }
 
 </script>
 
 <template>
   <BaseWrapper>
-
     <n-form
         ref="formRef"
         inline
@@ -77,11 +79,10 @@ const switchThemeOverrides= {
         :model="formValue"
         :rules="orderFormRules"
         size="medium"
-        :theme-overrides="switchThemeOverrides"
         :show-feedback="true"
     >
 <!--  todo: center this shit of n-space  style=" background-color: blue; width: 1000px; align-content: center; justify-content: center; align-items: center; justify-items: center"-->
-      <n-space vertical>
+      <n-space vertical >
         <h1>Create Order</h1>
         <n-form-item label="Order Number" path="orderNumber">
           <!-- TODO: Change for a input number(maybe not, could be a good idea generate a custom num order base on schoolName and date) -->

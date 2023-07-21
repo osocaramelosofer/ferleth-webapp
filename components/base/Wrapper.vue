@@ -2,7 +2,10 @@
 </script>
 
 <template>
-  <div class="px-16 bg-slate-100 md:px-44 h-full dark:bg-b">
+  <div class="overflow-auto h-full w-full px-16 bg-slate-100
+  md:px-44
+  dark:bg-b"
+  >
     <div flex justify-center w-full p-4 >
       <slot />
     </div>
