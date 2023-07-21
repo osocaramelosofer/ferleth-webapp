@@ -59,11 +59,17 @@ const handleValidateClick = (e: MouseEvent) => {
   })
 }
 
+const switchThemeOverrides= {
+  railColor: '#FFFF00',
+  railColorActive: '#0000FF',
+  background: 'red'
+}
 
 </script>
 
 <template>
   <BaseWrapper>
+
     <n-form
         ref="formRef"
         inline
@@ -71,12 +77,12 @@ const handleValidateClick = (e: MouseEvent) => {
         :model="formValue"
         :rules="orderFormRules"
         size="medium"
+        :theme-overrides="switchThemeOverrides"
+        :show-feedback="true"
     >
-
-
 <!--  todo: center this shit of n-space  style=" background-color: blue; width: 1000px; align-content: center; justify-content: center; align-items: center; justify-items: center"-->
       <n-space vertical>
-
+        <h1>Create Order</h1>
         <n-form-item label="Order Number" path="orderNumber">
           <!-- TODO: Change for a input number(maybe not, could be a good idea generate a custom num order base on schoolName and date) -->
           <n-input v-model:value="formValue.orderNumber" clearable placeholder="Order Number">

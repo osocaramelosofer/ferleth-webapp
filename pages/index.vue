@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {  NButton } from 'naive-ui'
 const showAlert = ()=>{
-  alert("ji")
+  alert("Hello :)")
 }
 </script>
 
@@ -73,4 +73,5 @@ header{
 .title-section::after{
   left: 60%;
 }
+
 </style>
