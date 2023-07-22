@@ -11,40 +11,42 @@ import { storeToRefs } from 'pinia'
 const store = useAppStore()
 const {changeDarkTheme, theme } = storeToRefs(store)
 
+const onClick =()=>{
+  store.count++
+  store.theme =  darkTheme
+}
 // definePageMeta({
 //   pageTransition: {
 //     name: 'fade'
 //   }
 // })
 
-const onClick =()=>{
-  store.count++
-  store.theme =  darkTheme
-}
 
 
 </script>
 
 <template>
-  <div>
-    <n-space>
-      <n-card>
-        <n-space>
-          <n-button @click="onClick">Dark</n-button>
-          <n-button @click="theme = null">Light</n-button>
-          <naiveSwitchMenu />
-        </n-space>
-      </n-card>
-      <n-card>
-        <n-time-picker
-            default-formatted-value="00:12:13"
-        />
-      </n-card>
-    </n-space>
-  </div>
-<!--    <NaiveMenu>-->
-<!--      <slot />-->
-<!--    </NaiveMenu>-->
+<!--  <div h-full>-->
+<!--    This is for testing dark theme -->
+<!--    <n-space>-->
+<!--      <n-card>-->
+<!--        <n-space>-->
+<!--          <n-button @click="onClick">Dark</n-button>-->
+<!--          <n-button @click="theme = null">Light</n-button>-->
+<!--          <naiveSwitchMenu />-->
+<!--        </n-space>-->
+<!--      </n-card>-->
+<!--      <n-card>-->
+<!--        <n-time-picker-->
+<!--            default-formatted-value="00:12:13"-->
+<!--        />-->
+<!--      </n-card>-->
+<!--      <h1>{{ store.isDark }}</h1>-->
+<!--    </n-space>-->
+<!--  </div>-->
+    <NaiveMenu>
+      <slot />
+    </NaiveMenu>
 </template>
 <style scoped>
 .header-bg{

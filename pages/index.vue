@@ -72,89 +72,66 @@ const formThemeOverrides = {
 // const theme = ref<GlobalTheme | null>(null)
 type ButtonThemeOverrides = NonNullable<ButtonProps['themeOverrides']>
 type FormThemeOverrides = NonNullable<FormProps['themeOverrides']>
-const buttonThemeOverrides2: ButtonThemeOverrides = {
-  heightMedium: '40px',
-  textColor: 'rgba(24, 127, 231, 1)'
-}
-const formThemeOverrides2: FormThemeOverrides = {
-  labelTextColor: 'rgba(24, 127, 231, 1)',
-  asteriskColor: 'rgba(24, 127, 231, 1)'
-}
+// const buttonThemeOverrides2: ButtonThemeOverrides = {
+//   heightMedium: '40px',
+//   textColor: 'rgba(24, 127, 231, 1)'
+// }
+// const formThemeOverrides2: FormThemeOverrides = {
+//   labelTextColor: 'rgba(24, 127, 231, 1)',
+//   asteriskColor: 'rgba(24, 127, 231, 1)'
+// }
 
 </script>
 
 <template>
-  <n-space vertical bg-slate-200 h-ful w-full>
-    <n-space vertical>
-      <n-button :theme-overrides="buttonThemeOverrides2">theme</n-button>
-      <n-switch v-model:value="switch" :theme-overrides="switchThemeOverrides" />
-      <n-button :theme-overrides="buttonThemeOverrides">Button</n-button>
-    </n-space>
-    <n-config-provider :theme="darkTheme">
-      <n-space>
-        <n-button @click="theme2 = darkTheme">
-          Dark
-        </n-button>
-        <n-button @click="theme2 = null">
-          Light
-        </n-button>
-      </n-space>
-    </n-config-provider>
-    <n-form
-        :ref="formRef"
-        inline
-        :label-width="80"
-        :model="formValue"
-        :rules="rules"
-        :size="size"
-        :theme-overrides="formThemeOverrides2"
-    >
-      <n-space vertical>
-        <n-form-item label="Name" path="user.name">
-          <n-input v-model:value="formValue.user.name" placeholder="Input Name" />
-        </n-form-item>
-        <n-form-item label="Age" path="user.age">
-          <n-input v-model:value="formValue.user.age" placeholder="Input Age" />
-        </n-form-item>
-        <n-form-item label="Phone" path="phone">
-          <n-input v-model:value="formValue.phone" placeholder="Phone Number" />
-        </n-form-item>
-        <n-form-item>
-          <n-button @click="handleValidateClick">
-            Validate
-          </n-button>
-        </n-form-item>
-      </n-space>
-    </n-form>
-  </n-space>
-<!--  <n-config-provider :theme="theme">-->
-<!--    <n-card>-->
-<!--      <n-space>-->
-<!--        <n-button @click="theme = darkTheme">Dark</n-button>-->
-<!--        <n-button :fontWeight="45" @click="theme = null">Light</n-button>-->
+<!--  <BaseWrapper bg-slate-200 h-ful w-full>-->
+<!--    <n-form-->
+<!--        :ref="formRef"-->
+<!--        inline-->
+<!--        :label-width="80"-->
+<!--        :model="formValue"-->
+<!--        :rules="rules"-->
+<!--        :size="size"-->
+<!--        :theme-overrides="formThemeOverrides2"-->
+<!--    >-->
+<!--      <n-space vertical>-->
+<!--        <n-form-item label="Name" path="user.name">-->
+<!--          <n-input v-model:value="formValue.user.name" placeholder="Input Name" />-->
+<!--        </n-form-item>-->
+<!--        <n-form-item label="Age" path="user.age">-->
+<!--          <n-input v-model:value="formValue.user.age" placeholder="Input Age" />-->
+<!--        </n-form-item>-->
+<!--        <n-form-item label="Phone" path="phone">-->
+<!--          <n-input v-model:value="formValue.phone" placeholder="Phone Number" />-->
+<!--        </n-form-item>-->
+<!--        <n-form-item>-->
+<!--          <n-button @click="handleValidateClick">-->
+<!--            Validate-->
+<!--          </n-button>-->
+<!--        </n-form-item>-->
 <!--      </n-space>-->
-<!--    </n-card>-->
-<!--  </n-config-provider>-->
-<!--  <BaseWrapper>-->
-<!--    <section class="hero">-->
-<!--      <div class="hero ">-->
-<!--        <div>-->
-<!--          <h1 text-5xl m-none text-center>Valiente: Your App Development Partner</h1>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <SharedSection-->
-<!--          title="First section"-->
-<!--          text="Why would you work with us? Well we are an excellent parte since we have experience building mobile and web apps that are the common apps in these days, we can help you to break down all your needs and create a road map in order to acomplish with you goal."-->
-<!--      >-->
-<!--        <SharedCustomButton class="rounded-full cursor-pointer" :onClick="showAlert" text="GET IN TOUCH" />-->
-<!--      </SharedSection>-->
-
-
-<!--      -->
-<!--    </section>-->
-<!--    <router-view />-->
+<!--    </n-form>-->
 <!--  </BaseWrapper>-->
+  <BaseWrapper>
+    <section class="hero h-full">
+      <div class="hero ">
+        <div>
+          <h1 text-5xl m-none text-center>Valiente: Your App Development Partner</h1>
+        </div>
+      </div>
+
+      <SharedSection
+          title="First section"
+          text="Why would you work with us? Well we are an excellent parte since we have experience building mobile and web apps that are the common apps in these days, we can help you to break down all your needs and create a road map in order to acomplish with you goal."
+      >
+        <SharedCustomButton class="rounded-full cursor-pointer" :onClick="showAlert" text="GET IN TOUCH" />
+      </SharedSection>
+
+
+
+    </section>
+    <router-view />
+  </BaseWrapper>
 </template>
 
 <style scoped>
