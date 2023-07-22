@@ -2,7 +2,11 @@
 import { SunnyOutline, MoonOutline } from '@vicons/ionicons5'
 import {NSwitch, NIcon} from "naive-ui";
 
+import {useAppStore} from "~/stores/store";
+import { storeToRefs } from 'pinia'
 
+const store = useAppStore()
+const {changeDarkTheme, theme } = storeToRefs(store)
 
 const railStyle = ({focused,checked}) => {
   const style = {};
@@ -23,7 +27,7 @@ const railStyle = ({focused,checked}) => {
 </script>
 
 <template>
-  <n-switch @click="$emit('switchDark')" size="small" :rail-style="railStyle" >
+  <n-switch @click="changeDarkTheme" size="small" :rail-style="railStyle" >
     <template #checked-icon >
       <n-icon :component="MoonOutline" />
     </template>

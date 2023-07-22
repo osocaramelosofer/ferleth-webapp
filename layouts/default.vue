@@ -5,12 +5,22 @@ import {NMessageProvider, NThemeEditor, NLoadingBarProvider, NNotificationProvid
   NConfigProvider, GlobalTheme, darkTheme, NButton, NSpace,
   NCard, NTimePicker, NLayout} from 'naive-ui'
 
+import {useAppStore} from "~/stores/store";
+import { storeToRefs } from 'pinia'
+
+const store = useAppStore()
+const {changeDarkTheme, theme } = storeToRefs(store)
+
 // definePageMeta({
 //   pageTransition: {
 //     name: 'fade'
 //   }
 // })
 
+const onClick =()=>{
+  store.count++
+  store.theme =  darkTheme
+}
 
 
 </script>
@@ -20,8 +30,9 @@ import {NMessageProvider, NThemeEditor, NLoadingBarProvider, NNotificationProvid
     <n-space>
       <n-card>
         <n-space>
-          <n-button @click="theme = darkTheme">Dark</n-button>
+          <n-button @click="onClick">Dark</n-button>
           <n-button @click="theme = null">Light</n-button>
+          <naiveSwitchMenu />
         </n-space>
       </n-card>
       <n-card>

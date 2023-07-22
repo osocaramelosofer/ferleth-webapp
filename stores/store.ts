@@ -8,7 +8,7 @@ export const useAppStore = defineStore('global',() => {
   // ref()s become state properties
   const count = ref(0)
   const name = ref('Eduardo')
-  const theme = ref(darkTheme)
+  const theme = ref(null)
 
   // computed()s become getters
   const doubleCount = computed(() => count.value * 2)
