@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {NMessageProvider, NThemeEditor, NLoadingBarProvider, NNotificationProvider, NDialogProvider,
+import {NMessageProvider, NLoadingBarProvider, NNotificationProvider, NDialogProvider,
 NConfigProvider, NGlobalStyle, GlobalTheme, darkTheme, GlobalThemeOverrides, NButton, NSpace,
 NCard, NTimePicker, NLayout} from 'naive-ui'
 import {useAppStore} from "~/stores/store";
@@ -18,41 +18,23 @@ const {changeDarkTheme, theme } = storeToRefs(store)
       class="demo"
       namespace="naive-ui-doc"
       preflight-style-disabled
-
+      :theme="theme"
+      h-full
   >
-<!--    :style="themeEditorStyle"-->
-    <n-theme-editor>
       <n-loading-bar-provider>
         <n-message-provider>
           <n-notification-provider>
             <n-dialog-provider>
-              <n-config-provider :theme="theme">
-                    <NuxtLayout>
-                      <NuxtPage />
-                    </NuxtLayout>
-<!--                <n-space>-->
-<!--                  <n-card>-->
-<!--                    <n-space>-->
-<!--                      <n-button @click="theme = darkTheme">Dark</n-button>-->
-<!--                      <n-button @click="theme = null">Light</n-button>-->
-<!--                    </n-space>-->
-<!--                  </n-card>-->
-<!--                  <n-card>-->
-<!--                    <n-time-picker-->
-<!--                        default-formatted-value="00:12:13"-->
-<!--                    />-->
-<!--                  </n-card>-->
-<!--                </n-space>-->
-
-              </n-config-provider>
+              <NuxtLayout>
+                <NuxtPage />
+              </NuxtLayout>
             </n-dialog-provider>
           </n-notification-provider>
         </n-message-provider>
       </n-loading-bar-provider>
-      <n-global-style />
-    </n-theme-editor>
+    <n-global-style />
   </n-config-provider>
-<!--  <n-message-provider h-full>-->
+<!--  <n-message-provider >-->
 <!--    <NuxtLayout>-->
 <!--      <NuxtPage />-->
 <!--    </NuxtLayout>-->
