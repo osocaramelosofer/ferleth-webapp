@@ -1,11 +1,11 @@
 <script setup >
 import {onMounted} from "vue";
 
-definePageMeta({
-  pageTransition: {
-    name: 'rotate'
-  }
-})
+// definePageMeta({
+//   pageTransition: {
+//     name: 'rotate'
+//   }
+// })
 
 const x = 50
 const width = 200
