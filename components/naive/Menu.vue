@@ -25,7 +25,6 @@ const inverted = ref(false)
             <NaiveSwitchMenu />
           </n-space>
           <n-menu
-              :inverted="isDark"
               :collapsed-width="64"
               :collapsed-icon-size="22"
               :options="menuOptions"
