@@ -32,7 +32,7 @@ const inverted = ref(false)
           />
         </n-layout-sider>
         <n-layout>
-          <slot />
+          <NuxtPage />
         </n-layout>
       </n-layout>
     </div>

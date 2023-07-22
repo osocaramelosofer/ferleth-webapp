@@ -25,9 +25,7 @@ const {changeDarkTheme, theme } = storeToRefs(store)
         <n-message-provider>
           <n-notification-provider>
             <n-dialog-provider>
-              <NuxtLayout>
-                <NuxtPage />
-              </NuxtLayout>
+              <NuxtLayout />
             </n-dialog-provider>
           </n-notification-provider>
         </n-message-provider>

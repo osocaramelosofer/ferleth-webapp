@@ -26,8 +26,8 @@ const onClick =()=>{
 </script>
 
 <template>
+<!--    This is for testing dark theme-->
 <!--  <div h-full>-->
-<!--    This is for testing dark theme -->
 <!--    <n-space>-->
 <!--      <n-card>-->
 <!--        <n-space>-->
@@ -44,9 +44,7 @@ const onClick =()=>{
 <!--      <h1>{{ store.isDark }}</h1>-->
 <!--    </n-space>-->
 <!--  </div>-->
-    <NaiveMenu>
-      <slot />
-    </NaiveMenu>
+    <NaiveMenu/>
 </template>
 <style scoped>
 .header-bg{
