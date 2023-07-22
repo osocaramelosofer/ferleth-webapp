@@ -6,7 +6,15 @@ export default defineNuxtConfig({
   modules:[
     '@unocss/nuxt',
     "@tresjs/nuxt",
+    '@pinia/nuxt',
   ],
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
+  },
   css: ['~/assets/css/main.css'],
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },

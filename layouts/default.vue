@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { useDark, useToggle } from "@vueuse/core"
 import {onMounted} from "vue";
+import {NMessageProvider, NThemeEditor, NLoadingBarProvider, NNotificationProvider, NDialogProvider,
+  NConfigProvider, GlobalTheme, darkTheme, NButton, NSpace,
+  NCard, NTimePicker, NLayout} from 'naive-ui'
 
 // definePageMeta({
 //   pageTransition: {
@@ -13,9 +16,24 @@ import {onMounted} from "vue";
 </script>
 
 <template>
-    <NaiveMenu>
-      <slot />
-    </NaiveMenu>
+  <div>
+    <n-space>
+      <n-card>
+        <n-space>
+          <n-button @click="theme = darkTheme">Dark</n-button>
+          <n-button @click="theme = null">Light</n-button>
+        </n-space>
+      </n-card>
+      <n-card>
+        <n-time-picker
+            default-formatted-value="00:12:13"
+        />
+      </n-card>
+    </n-space>
+  </div>
+<!--    <NaiveMenu>-->
+<!--      <slot />-->
+<!--    </NaiveMenu>-->
 </template>
 <style scoped>
 .header-bg{

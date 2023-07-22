@@ -1,14 +1,62 @@
 <script lang="ts" setup>
-import {NMessageProvider} from 'naive-ui'
+import {NMessageProvider, NThemeEditor, NLoadingBarProvider, NNotificationProvider, NDialogProvider,
+NConfigProvider, NGlobalStyle, GlobalTheme, darkTheme, GlobalThemeOverrides, NButton, NSpace,
+NCard, NTimePicker, NLayout} from 'naive-ui'
+import {useAppStore} from "~/stores/store";
+import { storeToRefs } from 'pinia'
+
+const store = useAppStore()
+const {changeDarkTheme, theme } = storeToRefs(store)
+
+// const theme = ref(null)
+
 </script>
 
 <template>
 
-  <n-message-provider h-full>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </n-message-provider>
+  <n-config-provider
+      class="demo"
+      namespace="naive-ui-doc"
+      preflight-style-disabled
+
+  >
+<!--    :style="themeEditorStyle"-->
+    <n-theme-editor>
+      <n-loading-bar-provider>
+        <n-message-provider>
+          <n-notification-provider>
+            <n-dialog-provider>
+              <n-config-provider :theme="theme">
+                    <NuxtLayout>
+                      <NuxtPage />
+                    </NuxtLayout>
+<!--                <n-space>-->
+<!--                  <n-card>-->
+<!--                    <n-space>-->
+<!--                      <n-button @click="theme = darkTheme">Dark</n-button>-->
+<!--                      <n-button @click="theme = null">Light</n-button>-->
+<!--                    </n-space>-->
+<!--                  </n-card>-->
+<!--                  <n-card>-->
+<!--                    <n-time-picker-->
+<!--                        default-formatted-value="00:12:13"-->
+<!--                    />-->
+<!--                  </n-card>-->
+<!--                </n-space>-->
+
+              </n-config-provider>
+            </n-dialog-provider>
+          </n-notification-provider>
+        </n-message-provider>
+      </n-loading-bar-provider>
+      <n-global-style />
+    </n-theme-editor>
+  </n-config-provider>
+<!--  <n-message-provider h-full>-->
+<!--    <NuxtLayout>-->
+<!--      <NuxtPage />-->
+<!--    </NuxtLayout>-->
+<!--  </n-message-provider>-->
 </template>
 <style>
 .page-enter-active,

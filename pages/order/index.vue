@@ -180,7 +180,7 @@ const switchThemeOverrides= {
         <!--
               TODO: Lettering Specifications lado izquierdo o derecho y arriba o abajo
               TODO: Add inputs for images
-              TODO: Add store to save a form
+              TODO: Add stores to save a form
         -->
         <n-space justify="center">
           <n-form-item>

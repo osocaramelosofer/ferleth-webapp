@@ -36,7 +36,65 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
     {
       title: 'Order Number',
       key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
+    },    {
+      title: 'Order Number',
+      key: 'orderNumber'
     },
+
     {
       title: 'School Name',
       key: 'schoolName'
@@ -157,13 +215,18 @@ const pagination = reactive({
   }
 })
 
+
+const dataThemeOverrides =  {
+  xScrollable: true
+}
+
 </script>
 
 <template>
   <div mx-5>
     <h1>view orders</h1>
-    <n-scrollbar x-scrollable>
-      <n-data-table trigger="none" :x-scrollable="true" :columns="columns2" :data="ordersData" :pagination="pagination" />
+    <n-scrollbar x-scrollable scrollbar-props="">
+      <n-data-table trigger="none" :scrollbar-props="dataThemeOverrides"  :x-scrollable="true" :scroll-x="true" :columns="columns2" :data="ordersData" :pagination="pagination" />
     </n-scrollbar>
 <!-- these are for testing -->
 <!--    <n-space>-->
