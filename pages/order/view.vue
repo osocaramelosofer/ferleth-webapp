@@ -29,6 +29,7 @@ querySnapshot.forEach((doc) => {
   // };
 
 });
+const message = useMessage()
 
 
 const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns<Order> => {
@@ -42,28 +43,12 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
       key: 'schoolName'
     },
     {
-      title: 'Stole Pieces',
-      key: 'stole.pieces'
+      title: 'Order Creation Date',
+      key: 'timestampCreation'
     },
     {
-      title: 'Stole Color',
-      key: 'stole.color'
-    },
-    {
-      title: 'Stole Type',
-      key: 'stole.type'
-    },
-    {
-      title: 'Stole Lettering',
-      key: 'stole.lettering'
-    },
-    {
-      title: 'Stole logoColor1',
-      key: 'stole.logoColor1'
-    },
-    {
-      title: 'Stole logoColor2',
-      key: 'stole.logoColor2'
+      title: 'Fecha de entrega',
+      key: 'dueTimestamp'
     },
     {
       title: 'Action',
@@ -115,33 +100,32 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
     // },
   ]
 }
-const message = useMessage()
 const columns2 = createColumns({
   play (row: Order) {
     message.info(`Play ${row.schoolName}`)
   }
 })
-const columns = [
-  {
-    title: 'Name',
-    key: 'name'
-  },
-  {
-    title: 'Age',
-    key: 'age'
-  },
-  {
-    title: 'Address',
-    key: 'address'
-  }
-]
-
-const data = Array.from({ length: 46 }).map((_, index) => ({
-  // key: index+1,
-  name: `Edward King ${index}`,
-  age: 32,
-  address: `London, Park Lane no. ${index}`
-}))
+// const columns = [
+//   {
+//     title: 'Name',
+//     key: 'name'
+//   },
+//   {
+//     title: 'Age',
+//     key: 'age'
+//   },
+//   {
+//     title: 'Address',
+//     key: 'address'
+//   }
+// ]
+//
+// const data = Array.from({ length: 46 }).map((_, index) => ({
+//   // key: index+1,
+//   name: `Edward King ${index}`,
+//   age: 32,
+//   address: `London, Park Lane no. ${index}`
+// }))
 
 const pagination = reactive({
   page: 2,
@@ -162,14 +146,14 @@ const pagination = reactive({
 <template>
   <div mx-5>
     <h1>view orders</h1>
-    <n-scrollbar x-scrollable>
-      <n-data-table trigger="none" :x-scrollable="true" :columns="columns2" :data="ordersData" :pagination="pagination" />
+    <n-scrollbar x-scrollable scrollbar-props="">
+      <n-data-table trigger="none"  :columns="columns2" :data="ordersData" :pagination="pagination" />
     </n-scrollbar>
 <!-- these are for testing -->
-<!--    <n-space>-->
-<!--      <pre>{{ordersData}}</pre>-->
-<!--      <pre>{{data}}</pre>-->
-<!--    </n-space>-->
+    <n-space>
+      <pre>{{ordersData}}</pre>
+      <pre>{{data}}</pre>
+    </n-space>
   </div>
 </template>
 <style scoped>

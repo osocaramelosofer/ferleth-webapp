@@ -6,12 +6,21 @@ export default defineNuxtConfig({
   modules:[
     '@unocss/nuxt',
     "@tresjs/nuxt",
+    '@pinia/nuxt',
   ],
-  css: ['~/assets/css/main.css'],
-  app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
-    layoutTransition: { name: 'slide', mode: 'out-in' }
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
   },
+  css: ['~/assets/css/main.css'],
+  //todo figure out why transitions show me a problem with the nodes?
+  // app: {
+  //   pageTransition: { name: 'page', mode: 'out-in' },
+  //   layoutTransition: { name: 'slide', mode: 'out-in' }
+  // },
   // routeRules: {
   //   // Admin dashboard renders only on client-side
   //   '/about/**': { ssr: false },

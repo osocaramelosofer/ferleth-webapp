@@ -1,14 +1,42 @@
 <script lang="ts" setup>
-import {NMessageProvider} from 'naive-ui'
+import {NMessageProvider, NLoadingBarProvider, NNotificationProvider, NDialogProvider,
+NConfigProvider, NGlobalStyle, GlobalTheme, darkTheme, GlobalThemeOverrides, NButton, NSpace,
+NCard, NTimePicker, NLayout} from 'naive-ui'
+import {useAppStore} from "~/stores/store";
+import { storeToRefs } from 'pinia'
+
+const store = useAppStore()
+const {changeDarkTheme, theme } = storeToRefs(store)
+
+// const theme = ref(null)
+
 </script>
 
 <template>
 
-  <n-message-provider h-full>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </n-message-provider>
+  <n-config-provider
+      class="demo"
+      namespace="naive-ui-doc"
+      preflight-style-disabled
+      :theme="theme"
+      h-full
+  >
+      <n-loading-bar-provider>
+        <n-message-provider>
+          <n-notification-provider>
+            <n-dialog-provider>
+              <NuxtLayout />
+            </n-dialog-provider>
+          </n-notification-provider>
+        </n-message-provider>
+      </n-loading-bar-provider>
+    <n-global-style />
+  </n-config-provider>
+<!--  <n-message-provider >-->
+<!--    <NuxtLayout>-->
+<!--      <NuxtPage />-->
+<!--    </NuxtLayout>-->
+<!--  </n-message-provider>-->
 </template>
 <style>
 .page-enter-active,

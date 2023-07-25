@@ -1,9 +1,13 @@
 <script setup>
 import { SunnyOutline, MoonOutline } from '@vicons/ionicons5'
-import {NSwitch, NIcon} from "naive-ui";
-import {useDark, useToggle} from "@vueuse/core/index";
+import {NSwitch, NIcon, darkTheme} from "naive-ui";
 
+import {useAppStore} from "~/stores/store";
 
+const store = useAppStore()
+const handleTheme = () => {
+  store.changeDarkTheme()
+}
 
 const railStyle = ({focused,checked}) => {
   const style = {};
@@ -24,7 +28,7 @@ const railStyle = ({focused,checked}) => {
 </script>
 
 <template>
-  <n-switch @click="$emit('switchDark')" size="small" :rail-style="railStyle" >
+  <n-switch @click="handleTheme" size="small" :rail-style="railStyle" >
     <template #checked-icon >
       <n-icon :component="MoonOutline" />
     </template>
