@@ -11,6 +11,8 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxt/types": "^2.17.1",
+    "@tweakpane/core": "^1.1.9",
+    "@tweakpane/plugin-essentials": "^0.1.8",
     "@types/node": "^18",
     "@unocss/nuxt": "^0.53.4",
     "naive-ui": "^2.34.4",
@@ -30,6 +32,7 @@
     "@vueuse/core": "^10.2.1",
     "firebase": "^10.0.0",
     "pinia": "^2.1.4",
-    "three": "^0.154.0"
+    "three": "^0.154.0",
+    "tweakpane": "^3.1.10"
   }
 }
