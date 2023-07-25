@@ -61,9 +61,9 @@ export const menuOptions: MenuOption[] = [
           h(
             MyNuxtLink,
             {
-              to: '/about',
+              to: '/tres',
             },
-            { default: () => 'TEST STOLE' }
+            { default: () => 'CREATE STOLE' }
           ),
         key: 'test-stole',
         icon: renderIcon(BookIcon)
