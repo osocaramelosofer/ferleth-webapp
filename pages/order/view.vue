@@ -29,6 +29,7 @@ querySnapshot.forEach((doc) => {
   // };
 
 });
+const message = useMessage()
 
 
 const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns<Order> => {
@@ -36,6 +37,18 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
     {
       title: 'Order Number',
       key: 'orderNumber'
+    },
+    {
+      title: 'School Name',
+      key: 'schoolName'
+    },
+    {
+      title: 'Order Creation Date',
+      key: 'timestampCreation'
+    },
+    {
+      title: 'Fecha de entrega',
+      key: 'dueTimestamp'
     },
     {
       title: 'Action',
@@ -87,33 +100,32 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
     // },
   ]
 }
-const message = useMessage()
 const columns2 = createColumns({
   play (row: Order) {
     message.info(`Play ${row.schoolName}`)
   }
 })
-const columns = [
-  {
-    title: 'Name',
-    key: 'name'
-  },
-  {
-    title: 'Age',
-    key: 'age'
-  },
-  {
-    title: 'Address',
-    key: 'address'
-  }
-]
-
-const data = Array.from({ length: 46 }).map((_, index) => ({
-  // key: index+1,
-  name: `Edward King ${index}`,
-  age: 32,
-  address: `London, Park Lane no. ${index}`
-}))
+// const columns = [
+//   {
+//     title: 'Name',
+//     key: 'name'
+//   },
+//   {
+//     title: 'Age',
+//     key: 'age'
+//   },
+//   {
+//     title: 'Address',
+//     key: 'address'
+//   }
+// ]
+//
+// const data = Array.from({ length: 46 }).map((_, index) => ({
+//   // key: index+1,
+//   name: `Edward King ${index}`,
+//   age: 32,
+//   address: `London, Park Lane no. ${index}`
+// }))
 
 const pagination = reactive({
   page: 2,
@@ -129,24 +141,19 @@ const pagination = reactive({
   }
 })
 
-
-const dataThemeOverrides =  {
-  xScrollable: true
-}
-
 </script>
 
 <template>
   <div mx-5>
     <h1>view orders</h1>
     <n-scrollbar x-scrollable scrollbar-props="">
-      <n-data-table trigger="none" :scrollbar-props="dataThemeOverrides"  :x-scrollable="true" :scroll-x="true" :columns="columns2" :data="ordersData" :pagination="pagination" />
+      <n-data-table trigger="none"  :columns="columns2" :data="ordersData" :pagination="pagination" />
     </n-scrollbar>
 <!-- these are for testing -->
-<!--    <n-space>-->
-<!--      <pre>{{ordersData}}</pre>-->
-<!--      <pre>{{data}}</pre>-->
-<!--    </n-space>-->
+    <n-space>
+      <pre>{{ordersData}}</pre>
+      <pre>{{data}}</pre>
+    </n-space>
   </div>
 </template>
 <style scoped>
