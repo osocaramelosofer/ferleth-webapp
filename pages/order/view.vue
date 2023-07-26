@@ -150,10 +150,10 @@ const pagination = reactive({
       <n-data-table trigger="none"  :columns="columns2" :data="ordersData" :pagination="pagination" />
     </n-scrollbar>
 <!-- these are for testing -->
-    <n-space>
-      <pre>{{ordersData}}</pre>
-      <pre>{{data}}</pre>
-    </n-space>
+<!--    <n-space>-->
+<!--      <pre>{{ordersData}}</pre>-->
+<!--      <pre>{{data}}</pre>-->
+<!--    </n-space>-->
   </div>
 </template>
 <style scoped>
