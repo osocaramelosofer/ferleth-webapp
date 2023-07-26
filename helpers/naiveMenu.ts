@@ -61,7 +61,7 @@ export const menuOptions: MenuOption[] = [
           h(
             MyNuxtLink,
             {
-              to: '/about',
+              to: '/stole',
             },
             { default: () => 'CREATE STOLE' }
           ),
