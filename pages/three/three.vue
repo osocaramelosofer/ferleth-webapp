@@ -37,12 +37,27 @@ camera = new PerspectiveCamera(
 camera.position.z = 5
 scene.add(camera)
 
-const customColor =  ref("yellow")
-const sphere = new Mesh(
-    new SphereGeometry(1,20,20),
-    new MeshBasicMaterial({color: customColor.value})
-)
-scene.add(sphere)
+
+// const sphere = new Mesh(
+//     new SphereGeometry(1,20,20),
+//     new MeshBasicMaterial({color: customColor.value})
+// )
+// scene.add(sphere)
+
+// const loader = new GLTFLoader();
+// loader.load( '/stole.glb', function ( gltf ) {
+//   console.log("======",gltf.scene)
+//   scene.add( gltf.scene);
+// }, undefined, function ( error ) {
+//   console.error( error );
+// } );
+
+const gltfLoader = new GLTFLoader()
+const url = '/stole.glb'
+gltfLoader.load(url, (gltf) => {
+  const root = gltf.scene
+
+})
 
 const { pane, fpsGraph } = useTweakPane()
 
@@ -70,27 +85,13 @@ onMounted(()=>{
   loop()
 })
 
-
-
-onMounted(()=>{
-  // const loader = new GLTFLoader();
-  // const scene = ref(null)
-  // console.log(scene)
-  //
-  // loader.load( '/stole.glb', function ( gltf ) {
-  //   console.log(gltf.scene)
-  //   // scene.add( gltf.scene );
-  // }, undefined, function ( error ) {
-  //   console.error( error );
-  // } );
-
-})
-
 </script>
 
 <template>
+  <suspense>
     <canvas w-full h-full ref="experience">
     </canvas>
+  </suspense>
 </template>
 <style scoped>
 </style>
