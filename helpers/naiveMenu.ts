@@ -61,74 +61,26 @@ export const menuOptions: MenuOption[] = [
           h(
             MyNuxtLink,
             {
-              to: '/tres',
+              to: '/about',
             },
             { default: () => 'CREATE STOLE' }
           ),
         key: 'test-stole',
         icon: renderIcon(BookIcon)
       },
-      {
-        label: () =>
-          h(
-            MyNuxtLink,
-            {
-              to: '/test',
-            },
-            { default: () => 'TRES' }
-          ),
-        key: 'tres',
-        icon: renderIcon(home)
-      },
+      // {
+      //   label: () =>
+      //     h(
+      //       MyNuxtLink,
+      //       {
+      //         to: '/test',
+      //       },
+      //       { default: () => 'TRES' }
+      //     ),
+      //   key: 'tres',
+      //   icon: renderIcon(home)
+      // },
     ]
   },
-  {
-    label: 'Dance Dance Dance',
-    key: 'Dance Dance Dance',
-    icon: renderIcon(BookIcon),
-    children: [
-      {
-        type: 'group',
-        label: 'People',
-        key: 'people',
-        children: [
-          {
-            label: 'Narrator',
-            key: 'narrator',
-            icon: renderIcon(PersonIcon)
-          },
-          {
-            label: 'Sheep Man',
-            key: 'sheep-man',
-            icon: renderIcon(PersonIcon)
-          }
-        ]
-      },
-      {
-        label: 'Beverage',
-        key: 'beverage',
-        icon: renderIcon(WineIcon),
-        children: [
-          {
-            label: 'Whisky',
-            key: 'whisky'
-          }
-        ]
-      },
-      {
-        label: 'Food',
-        key: 'food',
-        children: [
-          {
-            label: 'Sandwich',
-            key: 'sandwich'
-          }
-        ]
-      },
-      {
-        label: 'The past increases. The future recedes.',
-        key: 'the-past-increases-the-future-recedes'
-      }
-    ]
-  }
+
 ]
