@@ -56,6 +56,9 @@ const changeColor = () => {
 // todo: add inputs to interact with the position and size of the letters and year
 // todo: check how can I preview the images uploaded
 // todo: donwload the image
+// todo: check the year input just acept numbers and set a limit of characters
+// todo: set a limit of character in letters input
+
 </script>
 
 <template>
