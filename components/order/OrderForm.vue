@@ -8,35 +8,15 @@ import {collection, addDoc, setDoc} from "firebase/firestore";
 import {db} from "@/firebase"
 import {Order} from "@/types/Order"
 //Local Imports
-import {stoleColorOptions, stoleTypeOptions} from "@/helpers/data/stole"
 import orderFormRules from "@/helpers/validation_rules/orderFormRules"
-import {computed, Ref, ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
+import {formValue} from "@/composables/order/useOrderForm"
+import {qualityOptions} from "~/helpers/order/order";
 
-
-
-
-
-
-// Working with timestamp.
-// const timestamp = +new Date; this is how we create a timestamp
-// const convertDate = new Date(+new Date * 1000); this is how we can convert the timestamp to datetime
-// https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
-//https://stackoverflow.com/questions/221294/how-do-i-get-a-timestamp-in-javascript
 
 const formRef = ref<FormInst | null>(null) // I think this is for validations
 const message = useMessage()
 
-const formValue: Ref<Order> = ref<Order>({
-  orderNumber: 0,
-  schoolName: '',
-  timestampCreation: +new Date,
-  dueTimestamp: +new Date,
-  tags: null,
-  pieces: null,
-  quality: 'medium',
-  costPerUnit: null,
-  totalCost: null
-});
 
 const submitOrder = async (order: Order) => {
   try {
@@ -60,12 +40,6 @@ const handleValidateClick = (e: MouseEvent) => {
   })
 }
 
-// select quality input
-const qualityOptions = [
-  { label: 'Low', value: 'low'},
-  { label: 'Medium', value: 'medium'},
-  { label: 'High', value: 'high'},
-]
 
 // Total Cost Animation Field
 const numberAnimationInstRef = ref<NumberAnimationInst | null>(null)
@@ -73,10 +47,9 @@ function animateTotalCost () {
   console.log(totalCost.value)
   setTimeout(() => {
     numberAnimationInstRef.value?.play();
-  }, 300); // 2000 milisegundos (2 segundos de retraso)
+  }, 300);
 }
 
-// const totalCost = ref(0)
 const totalCost = computed(()=>{
   return formValue.value.totalCost
 })
@@ -102,7 +75,7 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
 </script>
 
 <template>
-  <n-card h-full>
+  <div h-full >
     <n-form
         ref="formRef"
         inline
@@ -111,9 +84,9 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
         :rules="orderFormRules"
         size="medium"
         :show-feedback="true"
+        style="justify-content: center; align-items: center; height: 100%"
     >
-      <!--  todo: center this shit of n-space  style=" background-color: blue; width: 1000px; align-content: center; justify-content: center; align-items: center; justify-items: center"-->
-      <n-space vertical >
+      <div class="flex flex-col bg-slate-100 px-12 pb-12 rounded-xl dark:bg-red-200">
         <h1>Create Order</h1>
         <n-form-item label="Order Number" path="orderNumber">
           <!-- TODO: Change for a input number(maybe not, could be a good idea generate a custom num order base on schoolName and date) -->
@@ -157,18 +130,9 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
               :active="false"
           />
         </n-statistic>
-        <n-button @click="animateTotalCost">
-          Play
-        </n-button>
-        <pre>
-          {{ formValue }}
-        </pre>
 
-        <!--
-              TODO: Lettering Specifications lado izquierdo o derecho y arriba o abajo
-              TODO: Add inputs for images
-              TODO: Add stores to save a form
-        -->
+        <!--  TODO: Add inputs for images
+              TODO: Add stores to save a form -->
         <n-space justify="center">
           <n-form-item>
             <n-button @click="handleValidateClick">
@@ -176,15 +140,12 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
             </n-button>
           </n-form-item>
         </n-space>
+      </div>
 
-      </n-space>
-
-      <!--      <n-space vertical>-->
-      <!--        <pre>{{ formValue }}</pre>-->
-      <!--      </n-space>-->
+<!--      <pre>-->
+<!--        {{ formValue }}-->
+<!--      </pre>-->
 
     </n-form>
-  </n-card>
+  </div>
 </template>
-<style scoped>
-</style>

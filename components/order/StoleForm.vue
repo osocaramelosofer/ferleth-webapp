@@ -8,7 +8,7 @@ import {collection, addDoc, setDoc} from "firebase/firestore";
 import {db} from "@/firebase"
 import {Order} from "@/types/Order"
 //Local Imports
-import {stoleColorOptions, stoleTypeOptions} from "@/helpers/data/stole"
+import {stoleColorOptions, stoleTypeOptions} from "@/helpers/order/stole"
 import orderFormRules from "@/helpers/validation_rules/orderFormRules"
 import {computed, Ref, ref, watch} from "vue";
 

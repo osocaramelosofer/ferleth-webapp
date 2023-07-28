@@ -36,7 +36,7 @@ function download() {
       document.createElement("a")
   );
   a.download = "newfile.jpg";
-  a.href = "data:text/html," + document.getElementById("content").innerHTML;
+  a.href = "order:text/html," + document.getElementById("content").innerHTML;
   a.click(); //Trigger a click on the element
 }
 
