@@ -10,6 +10,7 @@ import {Order} from "@/types/Order"
 //Local Imports
 import {stoleColorOptions, stoleTypeOptions} from "@/helpers/data/stole"
 import orderFormRules from "@/helpers/validation_rules/orderFormRules"
+import OrderForm from "~/components/order/OrderForm.vue";
 
 // Working with timestamp.
 // const timestamp = +new Date; this is how we create a timestamp
@@ -59,144 +60,14 @@ const handleValidateClick = (e: MouseEvent) => {
   })
 }
 
-const switchThemeOverrides= {
-  railColor: '#FFFF00',
-  railColorActive: '#0000FF',
-  background: 'red'
-}
 // const formThemeOverrides =  {
 </script>
 
 <template>
-  <div flex  justify-center items-center>
-    <n-card>
-      <n-form
-          ref="formRef"
-          inline
-          :label-width="80"
-          :model="formValue"
-          :rules="orderFormRules"
-          size="medium"
-          :show-feedback="true"
-      >
-  <!--  todo: center this shit of n-space  style=" background-color: blue; width: 1000px; align-content: center; justify-content: center; align-items: center; justify-items: center"-->
-        <n-space vertical >
-          <h1>Create Order</h1>
-          <n-form-item label="Order Number" path="orderNumber">
-            <!-- TODO: Change for a input number(maybe not, could be a good idea generate a custom num order base on schoolName and date) -->
-            <n-input v-model:value="formValue.orderNumber" clearable placeholder="Order Number">
-              <template #suffix>#</template>
-            </n-input>
-          </n-form-item>
-
-          <n-form-item label="School Name" path="schoolName">
-            <n-input v-model:value="formValue.schoolName" clearable placeholder="Input the School Name"/>
-          </n-form-item>
-
-          <n-form-item label="Date of Order Creation" path="timestampCreation">
-            <n-date-picker v-model:value="formValue.timestampCreation" type="date" clearable size="large"/>
-          </n-form-item>
-
-          <n-form-item label="Due Date" path="dueTimestamp">
-            <n-date-picker v-model:value="formValue.dueTimestamp" type="date" clearable size="large"/>
-          </n-form-item>
-
-
-          <n-form-item label="Number of Pieces" path="stole.pieces">
-            <n-input-number v-model:value="formValue.stole.pieces" :step="500" :min="500" :max="10000">
-              <template #suffix>
-                pcs
-                <n-icon :component="ExtensionPuzzleOutline"/>
-              </template>
-            </n-input-number>
-          </n-form-item>
-
-          <n-form-item label="Stole Type" path="stole.type">
-            <n-select
-                v-model:value="formValue.stole.type"
-                filterable
-                placeholder="Please select a Fabric Type for the Stole"
-                :options="stoleTypeOptions"
-                clearable
-            />
-          </n-form-item>
-
-          <n-form-item label="Stole Color" path="stole.color">
-            <n-select
-                v-model:value="formValue.stole.color"
-                filterable
-                placeholder="You can start typing to search"
-                :options="stoleColorOptions"
-                clearable
-            />
-          </n-form-item>
-
-          <n-form-item label="Stole Lettering" path="stole.lettering">
-            <n-input v-model:value="formValue.stole.lettering" clearable
-                     placeholder="Write the stole's letters Ex. ECHS"/>
-          </n-form-item>
-
-          <n-form-item label="Border Color / Clipping / Border" path="stole.borderColor">
-            <n-select
-                v-model:value="formValue.stole.borderColor"
-                filterable
-                placeholder="Choose a Border Color for the Stole"
-                :options="stoleColorOptions"
-                clearable
-            />
-          </n-form-item>
-
-          <n-form-item label="Color of Letters and Numbers" path="stole.letteringAndNumberColors">
-            <n-select
-                v-model:value="formValue.stole.letteringAndNumberColors"
-                filterable
-                placeholder="Choose the Color for Letters and Numbers"
-                :options="stoleColorOptions"
-                clearable
-            />
-          </n-form-item>
-
-          <n-form-item label="Stole Logo Color 1#" path="stole.logoColor1">
-            <n-select
-                v-model:value="formValue.stole.logoColor1"
-                filterable
-                placeholder="Choose the Color of Logo 1#"
-                :options="stoleColorOptions"
-                clearable
-            />
-          </n-form-item>
-
-          <n-form-item label="Stole Logo Color 2#" path="stole.logoColor2">
-            <n-select
-                v-model:value="formValue.stole.logoColor2"
-                filterable
-                placeholder="Choose the Color of Logo 2#"
-                :options="stoleColorOptions"
-                clearable
-            />
-          </n-form-item>
-          <!--
-                TODO: Lettering Specifications lado izquierdo o derecho y arriba o abajo
-                TODO: Add inputs for images
-                TODO: Add stores to save a form
-          -->
-          <n-space justify="center">
-            <n-form-item>
-              <n-button @click="handleValidateClick">
-                Validate
-              </n-button>
-            </n-form-item>
-          </n-space>
-
-        </n-space>
-
-
-  <!--      <n-space vertical>-->
-  <!--        <pre>{{ formValue }}</pre>-->
-  <!--      </n-space>-->
-
-      </n-form>
-    </n-card>
+  <div h-full>
+<!--    <NaiveSteps />-->
+    <OrderForm/>
+<!--    <OrderStoleForm />-->
   </div>
 </template>
 <style scoped>
