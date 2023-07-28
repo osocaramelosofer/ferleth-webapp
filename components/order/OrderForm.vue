@@ -1,14 +1,9 @@
 <script setup lang="ts">
 // Naive ui Imports
 import {NForm, NFormItem, NInput, NButton, NDatePicker, NInputNumber, NSelect, NIcon, NumberAnimationInst, NNumberAnimation, NStatistic} from 'naive-ui'
-import {FormInst, useMessage, NSpace, NCard, NLayout} from 'naive-ui'
+import {FormInst, useMessage, NSpace} from 'naive-ui'
 import {ExtensionPuzzleOutline} from "@vicons/ionicons5";
-// Firebase Imports
-import {collection, addDoc, setDoc} from "firebase/firestore";
-import {db} from "@/firebase"
-import { runTransaction } from "firebase/firestore";
 //Local Imports
-import {Order} from "@/types/Order"
 import orderFormRules from "~/helpers/order/orderFormRules"
 import {computed, ref, watch} from "vue";
 import {formValue} from "@/composables/order/useOrderForm"
@@ -33,8 +28,7 @@ const handleValidateClick = (e: MouseEvent) => {
   })
 }
 
-
-// Total Cost Animation Field
+// Total Cost Animation
 const numberAnimationInstRef = ref<NumberAnimationInst | null>(null)
 function animateTotalCost () {
   setTimeout(() => {
@@ -46,7 +40,7 @@ const totalCost = computed(()=>{
   return formValue.value.totalCost
 })
 
-// Figuring out the total cost
+// Setting up the cost per piece base on the quality selected
 const costPerPiece = computed(()=>{
   switch (formValue.value.quality) {
     case "low":
@@ -121,7 +115,7 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
         <n-space justify="center">
           <n-form-item>
             <n-button @click="handleValidateClick">
-              Validate
+              Submit
             </n-button>
           </n-form-item>
         </n-space>
