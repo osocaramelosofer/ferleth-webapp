@@ -109,12 +109,6 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
     >
       <div class="flex flex-col bg-slate-100 px-12 pb-12 rounded-xl dark:bg-red-200">
         <h1>Create Order</h1>
-        <n-form-item label="Order Number" path="orderNumber">
-          <!-- TODO: Change for a input number(maybe not, could be a good idea generate a custom num order base on schoolName and date) -->
-          <n-input v-model:value="formValue.orderNumber" clearable placeholder="Order Number">
-            <template #suffix>#</template>
-          </n-input>
-        </n-form-item>
 
         <n-form-item label="School Name" path="schoolName">
           <n-input v-model:value="formValue.schoolName" clearable placeholder="Input the School Name"/>

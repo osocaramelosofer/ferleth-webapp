@@ -1,9 +1,4 @@
 export default {
-  orderNumber:{
-    required: true,
-    message: 'Please input your order number.',
-    trigger: ['input', 'blur']
-  },
   schoolName:{
     required: true,
     message: 'Please input the name of the school.',
