@@ -13,40 +13,12 @@ import orderFormRules from "~/helpers/order/orderFormRules"
 import {computed, ref, watch} from "vue";
 import {formValue} from "@/composables/order/useOrderForm"
 import {qualityOptions} from "~/helpers/order/order";
+import {submitOrder} from "@/firebase/order.ts"
 
 
 const formRef = ref<FormInst | null>(null) // I think this is for validations
 const message = useMessage()
 
-
-async function setOrderNumberUID(sfDocRef, orderUID){
-  try {
-    await runTransaction(db, async (transaction) => {
-      const sfDoc = await transaction.get(sfDocRef);
-      if (!sfDoc.exists()) {
-        throw "Document does not exist!";
-      }
-
-      const newPopulation = sfDoc.data().orderNumber = orderUID;
-      transaction.update(sfDocRef, { orderNumber: newPopulation });
-    });
-    console.log("Transaction successfully committed!");
-  } catch (e) {
-    console.log("Transaction failed: ", e);
-  }
-}
-
-
-
-const submitOrder = async (order: Order) => {
-  try {
-    const docRef = await addDoc<Order>(collection(db, "orders"), order);
-    console.log("Document written with ID: ", docRef.id);
-    await setOrderNumberUID(docRef, docRef.id)
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-}
 const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors) => {
@@ -65,7 +37,6 @@ const handleValidateClick = (e: MouseEvent) => {
 // Total Cost Animation Field
 const numberAnimationInstRef = ref<NumberAnimationInst | null>(null)
 function animateTotalCost () {
-  console.log(totalCost.value)
   setTimeout(() => {
     numberAnimationInstRef.value?.play();
   }, 300);
@@ -77,7 +48,6 @@ const totalCost = computed(()=>{
 
 // Figuring out the total cost
 const costPerPiece = computed(()=>{
-  console.log("updating")
   switch (formValue.value.quality) {
     case "low":
       return 7.50
