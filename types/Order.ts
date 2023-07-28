@@ -1,11 +1,11 @@
 export interface Stole {
-  type: String,
-  color: String,
-  lettering: String,
-  borderColor: String,
-  letteringAndNumberColors: String,
-  logoColor1: String,
-  logoColor2: String,
+  type: String | null,
+  color: String | null,
+  lettering: String | null,
+  borderColor: String | null,
+  letteringAndNumberColors: String | null,
+  logoColor1: String | null,
+  logoColor2: String | null,
   orderUID: String | Number | null
 }
 

@@ -4,7 +4,7 @@ import {NForm, NFormItem, NInput, NButton, NDatePicker, NInputNumber, NSelect, N
 import {FormInst, useMessage, NSpace} from 'naive-ui'
 import {ExtensionPuzzleOutline} from "@vicons/ionicons5";
 //Local Imports
-import orderFormRules from "~/helpers/order/orderFormRules"
+import {orderFormRules} from "~/helpers/order/orderFormRules"
 import {computed, ref, watch} from "vue";
 import {formValue} from "@/composables/order/useOrderForm"
 import {qualityOptions} from "~/helpers/order/order";
