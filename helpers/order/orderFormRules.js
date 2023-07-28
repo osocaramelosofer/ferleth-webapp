@@ -26,12 +26,6 @@ export const orderFormRules = {
 
 export const stoleFormRules = {
 
-    pieces: {
-      type: 'number',
-      required: true,
-      message: 'Please input the number of pieces are gonna be made it.',
-      trigger: ['input', 'blur', 'change']
-    },
     type: {
       required: true,
       message: 'Please input the type of fabric for the stole.',
