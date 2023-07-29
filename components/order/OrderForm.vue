@@ -60,7 +60,6 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
 </script>
 
 <template>
-  <div h-full >
     <n-form
         ref="formRef"
         inline
@@ -71,8 +70,8 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
         :show-feedback="true"
         style="justify-content: center; align-items: center; height: 100%"
     >
-      <div class="flex flex-col bg-slate-100 px-12 pb-12 rounded-xl dark:bg-red-200">
-        <h1>Create Order</h1>
+      <n-space vertical>
+<!--        <h1>Create Order</h1>-->
 
         <n-form-item label="School Name" path="schoolName">
           <n-input v-model:value="formValue.schoolName" clearable placeholder="Input the School Name"/>
@@ -119,12 +118,6 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
             </n-button>
           </n-form-item>
         </n-space>
-      </div>
-
-<!--      <pre>-->
-<!--        {{ formValue }}-->
-<!--      </pre>-->
-
+      </n-space>
     </n-form>
-  </div>
 </template>

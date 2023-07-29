@@ -37,7 +37,6 @@ const handleValidateClick =(e:MouseEvent) => {
 </script>
 
 <template>
-  <n-card h-full>
     <n-form
         ref="formRef"
         inline
@@ -124,7 +123,6 @@ const handleValidateClick =(e:MouseEvent) => {
       </n-space>
 
     </n-form>
-  </n-card>
 </template>
 <style scoped>
 </style>

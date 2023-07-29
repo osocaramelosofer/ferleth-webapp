@@ -5,6 +5,7 @@ import { ArrowBack, ArrowForward } from '@vicons/ionicons5'
 
 import { StepsProps } from 'naive-ui'
 import OrderForm from "~/components/order/OrderForm.vue";
+import StoleForm from "~/components/order/StoleForm.vue";
 
 const current = ref(1)
 const currentStatus = ref<StepsProps['status']>('process')
@@ -21,7 +22,8 @@ const buttonType = computed(() => {
 })
 
 function handleButtonClick () {
-  current.value = (current.value % 4) + 1
+  current.value = (current.value % 3) + 1
+
 }
 
 function buttonNext(){
@@ -30,7 +32,7 @@ function buttonNext(){
 
 function next () {
   if (current.value === null) current.value = 1
-  else if (current.value >= 4) current.value = null
+  else if (current.value >= 3) current.value = null
   else current.value++
 }
 
@@ -46,9 +48,23 @@ function prev () {
 <template>
   <n-space vertical>
     <n-steps :current="current" :status="currentStatus">
-      <n-step title="Order" />
-      <n-step title="Stole" />
-      <n-step title="Something" />
+      <n-step title="Order">
+        <div v-if="current === 1" w-full flex justify-center="">
+          <OrderForm/>
+<!--          <n-button-->
+<!--              :type="buttonType"-->
+<!--              size="small"-->
+<!--              @click="handleButtonClick"-->
+<!--          >-->
+<!--            Next-->
+<!--          </n-button>-->
+        </div>
+      </n-step>
+      <n-step title="Stole">
+        <div v-if="current === 2">
+          <StoleForm />
+        </div>
+      </n-step>
       <n-step title="Something" />
     </n-steps>
     <n-button-group>
