@@ -3,6 +3,7 @@ import {addDoc, collection, runTransaction} from "firebase/firestore";
 import {db} from "~/firebase/index";
 import {Order} from "~/types/Order";
 
+// Add the document ID as the Order Number field
 async function setOrderNumberUID(sfDocRef, orderUID){
   try {
     await runTransaction(db, async (transaction) => {

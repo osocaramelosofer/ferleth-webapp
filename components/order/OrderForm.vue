@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Naive ui Imports
-import {NForm, NFormItem, NInput, NButton, NDatePicker, NInputNumber, NSelect, NIcon, NumberAnimationInst, NNumberAnimation, NStatistic} from 'naive-ui'
-import {FormInst, useMessage, NSpace} from 'naive-ui'
+import {NForm, NFormItem, NInput, NButton, NDatePicker, NInputNumber, NSelect, NIcon, NumberAnimationInst,
+  NNumberAnimation, NStatistic,FormInst, useMessage, NSpace} from 'naive-ui'
 import {ExtensionPuzzleOutline} from "@vicons/ionicons5";
 //Local Imports
 import {orderFormRules} from "~/helpers/order/orderFormRules"
@@ -9,7 +9,9 @@ import {computed, ref, watch} from "vue";
 import {formValue} from "@/composables/order/useOrderForm"
 import {qualityOptions} from "~/helpers/order/order";
 import {submitOrder} from "@/firebase/order.ts"
+import {useOrderStore} from "~/stores/storeOrder";
 
+const store = useOrderStore()
 
 const formRef = ref<FormInst | null>(null) // I think this is for validations
 const message = useMessage()
@@ -18,9 +20,12 @@ const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors) => {
     if (!errors) {
-      console.log("no errors")
-      submitOrder(formValue.value)
+      // console.log(store)
+      store.setFormOrderValue(formValue.value)
+      console.log(store.formValueOrder)
+      // submitOrder(formValue.value)
       message.success('successful')
+      navigate()
     } else {
       console.log(errors)
       message.error('Double check the inputs please')
@@ -28,6 +33,11 @@ const handleValidateClick = (e: MouseEvent) => {
   })
 }
 
+function navigate(){
+  return navigateTo({
+    path: '/order/forms/stole',
+  })
+}
 // Total Cost Animation
 const numberAnimationInstRef = ref<NumberAnimationInst | null>(null)
 function animateTotalCost () {
@@ -114,10 +124,13 @@ watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
         <n-space justify="center">
           <n-form-item>
             <n-button @click="handleValidateClick">
-              Submit
+              Next
             </n-button>
           </n-form-item>
         </n-space>
+        <pre>
+          {{store.formValueOrder}}
+        </pre>
       </n-space>
     </n-form>
 </template>

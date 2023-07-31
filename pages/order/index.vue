@@ -8,6 +8,11 @@ const message = useMessage()
 
 <template>
   <div h-full px-20>
-    <NaiveSteps />
+<!--    <NaiveSteps />-->
+    <NuxtLink to="/order/forms/order">order</NuxtLink>
+    <br>
+    <NuxtLink to="/order/forms/stole">stole</NuxtLink>
+    <OrderForm/>
+<!--    <NuxtPage />-->
   </div>
 </template>

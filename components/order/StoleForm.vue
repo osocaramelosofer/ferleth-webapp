@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace,NCard } from 'naive-ui'
+import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace,NCard, NModal, NIcon, NTooltip } from 'naive-ui'
+import {InformationCircleSharp} from '@vicons/ionicons5'
 import {collection, addDoc, setDoc} from "firebase/firestore";
 import {db} from "@/firebase"
 //Local Imports
@@ -7,7 +8,9 @@ import { Stole } from "@/types/Order"
 import { stoleColorOptions, stoleTypeOptions } from "@/helpers/order/stole"
 import { stoleFormRules } from "~/helpers/order/orderFormRules"
 import { Ref, ref } from "vue";
+import {useOrderStore} from "~/stores/storeOrder";
 
+const store = useOrderStore()
 
 const formRef = ref<FormInst | null>(null) // I think this is for validations
 const message = useMessage()
@@ -27,16 +30,39 @@ const handleValidateClick =(e:MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors)=>{
     if(!errors){
-      message.success('Successful')
+      // onPositiveClick()
+      showModal.value = true
     } else{
       message.error('Double check the fields')
     }
   })
 }
+function goBack(){
+  return navigateTo({
+    path: '/order/',
+  })
+}
+
+const showModal = ref(false)
+function onPositiveClick () {
+  showModal.value = true
+  message.success('Submit')
+}
+function onNegativeClick () {
+  // message.error('Cancel')
+  showModal.value = false
+}
+
 
 </script>
 
 <template>
+  <div>
+    <h1>jho</h1>
+      <n-icon>
+        <InformationCircleSharp />
+      </n-icon>
+
     <n-form
         ref="formRef"
         inline
@@ -56,6 +82,13 @@ const handleValidateClick =(e:MouseEvent) => {
               :options="stoleTypeOptions"
               clearable
           />
+          <n-tooltip trigger="hover">
+            <template #trigger>
+              <n-icon :component="InformationCircleSharp"  size="25"/>
+            </template>
+            If it looks like a duck, walks like a duck, and quacks like a duck...it must
+            be a duck.
+          </n-tooltip>
         </n-form-item>
 
         <n-form-item label="Stole Color" path="color">
@@ -115,14 +148,35 @@ const handleValidateClick =(e:MouseEvent) => {
 
         <n-space justify="center">
           <n-form-item>
+            <n-button @click="goBack" mr-1>
+              Back
+            </n-button>
             <n-button @click="handleValidateClick">
-              Validate
+              Submit
             </n-button>
           </n-form-item>
         </n-space>
-      </n-space>
 
+        <pre>
+          {{ store.formValueOrder }}
+        </pre>
+      </n-space>
     </n-form>
+
+    <n-modal
+        v-model:show="showModal"
+        :mask-closable="false"
+        preset="dialog"
+        title="Submit Order"
+        content="Are you sure you want to submit?"
+        positive-text="Confirm"
+        negative-text="Cancel"
+        @positive-click="onPositiveClick"
+        @negative-click="onNegativeClick"
+    />
+  </div>
+
+
 </template>
 <style scoped>
 </style>

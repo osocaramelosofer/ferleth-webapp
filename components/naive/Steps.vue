@@ -26,10 +26,6 @@ function handleButtonClick () {
 
 }
 
-function buttonNext(){
-  console.log("hola")
-}
-
 function next () {
   if (current.value === null) current.value = 1
   else if (current.value >= 3) current.value = null
@@ -48,9 +44,7 @@ function prev () {
 <template>
   <n-space vertical>
     <n-steps :current="current" :status="currentStatus">
-      <n-step title="Order">
-        <div v-if="current === 1" w-full flex justify-center="">
-          <OrderForm/>
+      <n-step title="Order" v-if="current === 1">
 <!--          <n-button-->
 <!--              :type="buttonType"-->
 <!--              size="small"-->
@@ -58,16 +52,16 @@ function prev () {
 <!--          >-->
 <!--            Next-->
 <!--          </n-button>-->
-        </div>
       </n-step>
-      <n-step title="Stole">
-        <div v-if="current === 2">
-          <StoleForm />
-        </div>
-      </n-step>
+<!--      <n-step title="Stole">-->
+<!--        <div v-if="current === 2">-->
+<!--          <StoleForm />-->
+<!--        </div>-->
+<!--      </n-step>-->
       <n-step title="Something" />
     </n-steps>
-    <n-button-group>
+
+    <n-button-group flex justify-center w-full>
       <n-button @click="prev">
         <template #icon>
           <n-icon>
