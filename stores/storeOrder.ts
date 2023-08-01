@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import {darkTheme, StepsProps} from "naive-ui"
+import { StepsProps} from "naive-ui"
 import {ref, computed, reactive, Ref} from "vue"
 import {Order, Stole} from "~/types/Order";
 

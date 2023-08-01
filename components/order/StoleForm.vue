@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace,NCard, NModal, NIcon, NTooltip } from 'naive-ui'
-import {InformationCircleSharp} from '@vicons/ionicons5'
+import {InformationCircleSharp, HelpCircle} from '@vicons/ionicons5'
 import {collection, addDoc, setDoc} from "firebase/firestore";
 import {db} from "@/firebase"
 //Local Imports
@@ -58,10 +58,6 @@ function onNegativeClick () {
 
 <template>
   <div>
-    <h1>jho</h1>
-      <n-icon>
-        <InformationCircleSharp />
-      </n-icon>
 
     <n-form
         ref="formRef"
@@ -84,7 +80,8 @@ function onNegativeClick () {
           />
           <n-tooltip trigger="hover">
             <template #trigger>
-              <n-icon :component="InformationCircleSharp"  size="25"/>
+<!--              <n-icon :component="InformationCircleSharp"  size="25"/>-->
+              <n-icon :component="HelpCircle" size="20"/>
             </template>
             If it looks like a duck, walks like a duck, and quacks like a duck...it must
             be a duck.

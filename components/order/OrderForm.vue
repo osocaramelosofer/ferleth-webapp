@@ -20,24 +20,17 @@ const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors) => {
     if (!errors) {
-      // console.log(store)
       store.setFormOrderValue(formValue.value)
       console.log(store.formValueOrder)
       // submitOrder(formValue.value)
       message.success('successful')
-      navigate()
+      navigateTo({path: '/order/forms/stole',})
     } else {
-      console.log(errors)
       message.error('Double check the inputs please')
     }
   })
 }
 
-function navigate(){
-  return navigateTo({
-    path: '/order/forms/stole',
-  })
-}
 // Total Cost Animation
 const numberAnimationInstRef = ref<NumberAnimationInst | null>(null)
 function animateTotalCost () {
@@ -45,11 +38,15 @@ function animateTotalCost () {
     numberAnimationInstRef.value?.play();
   }, 300);
 }
-
+// Limit to Total Cost Animation
 const totalCost = computed(()=>{
   return formValue.value.totalCost
 })
-
+// Watch Total Cost Animation
+watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
+  formValue.value.totalCost = costPerPiece.value * formValue.value.pieces;
+  formValue.value.costPerUnit = costPerPiece.value;
+});
 // Setting up the cost per piece base on the quality selected
 const costPerPiece = computed(()=>{
   switch (formValue.value.quality) {
@@ -63,10 +60,7 @@ const costPerPiece = computed(()=>{
       return 10
   }
 })
-watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
-  formValue.value.totalCost = costPerPiece.value * formValue.value.pieces;
-  formValue.value.costPerUnit = costPerPiece.value;
-});
+
 </script>
 
 <template>

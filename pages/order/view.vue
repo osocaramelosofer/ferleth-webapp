@@ -4,9 +4,9 @@ import { h, defineComponent } from 'vue'
 import { NSpace, NDataTable,useMessage, DataTableColumns, NButton, NTag, NScrollbar} from "naive-ui"
 // firebase imports
 import { collection, getDocs } from "firebase/firestore";
-import {db} from "@/firebase"
+import {db} from "~/firebase"
 // Local imports
-import {Order} from "@/types/Order"
+import {Order} from "~/types/Order"
 
 const querySnapshot = await getDocs(collection(db, "orders"));
 // const orders: Order[] = [] todo: do with type Order
