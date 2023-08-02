@@ -1,6 +1,19 @@
 <script setup >
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
 import {NForm,NCard,NFormItem,NInput, NSwitch} from "naive-ui"
+import html2canvas from "html2canvas";
+// import { getStorage, ref } from "firebase/storage";
+
+// Get a reference to the storage service, which is used to create references in your storage bucket
+// const storage = getStorage();
+
+// Create a storage reference from our storage service
+// const storageRef = ref(storage);
+
+// const imagesRef = ref(storage, 'stoles')
+// const myImageRef = ref(storage, 'stoles/IMG_20230311_154859_725.jpg')
+
+const baseURL = window.location.origin + "/assets/images"
 const x = 50
 const width = 200
 const y = 50
@@ -58,11 +71,37 @@ const changeColor = () => {
 // todo: donwload the image
 // todo: check the year input just acept numbers and set a limit of characters
 // todo: set a limit of character in letters input
+async function saveAsImage() {
+  try {
+    // const content = this.$el;
+    const content = document.querySelector('#content')
 
+    const canvas = await html2canvas(content);
+
+    // Convert canvas to image data URL
+    const imageDataURL = canvas.toDataURL("image/png");
+
+    // Create a link and trigger a download
+    const link = document.createElement("a");
+    link.href = imageDataURL;
+    link.download = "your_image_name.png";
+    link.click();
+  }catch (error) {
+    console.error("Error saving image:", error);
+  }
+}
+async function saveImg(){
+  const x = document.querySelector('#content')
+  console.log(x)
+  html2canvas(document.querySelector('#content')).then( canvas =>{
+    document.body.appendChild(canvas)
+  })
+}
 </script>
 
 <template>
   <div flex>
+    <pre>{{ baseURL }}</pre>
     <n-form label-placement="left"
             style="background: #cfcfcf; padding: 10px; border-radius: 10px; margin-left: 10px;"
     >
@@ -91,9 +130,10 @@ const changeColor = () => {
 
 <!--      <pre>{{verticalLetters}}</pre>-->
 <!--      <button @click="download">Cambiar color</button>-->
+      <button @click="saveAsImage">Save</button>
     </n-form>
 
-    <div class="container relative" id="content">
+    <div class="stole-container relative" id="content" ref="content">
         <div class="stole absolute">
           <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                height="750" width="399"
@@ -131,8 +171,8 @@ const changeColor = () => {
             >
               {{ year }}
             </text>
-            <image href="@/assets/images/harvard-logo.png" width="100" height="100" x="270" y="850"/>
-            <image href="@/assets/images/greek-letters.png" width="100" height="100" x="75" y="850"/>
+            <image :href="baseURL + '/harvard-logo.png'" width="100" height="100" x="270" y="850"/>
+            <image href="https://firebasestorage.googleapis.com/v0/b/valiente-616ef.appspot.com/o/stoles%2FIMG_20230311_154859_725.jpg?alt=media&token=e51c5f99-85f9-458d-84b3-0c0884d49b51" width="100" height="100" x="75" y="850"/>
           </svg>
         </div>
 
@@ -171,5 +211,8 @@ const changeColor = () => {
 </template>
 
 <style scoped>
-
+.stole-container{
+  width: 400px;
+  height: 750px;
+}
 </style>

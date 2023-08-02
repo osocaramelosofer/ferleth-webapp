@@ -16,7 +16,7 @@ const showAlert = ()=>{
   <BaseWrapper>
     <section class="hero h-full">
       <div class="hero ">
-        <div>
+        <div class="dark:bg-red-200">
           <h1 text-5xl m-none text-center>Valiente: Your App Development Partner</h1>
         </div>
       </div>
@@ -28,9 +28,7 @@ const showAlert = ()=>{
         <SharedCustomButton class="rounded-full cursor-pointer" :onClick="showAlert" text="GET IN TOUCH" />
       </SharedSection>
 
-      <NaiveSteps>
 
-      </NaiveSteps>
 
 
     </section>

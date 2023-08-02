@@ -39,7 +39,7 @@ const handleValidateClick =(e:MouseEvent) => {
 }
 function goBack(){
   return navigateTo({
-    path: '/order/',
+    path: '/order/orderCreate',
   })
 }
 
@@ -154,9 +154,9 @@ function onNegativeClick () {
           </n-form-item>
         </n-space>
 
-        <pre>
-          {{ store.formValueOrder }}
-        </pre>
+<!--        <pre>-->
+<!--          {{ store.formValueOrder }}-->
+<!--        </pre>-->
       </n-space>
     </n-form>
 
