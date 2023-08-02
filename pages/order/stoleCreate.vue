@@ -80,7 +80,7 @@ function onNegativeClick () {
           />
           <n-tooltip trigger="hover">
             <template #trigger>
-<!--              <n-icon :component="InformationCircleSharp"  size="25"/>-->
+              <!--              <n-icon :component="InformationCircleSharp"  size="25"/>-->
               <n-icon :component="HelpCircle" size="20"/>
             </template>
             If it looks like a duck, walks like a duck, and quacks like a duck...it must
