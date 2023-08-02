@@ -82,7 +82,7 @@ const costPerPiece = computed(()=>{
         :show-feedback="true"
         style="justify-content: center; align-items: center; height: 100%"
     >
-      <n-space vertical bg-red-200>
+      <n-space vertical>
         <n-form-item label="School Name" path="schoolName">
           <n-input v-model:value="formValue.schoolName" clearable placeholder="Input the School Name"/>
         </n-form-item>
@@ -94,7 +94,6 @@ const costPerPiece = computed(()=>{
         <n-form-item label="Due Date" path="dueTimestamp">
           <n-date-picker v-model:value="formValue.dueTimestamp" type="date" clearable size="large"/>
         </n-form-item>
-
 
         <n-form-item label="Number of Pieces" path="pieces">
           <n-input-number v-model:value="formValue.pieces" :step="500" :min="500" :max="10000"  @click="animateTotalCost">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace,NCard, NModal, NIcon, NTooltip } from 'naive-ui'
+import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace,NCard, NModal, NIcon,
+  NTooltip } from 'naive-ui'
 import {InformationCircleSharp, HelpCircle} from '@vicons/ionicons5'
 import {collection, addDoc, setDoc} from "firebase/firestore";
 import {db} from "@/firebase"
@@ -9,28 +10,35 @@ import { stoleColorOptions, stoleTypeOptions } from "@/helpers/order/stole"
 import { stoleFormRules } from "~/helpers/order/orderFormRules"
 import { Ref, ref } from "vue";
 import {useOrderStore} from "~/stores/storeOrder";
+import { storeToRefs } from 'pinia'
+import {submitStole} from '@/firebase/order'
 
+
+// Store stuff
 const store = useOrderStore()
+const { stoleForm } = storeToRefs(store)
+console.log(stoleForm.value)
 
 const formRef = ref<FormInst | null>(null) // I think this is for validations
 const message = useMessage()
 
-const formValue: Ref<Stole> = ref<Stole>({
-  type: null,
-  color: null,
-  lettering: null,
-  borderColor: null,
-  letteringAndNumberColors: null,
-  logoColor1: null,
-  logoColor2: null,
-  orderUID:  null
-});
+// const formValue: Ref<Stole> = ref<Stole>({
+//   type: null,
+//   color: null,
+//   lettering: null,
+//   borderColor: null,
+//   letteringAndNumberColors: null,
+//   logoColor1: null,
+//   logoColor2: null,
+//   orderUID:  null
+// });
 
 const handleValidateClick =(e:MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors)=>{
     if(!errors){
       // onPositiveClick()
+      submitStole(stoleForm.value)
       showModal.value = true
     } else{
       message.error('Double check the fields')
@@ -58,12 +66,11 @@ function onNegativeClick () {
 
 <template>
   <div>
-
     <n-form
         ref="formRef"
         inline
         :label-width="80"
-        :model="formValue"
+        :model="stoleForm"
         :rules="stoleFormRules"
         size="medium"
         :show-feedback="true"
@@ -72,7 +79,7 @@ function onNegativeClick () {
       <n-space vertical>
         <n-form-item label="Stole Type" path="type">
           <n-select
-              v-model:value="formValue.type"
+              v-model:value="stoleForm.type"
               filterable
               placeholder="Please select a Fabric Type for the Stole"
               :options="stoleTypeOptions"
@@ -90,7 +97,7 @@ function onNegativeClick () {
 
         <n-form-item label="Stole Color" path="color">
           <n-select
-              v-model:value="formValue.color"
+              v-model:value="stoleForm.color"
               filterable
               placeholder="You can start typing to search"
               :options="stoleColorOptions"
@@ -99,13 +106,13 @@ function onNegativeClick () {
         </n-form-item>
 
         <n-form-item label="Stole Lettering" path="lettering">
-          <n-input v-model:value="formValue.lettering" clearable
+          <n-input v-model:value="stoleForm.lettering" clearable
                    placeholder="Write the stole's letters Ex. ECHS"/>
         </n-form-item>
 
         <n-form-item label="Border Color / Clipping / Border" path="borderColor">
           <n-select
-              v-model:value="formValue.borderColor"
+              v-model:value="stoleForm.borderColor"
               filterable
               placeholder="Choose a Border Color for the Stole"
               :options="stoleColorOptions"
@@ -115,7 +122,7 @@ function onNegativeClick () {
 
         <n-form-item label="Color of Letters and Numbers" path="letteringAndNumberColors">
           <n-select
-              v-model:value="formValue.letteringAndNumberColors"
+              v-model:value="stoleForm.letteringAndNumberColors"
               filterable
               placeholder="Choose the Color for Letters and Numbers"
               :options="stoleColorOptions"
@@ -125,7 +132,7 @@ function onNegativeClick () {
 
         <n-form-item label="Stole Logo Color 1#" path="logoColor1">
           <n-select
-              v-model:value="formValue.logoColor1"
+              v-model:value="stoleForm.logoColor1"
               filterable
               placeholder="Choose the Color of Logo 1#"
               :options="stoleColorOptions"
@@ -135,7 +142,7 @@ function onNegativeClick () {
 
         <n-form-item label="Stole Logo Color 2#" path="logoColor2">
           <n-select
-              v-model:value="formValue.logoColor2"
+              v-model:value="stoleForm.logoColor2"
               filterable
               placeholder="Choose the Color of Logo 2#"
               :options="stoleColorOptions"
@@ -154,9 +161,9 @@ function onNegativeClick () {
           </n-form-item>
         </n-space>
 
-<!--        <pre>-->
-<!--          {{ store.formValueOrder }}-->
-<!--        </pre>-->
+        <pre>
+          {{ stoleForm }}
+        </pre>
       </n-space>
     </n-form>
 
@@ -172,8 +179,4 @@ function onNegativeClick () {
         @negative-click="onNegativeClick"
     />
   </div>
-
-
 </template>
-<style scoped>
-</style>

@@ -6,10 +6,6 @@ import {Order, Stole} from "~/types/Order";
 export const useOrderStore = defineStore('order',() => {
   //In Setup Stores:
   // ref()s become state properties
-  const count = ref(0)
-  const name = ref('Eduardo')
-  const theme = ref(null)
-
   const current = ref(1)
   const currentStatus = ref<StepsProps['status']>('process')
 
@@ -24,7 +20,7 @@ export const useOrderStore = defineStore('order',() => {
     costPerUnit: null,
     totalCost: null
   });
-  const formValueStole: Ref<Stole> = ref<Stole>({
+  const stoleForm: Ref<Stole> = ref<Stole>({
     type: null,
     color: null,
     lettering: null,
@@ -37,9 +33,6 @@ export const useOrderStore = defineStore('order',() => {
 
   // computed()s become getters
   const doubleCount = computed(() => count.value * 2)
-  const isDark = computed(() => {
-    return !!theme.value
-  })
 
   // function()s become action
   function setFormOrderValue(formValue: Order){
@@ -48,5 +41,5 @@ export const useOrderStore = defineStore('order',() => {
 
 
 
-  return {  setFormOrderValue, formValueOrder }
+  return {  setFormOrderValue, formValueOrder, stoleForm }
 })

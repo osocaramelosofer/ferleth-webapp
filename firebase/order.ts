@@ -1,9 +1,20 @@
 // Firebase Imports
 import {addDoc, collection, runTransaction} from "firebase/firestore";
 import {db} from "~/firebase/index";
-import {Order} from "~/types/Order";
+import {Order, Stole} from "~/types/Order";
 
-// Add the document ID as the Order Number field
+// Add a new order
+const submitOrder = async (order: Order) => {
+  try {
+    const docRef = await addDoc<Order>(collection(db, "orders"), order);
+    console.log("Document written with ID: ", docRef.id);
+    await setOrderNumberUID(docRef, docRef.id)
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+// Update the order.orderNumber with the documentID of the doc that just created
 async function setOrderNumberUID(sfDocRef, orderUID){
   try {
     await runTransaction(db, async (transaction) => {
@@ -21,14 +32,17 @@ async function setOrderNumberUID(sfDocRef, orderUID){
   }
 }
 
-const submitOrder = async (order: Order) => {
-  try {
-    const docRef = await addDoc<Order>(collection(db, "orders"), order);
-    console.log("Document written with ID: ", docRef.id);
-    await setOrderNumberUID(docRef, docRef.id)
-  } catch (e) {
-    console.error("Error adding document: ", e);
+
+// Add a new stole
+const submitStole = async (stole: Stole) => {
+  try{
+    const docRef = await addDoc<Stole>(collection(db,"stoles"), stole);
+    console.log("Stole has added successfully. Stole id: ", docRef.id);
+  }catch(e){
+    console.error("There was an error adding the stole to firebase: ", e);
   }
 }
 
-export { setOrderNumberUID, submitOrder }
+
+
+export { setOrderNumberUID, submitOrder, submitStole }
