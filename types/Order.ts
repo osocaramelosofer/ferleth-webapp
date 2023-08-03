@@ -1,17 +1,23 @@
+export interface Stole {
+  type: String | null,
+  color: String | null,
+  lettering: String | null,
+  borderColor: String | null,
+  letteringAndNumberColors: String | null,
+  logoColor1: String | null,
+  logoColor2: String | null,
+  orderUID: String | Number | null
+}
+
 export interface Order{
   orderNumber: Number | String,
   schoolName: String,
-  timestampCreation: Number,
-  dueTimestamp: Number,
+  timestampCreation: Number | null,
+  dueTimestamp: Number | null,
   tags: String[] | null,
-  stole: {
-    pieces: Number | null,
-    type: String,
-    color: String,
-    lettering: String,
-    borderColor: String,
-    letteringAndNumberColors: String,
-    logoColor1: String,
-    logoColor2: String,
-  }
+
+  pieces: Number | null,
+  quality: 'low' | 'medium' | 'high',
+  costPerUnit: Number | null,
+  totalCost: Number | null
 }

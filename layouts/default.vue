@@ -26,24 +26,6 @@ const onClick =()=>{
 </script>
 
 <template>
-<!--    This is for testing dark theme-->
-<!--  <div h-full>-->
-<!--    <n-space>-->
-<!--      <n-card>-->
-<!--        <n-space>-->
-<!--          <n-button @click="onClick">Dark</n-button>-->
-<!--          <n-button @click="theme = null">Light</n-button>-->
-<!--          <naiveSwitchMenu />-->
-<!--        </n-space>-->
-<!--      </n-card>-->
-<!--      <n-card>-->
-<!--        <n-time-picker-->
-<!--            default-formatted-value="00:12:13"-->
-<!--        />-->
-<!--      </n-card>-->
-<!--      <h1>{{ store.isDark }}</h1>-->
-<!--    </n-space>-->
-<!--  </div>-->
     <NaiveMenu/>
 </template>
 <style scoped>

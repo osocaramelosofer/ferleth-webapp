@@ -36,7 +36,7 @@ export const menuOptions: MenuOption[] = [
           h(
             MyNuxtLink,
             {
-              to: '/order',
+              to: '/order/orderCreate',
               // name: 'order'
             },
             { default: () => 'Create Order' }
