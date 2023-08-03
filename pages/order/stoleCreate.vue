@@ -1,66 +1,55 @@
 <script setup lang="ts">
-import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace,NCard, NModal, NIcon,
+import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace, NModal, NIcon,
   NTooltip } from 'naive-ui'
 import {InformationCircleSharp, HelpCircle} from '@vicons/ionicons5'
-import {collection, addDoc, setDoc} from "firebase/firestore";
-import {db} from "@/firebase"
+
 //Local Imports
-import { Stole } from "@/types/Order"
 import { stoleColorOptions, stoleTypeOptions } from "@/helpers/order/stole"
 import { stoleFormRules } from "~/helpers/order/orderFormRules"
-import { Ref, ref } from "vue";
+import { ref } from "vue";
 import {useOrderStore} from "~/stores/storeOrder";
 import { storeToRefs } from 'pinia'
-import {submitStole} from '@/firebase/order'
+import {submitStole, submitOrder} from '@/firebase/order'
 
 
 // Store stuff
 const store = useOrderStore()
 const { stoleForm } = storeToRefs(store)
-console.log(stoleForm.value)
+const { formValueOrder } = storeToRefs(store)
 
-const formRef = ref<FormInst | null>(null) // I think this is for validations
+const formRef = ref<FormInst | null>(null) // form reference
 const message = useMessage()
 
-// const formValue: Ref<Stole> = ref<Stole>({
-//   type: null,
-//   color: null,
-//   lettering: null,
-//   borderColor: null,
-//   letteringAndNumberColors: null,
-//   logoColor1: null,
-//   logoColor2: null,
-//   orderUID:  null
-// });
-
-const handleValidateClick =(e:MouseEvent) => {
-  e.preventDefault()
+// submit form
+const handleValidateClick =() => {
   formRef.value?.validate((errors)=>{
     if(!errors){
-      // onPositiveClick()
       submitStole(stoleForm.value)
-      showModal.value = true
+      submitOrder(formValueOrder.value)
+      message.success('Submit')
+      navigateTo({path: '/',})
     } else{
       message.error('Double check the fields')
     }
   })
 }
-function goBack(){
-  return navigateTo({
-    path: '/order/orderCreate',
-  })
-}
 
+// modal logic
 const showModal = ref(false)
 function onPositiveClick () {
   showModal.value = true
-  message.success('Submit')
+  handleValidateClick()
 }
 function onNegativeClick () {
   // message.error('Cancel')
   showModal.value = false
 }
 
+function goBack(){
+  return navigateTo({
+    path: '/order/orderCreate',
+  })
+}
 
 </script>
 
@@ -155,7 +144,7 @@ function onNegativeClick () {
             <n-button @click="goBack" mr-1>
               Back
             </n-button>
-            <n-button @click="handleValidateClick">
+            <n-button @click="showModal=true">
               Submit
             </n-button>
           </n-form-item>

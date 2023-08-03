@@ -172,7 +172,7 @@ async function saveImg(){
               {{ year }}
             </text>
             <image :href="baseURL + '/harvard-logo.png'" width="100" height="100" x="270" y="850"/>
-            <image href="https://firebasestorage.googleapis.com/v0/b/valiente-616ef.appspot.com/o/stoles%2FIMG_20230311_154859_725.jpg?alt=media&token=e51c5f99-85f9-458d-84b3-0c0884d49b51" width="100" height="100" x="75" y="850"/>
+            <image href="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png" width="100" height="100" x="75" y="850"/>
           </svg>
         </div>
 
