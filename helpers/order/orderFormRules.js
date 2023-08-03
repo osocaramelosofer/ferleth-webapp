@@ -1,9 +1,4 @@
-export default {
-  orderNumber:{
-    required: true,
-    message: 'Please input your order number.',
-    trigger: ['input', 'blur']
-  },
+export const orderFormRules = {
   schoolName:{
     required: true,
     message: 'Please input the name of the school.',
@@ -21,13 +16,16 @@ export default {
     message: 'Please input the due date of the order.',
     trigger: ['input', 'blur']
   },
-  stole: {
-    pieces: {
-      type: 'number',
-      required: true,
-      message: 'Please input the number of pieces are gonna be made it.',
-      trigger: ['input', 'blur', 'change']
-    },
+  pieces: {
+    type: 'number',
+    required: true,
+    message: 'Please input the number of pieces.',
+    trigger: ['input', 'blur']
+  }
+}
+
+export const stoleFormRules = {
+
     type: {
       required: true,
       message: 'Please input the type of fabric for the stole.',
@@ -63,5 +61,4 @@ export default {
       message: 'Please input the type of fabric for the stole.',
       trigger: ['input', 'blur']
     },
-  }
 }

@@ -4,13 +4,13 @@ import { h, defineComponent } from 'vue'
 import { NSpace, NDataTable,useMessage, DataTableColumns, NButton, NTag, NScrollbar} from "naive-ui"
 // firebase imports
 import { collection, getDocs } from "firebase/firestore";
-import {db} from "@/firebase"
+import {db} from "~/firebase"
 // Local imports
-import {Order} from "@/types/Order"
+import {Order} from "~/types/Order"
 
 const querySnapshot = await getDocs(collection(db, "orders"));
 // const orders: Order[] = [] todo: do with type Order
-// todo: create an interface extends from Order that will be OrderReadOnly and just add the id, this to use it only when we read data
+// todo: create an interface extends from Order that will be OrderReadOnly and just add the id, this to use it only when we read order
 let ordersData = []
 
 querySnapshot.forEach((doc) => {
@@ -120,7 +120,7 @@ const columns2 = createColumns({
 //   }
 // ]
 //
-// const data = Array.from({ length: 46 }).map((_, index) => ({
+// const order = Array.from({ length: 46 }).map((_, index) => ({
 //   // key: index+1,
 //   name: `Edward King ${index}`,
 //   age: 32,
@@ -152,7 +152,7 @@ const pagination = reactive({
 <!-- these are for testing -->
 <!--    <n-space>-->
 <!--      <pre>{{ordersData}}</pre>-->
-<!--      <pre>{{data}}</pre>-->
+<!--      <pre>{{order}}</pre>-->
 <!--    </n-space>-->
   </div>
 </template>
