@@ -11,6 +11,7 @@ import {qualityOptions} from "~/helpers/order/order";
 import {submitOrder} from "@/firebase/order.ts"
 import {useOrderStore} from "~/stores/storeOrder";
 import {useRoute} from "#app/composables/router";
+import { storeToRefs } from 'pinia'
 
 definePageMeta({
   name:"order",
@@ -19,7 +20,7 @@ definePageMeta({
 
 const route = useRoute()
 const store = useOrderStore()
-
+const { orderForm } = storeToRefs(store)
 const formRef = ref<FormInst | null>(null) // I think this is for validations
 const message = useMessage()
 
@@ -27,9 +28,7 @@ const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors) => {
     if (!errors) {
-      store.setFormOrderValue(formValue.value)
-      console.log(store.formValueOrder)
-      // submitOrder(formValue.value)
+      store.setFormOrderValue(orderForm.value)
       message.success('successful')
       navigateTo({path: '/order/stoleCreate',})
     } else {
@@ -47,16 +46,16 @@ function animateTotalCost () {
 }
 // Limit to Total Cost Animation
 const totalCost = computed(()=>{
-  return formValue.value.totalCost
+  return orderForm.value.totalCost
 })
 // Watch Total Cost Animation
-watch([() => formValue.value.quality, () => formValue.value.pieces], () => {
-  formValue.value.totalCost = costPerPiece.value * formValue.value.pieces;
-  formValue.value.costPerUnit = costPerPiece.value;
+watch([() => orderForm.value.quality, () => orderForm.value.pieces], () => {
+  orderForm.value.totalCost = costPerPiece.value * orderForm.value.pieces;
+  orderForm.value.costPerUnit = costPerPiece.value;
 });
 // Setting up the cost per piece base on the quality selected
 const costPerPiece = computed(()=>{
-  switch (formValue.value.quality) {
+  switch (orderForm.value.quality) {
     case "low":
       return 7.50
     case "medium":
@@ -76,7 +75,7 @@ const costPerPiece = computed(()=>{
         ref="formRef"
         inline
         :label-width="80"
-        :model="formValue"
+        :model="orderForm"
         :rules="orderFormRules"
         size="medium"
         :show-feedback="true"
@@ -84,19 +83,19 @@ const costPerPiece = computed(()=>{
     >
       <n-space vertical>
         <n-form-item label="School Name" path="schoolName">
-          <n-input v-model:value="formValue.schoolName" clearable placeholder="Input the School Name"/>
+          <n-input v-model:value="orderForm.schoolName" clearable placeholder="Input the School Name"/>
         </n-form-item>
 
         <n-form-item label="Date of Order Creation" path="timestampCreation">
-          <n-date-picker v-model:value="formValue.timestampCreation" type="date" clearable size="large"/>
+          <n-date-picker v-model:value="orderForm.timestampCreation" type="date" clearable size="large"/>
         </n-form-item>
 
         <n-form-item label="Due Date" path="dueTimestamp">
-          <n-date-picker v-model:value="formValue.dueTimestamp" type="date" clearable size="large"/>
+          <n-date-picker v-model:value="orderForm.dueTimestamp" type="date" clearable size="large"/>
         </n-form-item>
 
         <n-form-item label="Number of Pieces" path="pieces">
-          <n-input-number v-model:value="formValue.pieces" :step="500" :min="500" :max="10000"  @click="animateTotalCost">
+          <n-input-number v-model:value="orderForm.pieces" :step="500" :min="500" :max="10000"  @click="animateTotalCost">
             <template #suffix>
               pcs
               <n-icon :component="ExtensionPuzzleOutline"/>
@@ -105,7 +104,7 @@ const costPerPiece = computed(()=>{
         </n-form-item>
 
         <n-form-item label="Quality" path="">
-          <n-select v-model:value="formValue.quality" :options="qualityOptions" @update:value="animateTotalCost" />
+          <n-select v-model:value="orderForm.quality" :options="qualityOptions" @update:value="animateTotalCost" />
         </n-form-item>
 
         <n-statistic label="Total Cost" tabular-nums>
@@ -127,9 +126,9 @@ const costPerPiece = computed(()=>{
             </n-button>
           </n-form-item>
         </n-space>
-        <!--      <pre>-->
-        <!--          {{store.formValueOrder}}-->
-        <!--        </pre>-->
+          <pre>
+              {{ orderForm }}
+          </pre>
       </n-space>
     </n-form>
   </div>
