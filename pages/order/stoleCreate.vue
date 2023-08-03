@@ -26,7 +26,7 @@ const handleValidateClick =() => {
     if(!errors){
       submitStole(stoleForm.value)
       submitOrder(formValueOrder.value)
-      message.success('Submit')
+      message.success('La orden se ha creado exitosamente.')
       navigateTo({path: '/',})
     } else{
       message.error('Double check the fields')
@@ -150,9 +150,6 @@ function goBack(){
           </n-form-item>
         </n-space>
 
-        <pre>
-          {{ stoleForm }}
-        </pre>
       </n-space>
     </n-form>
 

@@ -126,9 +126,6 @@ const costPerPiece = computed(()=>{
             </n-button>
           </n-form-item>
         </n-space>
-          <pre>
-              {{ orderForm }}
-          </pre>
       </n-space>
     </n-form>
   </div>

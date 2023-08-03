@@ -101,7 +101,6 @@ async function saveImg(){
 
 <template>
   <div flex>
-    <pre>{{ baseURL }}</pre>
     <n-form label-placement="left"
             style="background: #cfcfcf; padding: 10px; border-radius: 10px; margin-left: 10px;"
     >
