@@ -12,27 +12,10 @@ const showAlert = ()=>{
 </script>
 
 <template>
-
   <BaseWrapper>
-    <section class="hero h-full">
-      <div class="hero ">
-        <div class="dark:bg-red-200">
-          <h1 text-5xl m-none text-center>Valiente: Your App Development Partner</h1>
-        </div>
-      </div>
-
-      <SharedSection
-          title="First section"
-          text="Why would you work with us? Well we are an excellent parte since we have experience building mobile and web apps that are the common apps in these days, we can help you to break down all your needs and create a road map in order to acomplish with you goal."
-      >
-        <SharedCustomButton class="rounded-full cursor-pointer" :onClick="showAlert" text="GET IN TOUCH" />
-      </SharedSection>
-
-
-
-
-    </section>
-    <router-view />
+    <n-buton>
+      
+    </n-buton>
   </BaseWrapper>
 </template>
 
