@@ -13,57 +13,17 @@ import {useOrderStore} from "~/stores/storeOrder";
 import {useAppStore} from "@/stores/store"
 import {useRoute} from "#app/composables/router";
 import { storeToRefs } from 'pinia'
-
-const globalStore = useAppStore()
-const { localRef } = storeToRefs(globalStore)
-
-// i18n
-const i18n = function (data) {
-  return {
-    locale: localRef.value,
-    t (key) {
-      const locale = localRef.value.name
-      return data[locale][key]
-    }
-  }
-}
-const locales = {
-  'es-AR': {
-    dark: 'Oscuro',
-    light: 'Claro',
-    searchPlaceholder: 'Buscar',
-    home: 'Inicio',
-    doc: 'Docs',
-    component: 'Components',
-    common: 'Common',
-    debug: 'Debug',
-    alreadyHome: 'You are already in home page',
-    tusimpleTheme: '图森主题',
-    defaultTheme: 'Tusimple tema'
-  },
-  'en-US': {
-    dark: 'Dark',
-    light: 'Light',
-    searchPlaceholder: 'Search',
-    home: 'Home',
-    doc: 'Docs',
-    component: 'Components',
-    common: 'Common',
-    debug: 'Debug',
-    alreadyHome: 'You are already in home page. No clicking anymore.',
-    tusimpleTheme: 'TuSimple Theme',
-    defaultTheme: 'Default Theme'
-  }
-}
-const { t } = i18n(locales)
-
-
+import { i18n } from '@/composables/use1l8n'
+import { locales } from '@/helpers/locales'
 
 definePageMeta({
   name:"order",
   title: "Create Order"
 })
 
+const globalStore = useAppStore()
+const { localRef } = storeToRefs(globalStore)
+const { t } = i18n(locales)
 const route = useRoute()
 const store = useOrderStore()
 const { orderForm } = storeToRefs(store)
@@ -118,8 +78,6 @@ const costPerPiece = computed(()=>{
 <template>
   <div>
     <SharedIdiomButton />
-<!--    <h1>{{t('home')}}</h1>-->
-<!--    <pre>{{localRef}}</pre>-->
     <n-config-provider :locale="localRef">
       <n-form
           ref="formRef"
@@ -179,7 +137,5 @@ const costPerPiece = computed(()=>{
         </n-space>
       </n-form>
     </n-config-provider>
-
   </div>
-
 </template>

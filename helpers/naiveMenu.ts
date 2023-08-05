@@ -1,5 +1,6 @@
 import {MenuOption, NIcon} from "naive-ui";
 import {Component, h} from "vue";
+import { toRef, inject, provide, reactive, watchEffect } from 'vue'
 import MyNuxtLink from "~/components/shared/NuxtLink";
 import {
   BookOutline as BookIcon,
@@ -12,6 +13,10 @@ import {
 function renderIcon (icon: Component) {
   return () => h(NIcon, null, { default: () => h(icon) })
 }
+
+
+
+
 export const menuOptions: MenuOption[] = [
   {
     label: () =>
@@ -20,7 +25,7 @@ export const menuOptions: MenuOption[] = [
         {
           to: '/',
         },
-        { default: () => 'Home' }
+        { default: () => 'home' }
       ),
     key: 'home',
     icon: renderIcon(home)
