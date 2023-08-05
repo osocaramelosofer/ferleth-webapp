@@ -13,7 +13,6 @@ import {useOrderStore} from "~/stores/storeOrder";
 import {useAppStore} from "@/stores/store"
 import {useRoute} from "#app/composables/router";
 import { storeToRefs } from 'pinia'
-import { i18n } from '@/composables/use1l8n'
 import { locales } from '@/helpers/locales'
 
 definePageMeta({
@@ -23,6 +22,15 @@ definePageMeta({
 
 const globalStore = useAppStore()
 const { localRef } = storeToRefs(globalStore)
+const i18n = function (data) {
+  return {
+    locale: localRef.value,
+    t (key) {
+      const locale = localRef.value.name
+      return data[locale][key]
+    }
+  }
+}
 const { t } = i18n(locales)
 const route = useRoute()
 const store = useOrderStore()
@@ -77,7 +85,6 @@ const costPerPiece = computed(()=>{
 
 <template>
   <div>
-    <SharedIdiomButton />
     <n-config-provider :locale="localRef">
       <n-form
           ref="formRef"
@@ -90,19 +97,19 @@ const costPerPiece = computed(()=>{
           style="justify-content: center; align-items: center; height: 100%"
       >
         <n-space vertical>
-          <n-form-item label="School Name" path="schoolName">
-            <n-input v-model:value="orderForm.schoolName" clearable :placeholder="t('dark')" />
+          <n-form-item :label="t('schoolName')" path="schoolName">
+            <n-input v-model:value="orderForm.schoolName" clearable :placeholder="t('schoolNamePlaceholder')" />
           </n-form-item>
 
-          <n-form-item label="Date of Order Creation" path="timestampCreation">
+          <n-form-item :label="t('timestampCreation')" path="timestampCreation">
             <n-date-picker v-model:value="orderForm.timestampCreation" type="date" clearable size="large"/>
           </n-form-item>
 
-          <n-form-item label="Due Date" path="dueTimestamp">
+          <n-form-item :label="t('dueTimestamp')" path="dueTimestamp">
             <n-date-picker v-model:value="orderForm.dueTimestamp" type="date" clearable size="large"/>
           </n-form-item>
 
-          <n-form-item label="Number of Pieces" path="pieces">
+          <n-form-item :label="t('numberOfPieces')" path="pieces">
             <n-input-number v-model:value="orderForm.pieces" :step="500" :min="500" :max="10000"  @click="animateTotalCost">
               <template #suffix>
                 pcs
@@ -111,11 +118,11 @@ const costPerPiece = computed(()=>{
             </n-input-number>
           </n-form-item>
 
-          <n-form-item label="Quality" path="">
+          <n-form-item :label="t('quality')" path="">
             <n-select v-model:value="orderForm.quality" :options="qualityOptions" @update:value="animateTotalCost" />
           </n-form-item>
 
-          <n-statistic label="Total Cost" tabular-nums>
+          <n-statistic :label="t('totalCost')" tabular-nums>
             <n-number-animation
                 ref="numberAnimationInstRef"
                 show-separator

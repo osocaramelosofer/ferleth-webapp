@@ -22,14 +22,9 @@ function handleLocaleUpdate() {
 </script>
 
 <template>
-  <div>
-    <n-button @click="handleLocaleUpdate">
-      {{ localeLabelMap[localNameRef]}}
-    </n-button>
-    <n-date-picker />
-
-    <!--    <pre>{{ localRef}}</pre>-->
-  </div>
+  <n-button @click="handleLocaleUpdate">
+    {{ localeLabelMap[localNameRef]}}
+  </n-button>
 </template>
 <style scoped>
 </style>

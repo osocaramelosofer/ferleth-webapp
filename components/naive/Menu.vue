@@ -28,6 +28,9 @@ const inverted = ref(false)
                 :collapsed-icon-size="22"
                 :options="menuOptions"
             />
+            <n-space justify="center">
+              <SharedIdiomButton />
+            </n-space>
           </n-layout-sider>
           <n-layout>
             <NuxtPage />
