@@ -1,21 +1,41 @@
 <script setup lang="ts">
-import {  NButton, NSwitch, NForm, NFormItem, NInput } from 'naive-ui'
+import {  NButton, NConfigProvider, NDatePicker } from 'naive-ui'
 import type { GlobalTheme, darkTheme, GlobalThemeOverrides,ButtonProps, FormProps  } from 'naive-ui'
-import { FormInst, useMessage } from 'naive-ui'
-const showAlert = ()=>{
-  alert("Hello :)")
+import { enUS, esAR } from 'naive-ui'
+import {useAppStore} from '@/stores/store'
+import { storeToRefs } from 'pinia'
+const store = useAppStore()
+
+const { localRef, localNameRef } = storeToRefs(store)
+
+const localeLabelMap = {
+  'es-AR': 'English',
+  'en-US': 'Spanish',
 }
 
-
-
-
+function handleLocaleUpdate() {
+  if(localNameRef.value === 'es-AR'){
+    localNameRef.value = 'en-US'
+  }
+  else {
+    localNameRef.value = 'es-AR'
+  }
+}
 </script>
 
 <template>
   <BaseWrapper>
-    <n-buton>
-      
-    </n-buton>
+    <n-space vertical>
+
+      <n-config-provider :locale="localRef" >
+        <n-button @click="handleLocaleUpdate">
+          {{ localeLabelMap[localNameRef]}}
+        </n-button>
+        <n-date-picker />
+      </n-config-provider>
+      <pre>{{localNameRef}}</pre>
+      <pre>== > {{localRef}}</pre>
+    </n-space>
   </BaseWrapper>
 </template>
 

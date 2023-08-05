@@ -8,12 +8,11 @@ export const useAppStore = defineStore('global',() => {
   // ref()s become state properties
   const theme = ref(null)
   let themeNameRef = ref(null)
-  const localNameRef = ref(null)
+  const localNameRef = ref('en-US')
 
   // computed()s become getters
-  const localeRef = computed(() => {
-    // return localNameRef.value === 'es-AR' ? esAR : enUS
-    return localNameRef.value === 'es-AR' ? enUS : esAR
+  const localRef = computed(() => {
+    return localNameRef.value === 'es-AR' ? esAR : enUS
   })
   const isDark = computed(() => {
     return !!theme.value
@@ -32,6 +31,11 @@ export const useAppStore = defineStore('global',() => {
       theme.value = darkTheme
     }
   }
+  function changeLanguage(){
+    if(localNameRef.value === 'en-US'){
+      localNameRef.value = 'es-AR'
+    }
+  }
 
-  return { localeRef, changeDarkTheme, theme, isDark }
+  return { localRef, localNameRef, changeDarkTheme, theme, isDark }
 })

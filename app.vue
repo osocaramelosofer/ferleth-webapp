@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import {NMessageProvider, NLoadingBarProvider, NNotificationProvider, NDialogProvider,
 NConfigProvider, NGlobalStyle, GlobalTheme, darkTheme, GlobalThemeOverrides, NButton, NSpace,
-NCard, NTimePicker, NLayout, zhCN} from 'naive-ui'
+NCard, NTimePicker, NLayout, zhCN,enUS} from 'naive-ui'
 import {useAppStore} from "~/stores/store";
 import { storeToRefs } from 'pinia'
 
 const store = useAppStore()
-const {changeDarkTheme, theme } = storeToRefs(store)
+const {changeDarkTheme, theme, localRef } = storeToRefs(store)
 
 
 
@@ -20,7 +20,7 @@ const {changeDarkTheme, theme } = storeToRefs(store)
       preflight-style-disabled
       :theme="theme"
       h-full
-      locale="zhCN"
+      :locale="localRef"
   >
       <n-loading-bar-provider>
         <n-message-provider>
