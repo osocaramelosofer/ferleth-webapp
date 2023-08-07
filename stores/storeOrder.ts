@@ -46,11 +46,13 @@ export const useOrderStore = defineStore('order',() => {
   const doubleCount = computed(() => count.value * 2)
 
   // function()s become action
+  // maybe I will need this when I check the details of an order I will need to
+  // set details of the order you wanna see in some way so we can re-use the page orderCreate.vue to visualize the data
   function setFormOrderValue(formValue: Order){
     formValueOrder.value = formValue
   }
 
 
 
-  return {  setFormOrderValue, formValueOrder, stoleForm, orderForm }
+  return {  formValueOrder, stoleForm, orderForm }
 })

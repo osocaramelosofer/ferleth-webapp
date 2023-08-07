@@ -6,9 +6,7 @@ import {ExtensionPuzzleOutline} from "@vicons/ionicons5";
 //Local Imports
 import {orderFormRules} from "~/helpers/order/orderFormRules"
 import {computed, ref, watch} from "vue";
-import {formValue} from "@/composables/order/useOrderForm"
 import {qualityOptions} from "~/helpers/order/order";
-import {submitOrder} from "@/firebase/order.ts"
 import {useOrderStore} from "~/stores/storeOrder";
 import {useAppStore} from "@/stores/store"
 import {useRoute} from "#app/composables/router";
@@ -32,17 +30,17 @@ const i18n = function (data) {
   }
 }
 const { t } = i18n(locales)
+
 const route = useRoute()
-const store = useOrderStore()
-const { orderForm } = storeToRefs(store)
-const formRef = ref<FormInst | null>(null) // I think this is for validations
+const orderStore = useOrderStore()
+const { orderForm } = storeToRefs(orderStore)
+const formRef = ref<FormInst | null>(null)
 const message = useMessage()
 
 const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors) => {
     if (!errors) {
-      store.setFormOrderValue(orderForm.value)
       message.success('successful')
       navigateTo({path: '/order/stoleCreate',})
     } else {
@@ -85,7 +83,7 @@ const costPerPiece = computed(()=>{
 
 <template>
   <div>
-    <n-config-provider :locale="localRef">
+    <h1 text-center>Create Order</h1>
       <n-form
           ref="formRef"
           inline
@@ -102,11 +100,11 @@ const costPerPiece = computed(()=>{
           </n-form-item>
 
           <n-form-item :label="t('timestampCreation')" path="timestampCreation">
-            <n-date-picker v-model:value="orderForm.timestampCreation" type="date" clearable size="large"/>
+            <n-date-picker v-model:value="orderForm.timestampCreation" type="date" clearable :disabled="true" style="width: 100%"/>
           </n-form-item>
 
           <n-form-item :label="t('dueTimestamp')" path="dueTimestamp">
-            <n-date-picker v-model:value="orderForm.dueTimestamp" type="date" clearable size="large"/>
+            <n-date-picker v-model:value="orderForm.dueTimestamp" type="date" clearable size="large" style="width: 100%"/>
           </n-form-item>
 
           <n-form-item :label="t('numberOfPieces')" path="pieces">
@@ -132,8 +130,7 @@ const costPerPiece = computed(()=>{
             />
           </n-statistic>
 
-          <!--  TODO: Add inputs for images
-                TODO: Add stores to save a form -->
+          <!--  TODO: Add inputs for images -->
           <n-space justify="center">
             <n-form-item>
               <n-button @click="handleValidateClick">
@@ -143,6 +140,5 @@ const costPerPiece = computed(()=>{
           </n-space>
         </n-space>
       </n-form>
-    </n-config-provider>
   </div>
 </template>

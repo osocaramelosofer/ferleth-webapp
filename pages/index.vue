@@ -24,19 +24,9 @@ function handleLocaleUpdate() {
 </script>
 
 <template>
-  <BaseWrapper>
-    <n-space vertical>
 
-      <n-config-provider :locale="localRef" >
-        <n-button @click="handleLocaleUpdate">
-          {{ localeLabelMap[localNameRef]}}
-        </n-button>
-        <n-date-picker />
-      </n-config-provider>
-      <pre>{{localNameRef}}</pre>
-      <pre>== > {{localRef}}</pre>
-    </n-space>
-  </BaseWrapper>
+    <h1 text-center font-bold text-5xl>Welcome!</h1>
+    <h2 text-center>There is nothing here yet but we' ll fix it ;D</h2>
 </template>
 
 <style scoped>

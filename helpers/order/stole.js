@@ -1,3 +1,5 @@
+// This is basic data I use to populate some inputs for stoelCreate.vue form
+
 // maybe would be better handle the value as same as the name
 export const stoleTypeOptions = [
   {

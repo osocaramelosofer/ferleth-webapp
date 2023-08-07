@@ -12,8 +12,8 @@ export interface Stole {
 export interface Order{
   orderNumber: Number | String,
   schoolName: String,
-  timestampCreation: Number | null,
-  dueTimestamp: Number | null,
+  timestampCreation: Number | String | null,
+  dueTimestamp: Number | String | null,
   tags: String[] | null,
 
   pieces: Number | null,
@@ -21,3 +21,4 @@ export interface Order{
   costPerUnit: Number | null,
   totalCost: Number | null
 }
+

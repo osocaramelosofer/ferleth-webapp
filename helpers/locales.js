@@ -1,3 +1,5 @@
+// Dictionary to internationalize the app
+
 export const locales = {
   'es-AR': {
     dark: 'Oscuro',
