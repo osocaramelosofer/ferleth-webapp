@@ -80,6 +80,7 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
                 style: {
                   marginRight: '6px'
                 },
+                round: true,
                 type: tagType,
                 bordered: false
               },
