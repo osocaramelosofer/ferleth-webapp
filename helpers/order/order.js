@@ -1,3 +1,4 @@
+// this are the date I used to display some inputs information at orderCreate.vue
 
 // select quality input
 const qualityOptions = [
@@ -5,4 +6,4 @@ const qualityOptions = [
   { label: 'Medium', value: 'medium'},
   { label: 'High', value: 'high'},
 ]
-export{qualityOptions}
+export{ qualityOptions }

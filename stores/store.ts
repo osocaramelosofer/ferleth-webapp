@@ -1,17 +1,19 @@
 import { defineStore } from 'pinia'
 import {darkTheme} from "naive-ui"
 import {ref, computed} from "vue"
+import { enUS, esAR, zhCN,
+  dateEnUS, dateZhCN, dateEsAR } from 'naive-ui'
 
 export const useAppStore = defineStore('global',() => {
-  //In Setup Stores:
   // ref()s become state properties
-  const count = ref(0)
-  const name = ref('Eduardo')
   const theme = ref(null)
   let themeNameRef = ref(null)
+  const localNameRef = ref('en-US')
 
   // computed()s become getters
-  const doubleCount = computed(() => count.value * 2)
+  const localRef = computed(() => {
+    return localNameRef.value === 'es-AR' ? esAR : enUS
+  })
   const isDark = computed(() => {
     return !!theme.value
   })
@@ -20,10 +22,8 @@ export const useAppStore = defineStore('global',() => {
     return value === 'dark' ? darkTheme : null
   })
 
+
   // function()s become action
-  function increment() {
-    count.value++
-  }
   function changeDarkTheme(){
     if(theme.value){
       theme.value =  null
@@ -31,7 +31,11 @@ export const useAppStore = defineStore('global',() => {
       theme.value = darkTheme
     }
   }
+  function changeLanguage(){
+    if(localNameRef.value === 'en-US'){
+      localNameRef.value = 'es-AR'
+    }
+  }
 
-  return { count, name, doubleCount,
-    increment, changeDarkTheme, theme, isDark }
+  return { localRef, localNameRef, changeDarkTheme, theme, isDark }
 })

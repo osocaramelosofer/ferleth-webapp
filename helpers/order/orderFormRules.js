@@ -1,3 +1,5 @@
+// These are the form rules I use for oderCreate.vue and stoleCreate.vue
+
 export const orderFormRules = {
   schoolName:{
     required: true,
