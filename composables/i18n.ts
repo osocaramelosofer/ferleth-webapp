@@ -8,11 +8,22 @@ const { localRef } = storeToRefs(globalStore)
 
 // i18n
 export const i18n = function (data) {
+  const localeReactive = inject('i18n',{})
   return {
-    locale: localRef.value,
+    locale: toRef(localeReactive),
     t (key) {
-      const locale = localRef.value.name
+      const { locale } = localeReactive
       return data[locale][key]
     }
   }
+}
+
+i18n.provide = function (localeRef) {
+  const localeReactive = reactive({
+    locale: undefined
+  })
+  watchEffect(() => {
+    localeReactive.locale = localeRef.value
+  })
+  provide('i18n', localeReactive)
 }
