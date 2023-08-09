@@ -4,12 +4,12 @@ NConfigProvider, NGlobalStyle, GlobalTheme, darkTheme, GlobalThemeOverrides, NBu
 NCard, NTimePicker, NLayout, zhCN,enUS} from 'naive-ui'
 import {useAppStore} from "~/stores/store";
 import { storeToRefs } from 'pinia'
+import { provide } from 'vue'
 
 const store = useAppStore()
 const {changeDarkTheme, theme, localRef } = storeToRefs(store)
 
-
-
+provide('message', 'hello from a provider!')
 </script>
 
 <template>

@@ -6,14 +6,11 @@ import { enUS, esAR, zhCN,
 
 export const useAppStore = defineStore('global',() => {
   // ref()s become state properties
-  const theme = ref(null)
+  const theme = ref(darkTheme)
   let themeNameRef = ref(null)
   const localNameRef = ref('en-US')
 
   // computed()s become getters
-  const localRef = computed(() => {
-    return localNameRef.value === 'es-AR' ? esAR : enUS
-  })
   const isDark = computed(() => {
     return !!theme.value
   })
@@ -31,11 +28,10 @@ export const useAppStore = defineStore('global',() => {
       theme.value = darkTheme
     }
   }
-  function changeLanguage(){
-    if(localNameRef.value === 'en-US'){
-      localNameRef.value = 'es-AR'
-    }
+  function changeLanguage(language){
+    if(language === 'en-US') localNameRef.value = 'es-AR'
+    if(language === 'es-AR') localNameRef.value = 'en-US'
   }
 
-  return { localRef, localNameRef, changeDarkTheme, theme, isDark }
+  return { localNameRef, changeDarkTheme, theme, isDark, changeLanguage }
 })
