@@ -3,7 +3,6 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import {onMounted, ref, computed, watch} from "vue";
 import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, SphereGeometry, MeshBasicMaterial } from 'three';
 import {useWindowSize} from "@vueuse/core";
-import {useTweakPane} from "~/composables/useTweakpane";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 
 let renderer : WebGLRenderer;
@@ -59,16 +58,6 @@ gltfLoader.load(url, (gltf) => {
 
 })
 
-const { pane, fpsGraph } = useTweakPane()
-
-const loop = () => {
-  fpsGraph.begin()
-  renderer.render(scene, camera)
-  controls.update()
-  fpsGraph.end()
-
-  requestAnimationFrame(loop)
-}
 
 
 onMounted(()=>{
