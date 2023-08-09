@@ -11,7 +11,8 @@ import {useOrderStore} from "~/stores/storeOrder";
 import {useAppStore} from "@/stores/store"
 import {useRoute} from "#app/composables/router";
 import { storeToRefs } from 'pinia'
-import { locales } from '@/helpers/locales'
+import { orderFormLocales as locales } from '~/constants/locales/orderFormLocales'
+import { translate } from '~/composables/usei18n'
 
 definePageMeta({
   name:"order",
@@ -19,17 +20,7 @@ definePageMeta({
 })
 
 const globalStore = useAppStore()
-const { localRef } = storeToRefs(globalStore)
-const i18n = function (data) {
-  return {
-    locale: localRef.value,
-    t (key) {
-      const locale = localRef.value.name
-      return data[locale][key]
-    }
-  }
-}
-const { t } = i18n(locales)
+const { t } = translate(locales)
 
 const route = useRoute()
 const orderStore = useOrderStore()
@@ -83,7 +74,7 @@ const costPerPiece = computed(()=>{
 
 <template>
   <div>
-    <h1 text-center>Create Order</h1>
+    <h1 text-center>{{ t('titleForm')}}</h1>
       <n-form
           ref="formRef"
           inline
@@ -134,7 +125,7 @@ const costPerPiece = computed(()=>{
           <n-space justify="center">
             <n-form-item>
               <n-button @click="handleValidateClick">
-                Next
+                {{ t('next')}}
               </n-button>
             </n-form-item>
           </n-space>

@@ -10,13 +10,18 @@ import { ref } from "vue";
 import {useOrderStore} from "~/stores/storeOrder";
 import { storeToRefs } from 'pinia'
 import {submitStole, submitOrder} from '@/firebase/order'
-
+import { translate } from "~/composables/usei18n";
+// This is how import export default with a custom name
+import  locales from "~/constants/locales/stoleForm";
+// also we can do this
+// import {default as locales} from "@/constants/locales/stoleForm"
 
 // Store stuff
 const store = useOrderStore()
 const { stoleForm } = storeToRefs(store)
 const { formValueOrder } = storeToRefs(store)
 const showModal = ref(false)
+const {t} = translate(locales)
 
 const formRef = ref<FormInst | null>(null) // form reference
 const message = useMessage()
@@ -54,7 +59,7 @@ function goBack(){
 
 <template>
   <div>
-    <h1 text-center>Create Stole</h1>
+    <h1 text-center>{{ t('formTitle')}}</h1>
     <div>
       <n-form
           ref="formRef"
@@ -67,11 +72,11 @@ function goBack(){
           style="justify-content: center; align-items: center; height: 100%"
       >
         <n-space vertical>
-          <n-form-item label="Stole Type" path="type">
+          <n-form-item :label="t('stoleType')" path="type">
             <n-select
                 v-model:value="stoleForm.type"
                 filterable
-                placeholder="Please select a Fabric Type for the Stole"
+                :placeholder="t('stoleTypePlaceholder')"
                 :options="stoleTypeOptions"
                 clearable
             />
