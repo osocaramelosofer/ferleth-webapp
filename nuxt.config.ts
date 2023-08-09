@@ -17,10 +17,10 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   //todo figure out why transitions show me a problem with the nodes?
-  // app: {
-  //   pageTransition: { name: 'page', mode: 'out-in' },
-  //   layoutTransition: { name: 'slide', mode: 'out-in' }
-  // },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+    layoutTransition: { name: 'slide', mode: 'out-in' }
+  },
   // routeRules: {
   //   // Admin dashboard renders only on client-side
   //   '/about/**': { ssr: false },
