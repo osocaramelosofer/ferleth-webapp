@@ -4,25 +4,18 @@ import {useAppStore} from '@/stores/store'
 import { storeToRefs } from 'pinia'
 const store = useAppStore()
 
-const { localRef, localNameRef } = storeToRefs(store)
+const { localNameRef } = storeToRefs(store)
 
 const localeLabelMap = {
   'es-AR': 'English',
-  'en-US': 'Spanish',
+  'en-US': 'Español',
 }
 
-function handleLocaleUpdate() {
-  if(localNameRef.value === 'es-AR'){
-    localNameRef.value = 'en-US'
-  }
-  else {
-    localNameRef.value = 'es-AR'
-  }
-}
+
 </script>
 
 <template>
-  <n-button @click="handleLocaleUpdate">
+  <n-button @click="store.changeLanguage(localNameRef)">
     {{ localeLabelMap[localNameRef]}}
   </n-button>
 </template>
