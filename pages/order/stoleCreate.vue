@@ -2,8 +2,6 @@
 import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace, NModal, NIcon,
   NTooltip } from 'naive-ui'
 import {InformationCircleSharp, HelpCircle} from '@vicons/ionicons5'
-
-//Local Imports
 import { stoleColorOptions, stoleTypeOptions } from "@/helpers/order/stole"
 import { stoleFormRules } from "~/helpers/order/orderFormRules"
 import { ref } from "vue";
@@ -15,6 +13,7 @@ import { translate } from "~/composables/usei18n";
 import  locales from "~/constants/locales/stoleForm";
 // also we can do this
 // import {default as locales} from "@/constants/locales/stoleForm"
+
 
 // Store stuff
 const store = useOrderStore()
@@ -145,6 +144,10 @@ function goBack(){
             />
           </n-form-item>
 
+<!-- Todo: create field to uplad stole photos here at stole form
+           integrate naive component upload from naive-ui
+           https://www.naiveui.com/en-US/light/components/upload
+-->
           <n-space justify="center">
             <n-form-item>
               <n-button @click="goBack" mr-1>
