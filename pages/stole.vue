@@ -3,7 +3,7 @@ import {onMounted, ref} from "vue";
 import {NForm,NCard,NFormItem,NInput, NSwitch} from "naive-ui"
 import html2canvas from "html2canvas";
 // import { getStorage, ref } from "firebase/storage";
-
+import { saveAsJpeg } from "save-html-as-image";
 // Get a reference to the storage service, which is used to create references in your storage bucket
 // const storage = getStorage();
 
@@ -76,15 +76,17 @@ async function saveAsImage() {
     // const content = this.$el;
     const content = document.querySelector('#content')
 
+
     const canvas = await html2canvas(content);
 
     // Convert canvas to image data URL
     const imageDataURL = canvas.toDataURL("image/png");
+    // const imageDataURL = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
 
     // Create a link and trigger a download
     const link = document.createElement("a");
     link.href = imageDataURL;
-    link.download = "your_image_name.png";
+    link.download = "stole.png";
     link.click();
   }catch (error) {
     console.error("Error saving image:", error);
@@ -96,6 +98,11 @@ async function saveImg(){
   html2canvas(document.querySelector('#content')).then( canvas =>{
     document.body.appendChild(canvas)
   })
+}
+function saveImage(){
+  const node = document.getElementById("imageToSave");
+  saveAsJpeg(node, { filename: "test", printDate: false });
+
 }
 </script>
 
@@ -132,7 +139,12 @@ async function saveImg(){
       <button @click="saveAsImage">Save</button>
     </n-form>
 
-    <div class="stole-container relative" id="content" ref="content">
+<!--    <div class="imageContainer" id="imageToSave">-->
+<!--      <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png"-->
+<!--           class="w-100 h-100  ImageToEdit">-->
+<!--    </div>-->
+    <button @click="saveImage()">Print </button>
+    <div class="stole-container relative" id="imageToSave" ref="content">
         <div class="stole absolute">
           <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                height="750" width="399"
@@ -214,4 +226,9 @@ async function saveImg(){
   width: 400px;
   height: 750px;
 }
+.custom-style {
+  right: 100px;
+  bottom: 13px;
+}
+
 </style>
