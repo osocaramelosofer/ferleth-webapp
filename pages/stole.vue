@@ -1,23 +1,24 @@
-<script setup >
-import {onMounted, ref} from "vue";
-import {NForm,NCard,NFormItem,NInput, NSwitch} from "naive-ui"
-import html2canvas from "html2canvas";
-// import { getStorage, ref } from "firebase/storage";
+<script setup lang="ts">
+import { ref } from "vue";
+import { NForm,NCard,NFormItem,NInput, NSwitch, NUpload, UploadFileInfo, NModal, NButton } from "naive-ui"
+import { saveAsJpeg } from "save-html-as-image";
 
+
+// import { getStorage, ref } from "firebase/storage";
 // Get a reference to the storage service, which is used to create references in your storage bucket
 // const storage = getStorage();
-
 // Create a storage reference from our storage service
 // const storageRef = ref(storage);
-
 // const imagesRef = ref(storage, 'stoles')
 // const myImageRef = ref(storage, 'stoles/IMG_20230311_154859_725.jpg')
-
 const baseURL = window.location.origin + "/assets/images"
 const x = 50
 const width = 200
 const y = 50
 const height = 100
+const imageUrl = ref(null)
+const showModalRef = ref(false)
+const previewImageUrlRef = ref('')
 
 const stoleColor = ref('blue')
 const trimColor = ref('red')
@@ -36,103 +37,102 @@ const verticalYear = computed(()=>{
   return yearSplitArray.reverse()
 })
 
-function downloadStole(){
-  // console.log("hola")
-  var canvas = document.getElementById("stole");
-  console.log(canvas)
-  var img    = canvas.toDataURL("image/png");
-  document.write('<img src="'+img+'"/>');
-}
-
-function download() {
-  var a = document.body.appendChild(
-      document.createElement("a")
-  );
-  a.download = "newfile.jpg";
-  a.href = "order:text/html," + document.getElementById("content").innerHTML;
-  a.click(); //Trigger a click on the element
-}
-
-const changeColor = () => {
-  // Aquí puedes implementar la lógica para cambiar el color del rectángulo
-
-  if(fillColor.value === 'blue'){
-    fillColor.value = 'red'
-    strokeColor.value = 'yellow'
-  }else {
-  fillColor.value = 'blue'
-    strokeColor.value = 'black'
-
-  }
-}
-
-// todo: add inputs to interact with the position and size of the letters and year
 // todo: check how can I preview the images uploaded
-// todo: donwload the image
 // todo: check the year input just acept numbers and set a limit of characters
 // todo: set a limit of character in letters input
-async function saveAsImage() {
-  try {
-    // const content = this.$el;
-    const content = document.querySelector('#content')
 
-    const canvas = await html2canvas(content);
+function saveImage(){
+  const node = document.getElementById("imageToSave");
+  saveAsJpeg(node, { filename: "test", printDate: false });
 
-    // Convert canvas to image data URL
-    const imageDataURL = canvas.toDataURL("image/png");
-
-    // Create a link and trigger a download
-    const link = document.createElement("a");
-    link.href = imageDataURL;
-    link.download = "your_image_name.png";
-    link.click();
-  }catch (error) {
-    console.error("Error saving image:", error);
+}
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  console.log("file =>", file)
+  if (file) {
+    // Crear una URL temporal para la imagen seleccionada
+    imageUrl.value = URL.createObjectURL(file);
+  } else {
+    imageUrl.value = null;
   }
 }
-async function saveImg(){
-  const x = document.querySelector('#content')
-  console.log(x)
-  html2canvas(document.querySelector('#content')).then( canvas =>{
-    document.body.appendChild(canvas)
-  })
+function handlePreview (file: UploadFileInfo) {
+  const { url } = file
+  previewImageUrlRef.value = url as string
+  showModalRef.value = true
 }
+
+const previewFileList = ref<UploadFileInfo[]>([
+  {
+    id: 'react',
+    name: '我是react.png',
+    status: 'finished',
+    url: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
+  },
+  {
+    id: 'vue',
+    name: '我是vue.png',
+    status: 'finished',
+    url: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
+  }
+])
 </script>
 
 <template>
   <div flex>
-    <n-form label-placement="left"
-            style="background: #cfcfcf; padding: 10px; border-radius: 10px; margin-left: 10px;"
-    >
-      <n-form-item label="Stole Color:">
-        <n-input v-model:value="stoleColor" round placeholder="Medium" />
-      </n-form-item>
+    <n-card embedded max-w-lg>
+      <n-form label-placement="left">
+        <n-form-item label="Stole Color:">
+          <n-input v-model:value="stoleColor" round placeholder="Medium" />
+        </n-form-item>
 
-      <n-form-item label="Trim Color:">
-        <n-input v-model:value="trimColor" round placeholder="Medium" />
-      </n-form-item>
+        <n-form-item label="Trim Color:">
+          <n-input v-model:value="trimColor" round placeholder="Medium" />
+        </n-form-item>
 
-      <n-form-item label="Stole Letters:">
-        <n-input v-model:value="letters" round placeholder="Medium" />
-      </n-form-item>
-      <n-form-item label="Letters Vertical">
-        <n-switch v-model:value="areLettersVertical"/>
-      </n-form-item>
+        <n-form-item label="Stole Letters:">
+          <n-input v-model:value="letters" round placeholder="Medium" />
+        </n-form-item>
+        <n-form-item label="Letters Vertical">
+          <n-switch v-model:value="areLettersVertical"/>
+        </n-form-item>
 
-      <n-form-item label="Stole Year:">
-        <n-input v-model:value="year" round placeholder="Medium" />
-      </n-form-item>
-      <n-form-item label="Year Vertical:">
-        <n-switch v-model:value="isYearVertical"/>
-      </n-form-item>
+        <n-form-item label="Stole Year:">
+          <n-input v-model:value="year" round placeholder="Medium" />
+        </n-form-item>
+        <n-form-item label="Year Vertical:">
+          <n-switch v-model:value="isYearVertical"/>
+        </n-form-item>
+        <div class="flex items-center">
+          <span>Logo 1#:  </span>
+            <input type="file" @change="handleImageUpload" accept="image/*" />
+            <div class="w-30 h-30">
+              <img v-if="imageUrl" :src="imageUrl" alt="Uploaded Image" class="w-full h-full object-cover" />
+            </div>
+        </div>
+
+<!--        <n-form-item label="upload photos">-->
+<!--          <n-upload-->
+<!--              :default-file-list="previewFileList"-->
+<!--              list-type="image-card"-->
+<!--              @preview="handlePreview"-->
+<!--              :max="2"-->
+<!--          />-->
+<!--        </n-form-item>-->
+<!--        <n-modal-->
+<!--            v-model:show="showModal"-->
+<!--            preset="card"-->
+<!--            style="width: 600px"-->
+<!--            title="A Cool Picture"-->
+<!--        >-->
+<!--          <img :src="previewImageUrl" style="width: 100%">-->
+<!--        </n-modal>-->
+        <n-button type="primary" ghost @click="saveImage">Save Image</n-button>
+      </n-form>
+    </n-card>
 
 
-<!--      <pre>{{verticalLetters}}</pre>-->
-<!--      <button @click="download">Cambiar color</button>-->
-      <button @click="saveAsImage">Save</button>
-    </n-form>
-
-    <div class="stole-container relative" id="content" ref="content">
+    <div class="stole-container relative" id="imageToSave" ref="content">
         <div class="stole absolute">
           <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                height="750" width="399"
@@ -170,7 +170,13 @@ async function saveImg(){
             >
               {{ year }}
             </text>
-            <image :href="baseURL + '/harvard-logo.png'" width="100" height="100" x="270" y="850"/>
+            <text fill="#ffffff" font-size="18" font-family="Verdana"
+                  x="270" y="850" v-if="!imageUrl"
+            >
+              <tspan x="310" dy="-60" transform="rotate(-90, 60, 750)">Add Image</tspan>
+            </text>
+<!--            <image :href="baseURL + '/harvard-logo.png'" width="100" height="100" x="270" y="850"/>-->
+            <image v-else :href="imageUrl" width="100" height="100" x="270" y="850"/>
             <image href="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png" width="100" height="100" x="75" y="850"/>
           </svg>
         </div>
@@ -203,7 +209,6 @@ async function saveImg(){
               5142 l-6 5143 -26 129 c-27 140 -26 190 7 244 29 48 9 39 -48 -22z"/>
             </g>
           </svg>
-
         </div>
       </div>
   </div>
@@ -214,4 +219,9 @@ async function saveImg(){
   width: 400px;
   height: 750px;
 }
+.custom-style {
+  right: 100px;
+  bottom: 13px;
+}
+
 </style>

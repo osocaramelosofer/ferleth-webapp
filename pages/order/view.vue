@@ -9,10 +9,10 @@ import {db} from "~/firebase"
 import {Order} from "~/types/Order"
 import convertToDate from "@/helpers/convertToDate"
 import {CurrencyField} from "#components"
-const querySnapshot = await getDocs(collection(db, "orders"));
 
 const x = resolveComponent('currencyField')
 let ordersList:Order[] = []
+const querySnapshot = await getDocs(collection(db, "orders"));
 querySnapshot.forEach((doc) => {
   const orderData:Order = doc.data() as Order;
   orderData.timestampCreation = convertToDate(orderData.timestampCreation as number)
