@@ -1,15 +1,14 @@
-<script setup >
+<script setup lang="ts">
 import { ref } from "vue";
-import { NForm,NCard,NFormItem,NInput, NSwitch } from "naive-ui"
-// import { getStorage, ref } from "firebase/storage";
+import { NForm,NCard,NFormItem,NInput, NSwitch, NUpload, UploadFileInfo, NModal, NButton } from "naive-ui"
 import { saveAsJpeg } from "save-html-as-image";
+
+
+// import { getStorage, ref } from "firebase/storage";
 // Get a reference to the storage service, which is used to create references in your storage bucket
 // const storage = getStorage();
-
-
 // Create a storage reference from our storage service
 // const storageRef = ref(storage);
-
 // const imagesRef = ref(storage, 'stoles')
 // const myImageRef = ref(storage, 'stoles/IMG_20230311_154859_725.jpg')
 const baseURL = window.location.origin + "/assets/images"
@@ -18,6 +17,8 @@ const width = 200
 const y = 50
 const height = 100
 const imageUrl = ref(null)
+const showModalRef = ref(false)
+const previewImageUrlRef = ref('')
 
 const stoleColor = ref('blue')
 const trimColor = ref('red')
@@ -35,9 +36,6 @@ const verticalYear = computed(()=>{
   const yearSplitArray = year.value.split('')
   return yearSplitArray.reverse()
 })
-
-
-
 
 // todo: check how can I preview the images uploaded
 // todo: check the year input just acept numbers and set a limit of characters
@@ -58,40 +56,80 @@ function handleImageUpload(event) {
     imageUrl.value = null;
   }
 }
+function handlePreview (file: UploadFileInfo) {
+  const { url } = file
+  previewImageUrlRef.value = url as string
+  showModalRef.value = true
+}
+
+const previewFileList = ref<UploadFileInfo[]>([
+  {
+    id: 'react',
+    name: '我是react.png',
+    status: 'finished',
+    url: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
+  },
+  {
+    id: 'vue',
+    name: '我是vue.png',
+    status: 'finished',
+    url: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
+  }
+])
 </script>
 
 <template>
   <div flex>
-    <n-form label-placement="left"
-            style="background: #cfcfcf; padding: 10px; border-radius: 10px; margin-left: 10px;"
-    >
-      <n-form-item label="Stole Color:">
-        <n-input v-model:value="stoleColor" round placeholder="Medium" />
-      </n-form-item>
+    <n-card embedded max-w-lg>
+      <n-form label-placement="left">
+        <n-form-item label="Stole Color:">
+          <n-input v-model:value="stoleColor" round placeholder="Medium" />
+        </n-form-item>
 
-      <n-form-item label="Trim Color:">
-        <n-input v-model:value="trimColor" round placeholder="Medium" />
-      </n-form-item>
+        <n-form-item label="Trim Color:">
+          <n-input v-model:value="trimColor" round placeholder="Medium" />
+        </n-form-item>
 
-      <n-form-item label="Stole Letters:">
-        <n-input v-model:value="letters" round placeholder="Medium" />
-      </n-form-item>
-      <n-form-item label="Letters Vertical">
-        <n-switch v-model:value="areLettersVertical"/>
-      </n-form-item>
+        <n-form-item label="Stole Letters:">
+          <n-input v-model:value="letters" round placeholder="Medium" />
+        </n-form-item>
+        <n-form-item label="Letters Vertical">
+          <n-switch v-model:value="areLettersVertical"/>
+        </n-form-item>
 
-      <n-form-item label="Stole Year:">
-        <n-input v-model:value="year" round placeholder="Medium" />
-      </n-form-item>
-      <n-form-item label="Year Vertical:">
-        <n-switch v-model:value="isYearVertical"/>
-      </n-form-item>
+        <n-form-item label="Stole Year:">
+          <n-input v-model:value="year" round placeholder="Medium" />
+        </n-form-item>
+        <n-form-item label="Year Vertical:">
+          <n-switch v-model:value="isYearVertical"/>
+        </n-form-item>
+        <div class="flex items-center">
+          <span>Logo 1#:  </span>
+            <input type="file" @change="handleImageUpload" accept="image/*" />
+            <div class="w-30 h-30">
+              <img v-if="imageUrl" :src="imageUrl" alt="Uploaded Image" class="w-full h-full object-cover" />
+            </div>
+        </div>
 
-      <input type="file" @change="handleImageUpload" accept="image/*" />
-      <img v-if="imageUrl" :src="imageUrl" alt="Uploaded Image" />
-
-      <button @click="saveImage">Save</button>
-    </n-form>
+<!--        <n-form-item label="upload photos">-->
+<!--          <n-upload-->
+<!--              :default-file-list="previewFileList"-->
+<!--              list-type="image-card"-->
+<!--              @preview="handlePreview"-->
+<!--              :max="2"-->
+<!--          />-->
+<!--        </n-form-item>-->
+<!--        <n-modal-->
+<!--            v-model:show="showModal"-->
+<!--            preset="card"-->
+<!--            style="width: 600px"-->
+<!--            title="A Cool Picture"-->
+<!--        >-->
+<!--          <img :src="previewImageUrl" style="width: 100%">-->
+<!--        </n-modal>-->
+        <n-button type="primary" ghost @click="saveImage">Save Image</n-button>
+      </n-form>
+    </n-card>
 
 
     <div class="stole-container relative" id="imageToSave" ref="content">
@@ -132,8 +170,13 @@ function handleImageUpload(event) {
             >
               {{ year }}
             </text>
+            <text fill="#ffffff" font-size="18" font-family="Verdana"
+                  x="270" y="850" v-if="!imageUrl"
+            >
+              <tspan x="310" dy="-60" transform="rotate(-90, 60, 750)">Add Image</tspan>
+            </text>
 <!--            <image :href="baseURL + '/harvard-logo.png'" width="100" height="100" x="270" y="850"/>-->
-            <image :href="imageUrl" width="100" height="100" x="270" y="850"/>
+            <image v-else :href="imageUrl" width="100" height="100" x="270" y="850"/>
             <image href="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png" width="100" height="100" x="75" y="850"/>
           </svg>
         </div>
