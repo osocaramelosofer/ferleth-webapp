@@ -1,23 +1,23 @@
 <script setup >
-import {onMounted, ref} from "vue";
-import {NForm,NCard,NFormItem,NInput, NSwitch} from "naive-ui"
-import html2canvas from "html2canvas";
+import { ref } from "vue";
+import { NForm,NCard,NFormItem,NInput, NSwitch } from "naive-ui"
 // import { getStorage, ref } from "firebase/storage";
 import { saveAsJpeg } from "save-html-as-image";
 // Get a reference to the storage service, which is used to create references in your storage bucket
 // const storage = getStorage();
+
 
 // Create a storage reference from our storage service
 // const storageRef = ref(storage);
 
 // const imagesRef = ref(storage, 'stoles')
 // const myImageRef = ref(storage, 'stoles/IMG_20230311_154859_725.jpg')
-
 const baseURL = window.location.origin + "/assets/images"
 const x = 50
 const width = 200
 const y = 50
 const height = 100
+const imageUrl = ref(null)
 
 const stoleColor = ref('blue')
 const trimColor = ref('red')
@@ -36,73 +36,27 @@ const verticalYear = computed(()=>{
   return yearSplitArray.reverse()
 })
 
-function downloadStole(){
-  // console.log("hola")
-  var canvas = document.getElementById("stole");
-  console.log(canvas)
-  var img    = canvas.toDataURL("image/png");
-  document.write('<img src="'+img+'"/>');
-}
 
-function download() {
-  var a = document.body.appendChild(
-      document.createElement("a")
-  );
-  a.download = "newfile.jpg";
-  a.href = "order:text/html," + document.getElementById("content").innerHTML;
-  a.click(); //Trigger a click on the element
-}
 
-const changeColor = () => {
-  // Aquí puedes implementar la lógica para cambiar el color del rectángulo
 
-  if(fillColor.value === 'blue'){
-    fillColor.value = 'red'
-    strokeColor.value = 'yellow'
-  }else {
-  fillColor.value = 'blue'
-    strokeColor.value = 'black'
-
-  }
-}
-
-// todo: add inputs to interact with the position and size of the letters and year
 // todo: check how can I preview the images uploaded
-// todo: donwload the image
 // todo: check the year input just acept numbers and set a limit of characters
 // todo: set a limit of character in letters input
-async function saveAsImage() {
-  try {
-    // const content = this.$el;
-    const content = document.querySelector('#content')
 
-
-    const canvas = await html2canvas(content);
-
-    // Convert canvas to image data URL
-    const imageDataURL = canvas.toDataURL("image/png");
-    // const imageDataURL = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-
-    // Create a link and trigger a download
-    const link = document.createElement("a");
-    link.href = imageDataURL;
-    link.download = "stole.png";
-    link.click();
-  }catch (error) {
-    console.error("Error saving image:", error);
-  }
-}
-async function saveImg(){
-  const x = document.querySelector('#content')
-  console.log(x)
-  html2canvas(document.querySelector('#content')).then( canvas =>{
-    document.body.appendChild(canvas)
-  })
-}
 function saveImage(){
   const node = document.getElementById("imageToSave");
   saveAsJpeg(node, { filename: "test", printDate: false });
 
+}
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  console.log("file =>", file)
+  if (file) {
+    // Crear una URL temporal para la imagen seleccionada
+    imageUrl.value = URL.createObjectURL(file);
+  } else {
+    imageUrl.value = null;
+  }
 }
 </script>
 
@@ -133,17 +87,13 @@ function saveImage(){
         <n-switch v-model:value="isYearVertical"/>
       </n-form-item>
 
+      <input type="file" @change="handleImageUpload" accept="image/*" />
+      <img v-if="imageUrl" :src="imageUrl" alt="Uploaded Image" />
 
-<!--      <pre>{{verticalLetters}}</pre>-->
-<!--      <button @click="download">Cambiar color</button>-->
-      <button @click="saveAsImage">Save</button>
+      <button @click="saveImage">Save</button>
     </n-form>
 
-<!--    <div class="imageContainer" id="imageToSave">-->
-<!--      <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png"-->
-<!--           class="w-100 h-100  ImageToEdit">-->
-<!--    </div>-->
-    <button @click="saveImage()">Print </button>
+
     <div class="stole-container relative" id="imageToSave" ref="content">
         <div class="stole absolute">
           <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +132,8 @@ function saveImage(){
             >
               {{ year }}
             </text>
-            <image :href="baseURL + '/harvard-logo.png'" width="100" height="100" x="270" y="850"/>
+<!--            <image :href="baseURL + '/harvard-logo.png'" width="100" height="100" x="270" y="850"/>-->
+            <image :href="imageUrl" width="100" height="100" x="270" y="850"/>
             <image href="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png" width="100" height="100" x="75" y="850"/>
           </svg>
         </div>
@@ -215,7 +166,6 @@ function saveImage(){
               5142 l-6 5143 -26 129 c-27 140 -26 190 7 244 29 48 9 39 -48 -22z"/>
             </g>
           </svg>
-
         </div>
       </div>
   </div>
