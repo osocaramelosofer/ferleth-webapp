@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace, NModal, NIcon,
-  NTooltip } from 'naive-ui'
+  NTooltip, NCard } from 'naive-ui'
 import {InformationCircleSharp, HelpCircle} from '@vicons/ionicons5'
 import { stoleColorOptions, stoleTypeOptions } from "@/helpers/order/stole"
 import { stoleFormRules } from "~/helpers/order/orderFormRules"
@@ -21,6 +21,7 @@ const { stoleForm } = storeToRefs(store)
 const { formValueOrder } = storeToRefs(store)
 const showModal = ref(false)
 const {t} = translate(locales)
+
 
 const formRef = ref<FormInst | null>(null) // form reference
 const message = useMessage()
@@ -57,9 +58,9 @@ function goBack(){
 </script>
 
 <template>
-  <div>
-    <h1 text-center>{{ t('formTitle')}}</h1>
-    <div>
+  <div class="lg:flex">
+    <n-card embedded max-w-lg>
+      <h1 text-center>{{ t('formTitle')}}</h1>
       <n-form
           ref="formRef"
           inline
@@ -144,10 +145,6 @@ function goBack(){
             />
           </n-form-item>
 
-<!-- Todo: create field to uplad stole photos here at stole form
-           integrate naive component upload from naive-ui
-           https://www.naiveui.com/en-US/light/components/upload
--->
           <n-space justify="center">
             <n-form-item>
               <n-button @click="goBack" mr-1>
@@ -161,8 +158,15 @@ function goBack(){
 
         </n-space>
       </n-form>
+    </n-card>
 
-    </div>
+    <StoleComponent
+        :stole-color="stoleForm.color" :letras="stoleForm.lettering"
+        :trim-color="stoleForm.borderColor"
+        :letters-color="stoleForm.letteringAndNumberColors"
+        :year-color="stoleForm.letteringAndNumberColors"
+    />
+
     <n-modal
         v-model:show="showModal"
         :mask-closable="false"

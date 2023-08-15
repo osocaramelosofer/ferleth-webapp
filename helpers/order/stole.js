@@ -29,24 +29,24 @@ export const stoleTypeOptions = [
 ]
 export const stoleColorOptions = [
   {
-    label: 'Azul Marino',
-    value: 'azul_marino'
+    label: 'Blue',
+    value: 'blue'
   },
   {
-    label: 'Rojo',
-    value: 'rojo'
+    label: 'Red',
+    value: 'red'
   },
   {
-    label: "Dorado",
-    value: 'dorado'
+    label: "Orange",
+    value: 'orange'
   },
   {
     label: 'Verde',
     value: 'green'
   },
   {
-    label: 'Oxford',
-    value: 'oxford'
+    label: 'Black',
+    value: 'black'
   },
   {
     label: 'Pink',
