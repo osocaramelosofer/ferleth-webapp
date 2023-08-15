@@ -111,22 +111,22 @@ const previewFileList = ref<UploadFileInfo[]>([
             </div>
         </div>
 
-<!--        <n-form-item label="upload photos">-->
-<!--          <n-upload-->
-<!--              :default-file-list="previewFileList"-->
-<!--              list-type="image-card"-->
-<!--              @preview="handlePreview"-->
-<!--              :max="2"-->
-<!--          />-->
-<!--        </n-form-item>-->
-<!--        <n-modal-->
-<!--            v-model:show="showModal"-->
-<!--            preset="card"-->
-<!--            style="width: 600px"-->
-<!--            title="A Cool Picture"-->
-<!--        >-->
-<!--          <img :src="previewImageUrl" style="width: 100%">-->
-<!--        </n-modal>-->
+        <n-form-item label="upload photos">
+          <n-upload
+              :default-file-list="previewFileList"
+              list-type="image-card"
+              @preview="handlePreview"
+              :max="2"
+          />
+        </n-form-item>
+        <n-modal
+            v-model:show="showModal"
+            preset="card"
+            style="width: 600px"
+            title="A Cool Picture"
+        >
+          <img :src="previewImageUrl" style="width: 100%">
+        </n-modal>
         <n-button type="primary" ghost @click="saveImage">Save Image</n-button>
       </n-form>
     </n-card>

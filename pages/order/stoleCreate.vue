@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { NForm, NFormItem, NInput, NButton, NSelect,FormInst, useMessage, NSpace, NModal, NIcon,
-  NTooltip, NCard } from 'naive-ui'
+  NTooltip, NCard, NUpload, UploadFileInfo, UploadInst   } from 'naive-ui'
 import {InformationCircleSharp, HelpCircle} from '@vicons/ionicons5'
 import { stoleColorOptions, stoleTypeOptions } from "@/helpers/order/stole"
 import { stoleFormRules } from "~/helpers/order/orderFormRules"
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import {useOrderStore} from "~/stores/storeOrder";
 import { storeToRefs } from 'pinia'
 import {submitStole, submitOrder} from '@/firebase/order'
 import { translate } from "~/composables/usei18n";
+import { saveAsJpeg } from "save-html-as-image";
 // This is how import export default with a custom name
 import  locales from "~/constants/locales/stoleForm";
 // also we can do this
@@ -25,9 +26,34 @@ const {t} = translate(locales)
 
 const formRef = ref<FormInst | null>(null) // form reference
 const message = useMessage()
+const fileListRef = ref<UploadFileInfo[]>()
+const previewImageUrlRef = ref('')
+const previewImageUrlRef2 = ref('')
+const showModalPreviewImage = ref(false)
+
+function saveImage(){
+  const node = document.getElementById("imageToSave2");
+  saveAsJpeg(node, { filename: "test", printDate: false });
+}
+
+watchEffect(()=> {
+  console.log("watching")
+  if (fileListRef.value) {
+    console.log(fileListRef.value)
+    previewImageUrlRef.value = URL.createObjectURL(fileListRef.value[0].file);
+    if(fileListRef.value[1]){
+      previewImageUrlRef2.value = URL.createObjectURL(fileListRef.value[1].file);
+    }
+  }
+})
+
+/// thi is the good one ===============================
+function handleChange (options: { file: UploadFileInfo, fileList: Array<UploadFileInfo>, event?: Event }) {
+  previewImageUrlRef.value = URL.createObjectURL(options.file.file as any);
+}
 
 // submit form
-const handleValidateClick =() => {
+const handleValidateClick = () => {
   formRef.value?.validate((errors)=>{
     if(!errors){
       showModal.value = true
@@ -102,7 +128,9 @@ function goBack(){
 
           <n-form-item label="Stole Lettering" path="lettering">
             <n-input v-model:value="stoleForm.lettering" clearable
-                     placeholder="Write the stole's letters Ex. ECHS"/>
+                     placeholder="Write the stole's letters Ex. ECHS"
+                     :maxlength="5"
+            />
           </n-form-item>
 
           <n-form-item label="Border Color / Clipping / Border" path="borderColor">
@@ -125,25 +153,49 @@ function goBack(){
             />
           </n-form-item>
 
-          <n-form-item label="Stole Logo Color 1#" path="logoColor1">
-            <n-select
-                v-model:value="stoleForm.logoColor1"
-                filterable
-                placeholder="Choose the Color of Logo 1#"
-                :options="stoleColorOptions"
-                clearable
-            />
-          </n-form-item>
+<!--          <n-form-item label="Stole Logo Color 1#" path="logoColor1">-->
+<!--            <n-select-->
+<!--                v-model:value="stoleForm.logoColor1"-->
+<!--                filterable-->
+<!--                placeholder="Choose the Color of Logo 1#"-->
+<!--                :options="stoleColorOptions"-->
+<!--                clearable-->
+<!--            />-->
+<!--          </n-form-item>-->
 
-          <n-form-item label="Stole Logo Color 2#" path="logoColor2">
-            <n-select
-                v-model:value="stoleForm.logoColor2"
-                filterable
-                placeholder="Choose the Color of Logo 2#"
-                :options="stoleColorOptions"
-                clearable
-            />
+<!--          <n-form-item label="Stole Logo Color 2#" path="logoColor2">-->
+<!--            <n-select-->
+<!--                v-model:value="stoleForm.logoColor2"-->
+<!--                filterable-->
+<!--                placeholder="Choose the Color of Logo 2#"-->
+<!--                :options="stoleColorOptions"-->
+<!--                clearable-->
+<!--            />-->
+<!--          </n-form-item>-->
+
+          <n-form-item label="upload photos">
+            <n-upload
+                action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
+                :default-upload="false"
+                @change="handleChange"
+                :default-file-list="previewFileList"
+                list-type="image-card"
+                :max="2"
+                v-model:file-list="fileListRef"
+            >
+            </n-upload>
+
+
           </n-form-item>
+          <n-modal
+              v-model:show="showModalPreviewImage"
+              preset="card"
+              style="width: 600px"
+              title="A Cool Picture"
+          >
+            <img :src="previewImageUrl" style="width: 100%" alt="uploaded image">
+          </n-modal>
+
 
           <n-space justify="center">
             <n-form-item>
@@ -153,18 +205,26 @@ function goBack(){
               <n-button @click="handleValidateClick">
                 Submit
               </n-button>
+              <n-button @click="saveImage">
+                Save image
+              </n-button>
             </n-form-item>
           </n-space>
+
 
         </n-space>
       </n-form>
     </n-card>
 
     <StoleComponent
-        :stole-color="stoleForm.color" :letras="stoleForm.lettering"
+        id="imageToSave2"
+        :stole-color="stoleForm.color"
+        :lettering="stoleForm.lettering"
         :trim-color="stoleForm.borderColor"
         :letters-color="stoleForm.letteringAndNumberColors"
         :year-color="stoleForm.letteringAndNumberColors"
+        :url-logo-one="previewImageUrlRef"
+        :url-logo-two="previewImageUrlRef2"
     />
 
     <n-modal

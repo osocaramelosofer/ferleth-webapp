@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { ref, toRef, toRefs, defineProps, computed } from "vue";
+import {ref, toRef, toRefs, defineProps, computed, watch, reactive, withDefaults} from "vue";
 import { NForm,NCard,NFormItem,NInput, NSwitch, NUpload, UploadFileInfo, NModal, NButton } from "naive-ui"
 import { saveAsJpeg } from "save-html-as-image";
 
 
-const {stoleColor, letras} = defineProps({
+
+const props = defineProps({
   stoleColor: String,
-  letras: String,
+  lettering: String,
   trimColor: String,
   yearColor: String,
   lettersColor: String,
+  urlLogoOne: String,
+  urlLogoTwo: String,
 })
-
 
 const x = 50
 const width = 200
@@ -20,40 +22,22 @@ const height = 100
 const imageUrl = ref(null)
 const showModalRef = ref(false)
 const previewImageUrlRef = ref('')
+const letters = ref(props.lettering)
 
-
-// const trimColor = ref('red')
-const letters = ref('ECHS')
 const areLettersVertical = ref(true)
 const year = ref('2024')
 const isYearVertical = ref(true)
 
-const verticalLetters = computed(()=>{
-  const array = letters.value.split(''); // Convierte la cadena en un array de caracteres
-  return array.reverse()
-})
-// const l = "fer"
-// const letrasCompued = computed(() => {
-//   return letras.split('')
-// })
-onMounted(()=>{
-  console.log("letras", letras)
 
-})
 const verticalYear = computed(()=>{
   const yearSplitArray = year.value.split('')
   return yearSplitArray.reverse()
 })
-
-// todo: check how can I preview the images uploaded
-// todo: check the year input just acept numbers and set a limit of characters
-// todo: set a limit of character in letters input
-
 function saveImage(){
   const node = document.getElementById("imageToSave");
   saveAsJpeg(node, { filename: "test", printDate: false });
-
 }
+
 function handleImageUpload(event) {
   const file = event.target.files[0];
   console.log("file =>", file)
@@ -64,82 +48,15 @@ function handleImageUpload(event) {
     imageUrl.value = null;
   }
 }
-function handlePreview (file: UploadFileInfo) {
-  const { url } = file
-  previewImageUrlRef.value = url as string
-  showModalRef.value = true
-}
 
-const previewFileList = ref<UploadFileInfo[]>([
-  {
-    id: 'react',
-    name: '我是react.png',
-    status: 'finished',
-    url: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
-  },
-  {
-    id: 'vue',
-    name: '我是vue.png',
-    status: 'finished',
-    url: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
-  }
-])
-
+// todo: check how can I preview the images uploaded, =? maybe not
+// todo: check the year input just acept numbers and set a limit of characters
+// todo: set a limit of character in letters input
+// todo: check the vertical letters logic
 </script>
 
 <template>
-  <div flex>
-<!--    <pre>==={{letrasCompued}}</pre>-->
-<!--    <n-card embedded max-w-lg>-->
-<!--      <n-form label-placement="left">-->
-<!--        <n-form-item label="Stole Color:">-->
-<!--          <n-input v-model:value="stoleColor" round placeholder="Medium" />-->
-<!--        </n-form-item>-->
 
-<!--        <n-form-item label="Trim Color:">-->
-<!--          <n-input v-model:value="trimColor" round placeholder="Medium" />-->
-<!--        </n-form-item>-->
-
-<!--        <n-form-item label="Stole Letters:">-->
-<!--          <n-input v-model:value="letters" round placeholder="Medium" />-->
-<!--        </n-form-item>-->
-<!--        <n-form-item label="Letters Vertical">-->
-<!--          <n-switch v-model:value="areLettersVertical"/>-->
-<!--        </n-form-item>-->
-
-<!--        <n-form-item label="Stole Year:">-->
-<!--          <n-input v-model:value="year" round placeholder="Medium" />-->
-<!--        </n-form-item>-->
-<!--        <n-form-item label="Year Vertical:">-->
-<!--          <n-switch v-model:value="isYearVertical"/>-->
-<!--        </n-form-item>-->
-<!--        <div class="flex items-center">-->
-<!--          <span>Logo 1#:  </span>-->
-<!--          <input type="file" @change="handleImageUpload" accept="image/*" />-->
-<!--          <div class="w-30 h-30">-->
-<!--            <img v-if="imageUrl" :src="imageUrl" alt="Uploaded Image" class="w-full h-full object-cover" />-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash;        <n-form-item label="upload photos">&ndash;&gt;-->
-<!--        &lt;!&ndash;          <n-upload&ndash;&gt;-->
-<!--        &lt;!&ndash;              :default-file-list="previewFileList"&ndash;&gt;-->
-<!--        &lt;!&ndash;              list-type="image-card"&ndash;&gt;-->
-<!--        &lt;!&ndash;              @preview="handlePreview"&ndash;&gt;-->
-<!--        &lt;!&ndash;              :max="2"&ndash;&gt;-->
-<!--        &lt;!&ndash;          />&ndash;&gt;-->
-<!--        &lt;!&ndash;        </n-form-item>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <n-modal&ndash;&gt;-->
-<!--        &lt;!&ndash;            v-model:show="showModal"&ndash;&gt;-->
-<!--        &lt;!&ndash;            preset="card"&ndash;&gt;-->
-<!--        &lt;!&ndash;            style="width: 600px"&ndash;&gt;-->
-<!--        &lt;!&ndash;            title="A Cool Picture"&ndash;&gt;-->
-<!--        &lt;!&ndash;        >&ndash;&gt;-->
-<!--        &lt;!&ndash;          <img :src="previewImageUrl" style="width: 100%">&ndash;&gt;-->
-<!--        &lt;!&ndash;        </n-modal>&ndash;&gt;-->
-<!--        <n-button type="primary" ghost @click="saveImage">Save Image</n-button>-->
-<!--      </n-form>-->
-<!--    </n-card>-->
     <div class="stole-container relative" id="imageToSave" ref="content">
       <div class="stole absolute">
         <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
@@ -159,13 +76,14 @@ const previewFileList = ref<UploadFileInfo[]>([
                 143 15 193 -13 46 -22 57 -315 385 -133 148 -389 438 -571 644 -182 206 -354
                 396 -381 422 -62 57 -151 103 -251 129 -90 23 -283 25 -377 4z"/>
           </g>
-          <text :fill="lettersColor" font-size="45" font-family="Verdana" x="60" y="750" v-if="areLettersVertical">
-            <tspan x="100" dy="-60" transform="rotate(-90, 60, 750)" v-for="x in verticalLetters">{{x}}</tspan>
-          </text>
+<!--          this is for vertical letters -->
+<!--          <text :fill="lettersColor" font-size="45" font-family="Verdana" x="60" y="750" v-if="areLettersVertical">-->
+<!--            <tspan x="100" dy="-60" transform="rotate(-90, 60, 750)" v-for="x in verticalLetters">{{x}}</tspan>-->
+<!--          </text>-->
           <text fill="#ffffff" font-size="45" font-family="Verdana"
-                x="60" y="750" v-else
+                x="60" y="750"
           >
-            {{ letters }}
+            {{ lettering }}
           </text>
 
           <text :fill="yearColor" font-size="45" font-family="Verdana"
@@ -178,14 +96,15 @@ const previewFileList = ref<UploadFileInfo[]>([
           >
             {{ year }}
           </text>
-          <text fill="#ffffff" font-size="18" font-family="Verdana"
-                x="270" y="850" v-if="!imageUrl"
-          >
-            <tspan x="310" dy="-60" transform="rotate(-90, 60, 750)">Add Image</tspan>
-          </text>
+<!--          this is a conditional to show "add image" when we dont have a image yet -->
+<!--          <text fill="#ffffff" font-size="18" font-family="Verdana"-->
+<!--                x="270" y="850" v-if="!imageUrl"-->
+<!--          >-->
+<!--            <tspan x="310" dy="-60" transform="rotate(-90, 60, 750)">Add Image</tspan>-->
+<!--          </text>-->
           <!--            <image :href="baseURL + '/harvard-logo.png'" width="100" height="100" x="270" y="850"/>-->
-          <image v-else :href="imageUrl" width="100" height="100" x="270" y="850"/>
-          <image href="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png" width="100" height="100" x="75" y="850"/>
+          <image :href="urlLogoTwo" width="100" height="100" x="270" y="850"/>
+          <image :href="urlLogoOne" width="100" height="100" x="75" y="850"/>
         </svg>
       </div>
 
@@ -219,7 +138,7 @@ const previewFileList = ref<UploadFileInfo[]>([
         </svg>
       </div>
     </div>
-  </div>
+
 </template>
 
 <style scoped>
@@ -231,13 +150,17 @@ const previewFileList = ref<UploadFileInfo[]>([
   right: 100px;
   bottom: 13px;
 }
-/* ----------------------------------------------
-  Generated by AnimatiSS
-  Licensed under FreeBSD License
-  URL: https://xsgames.co/animatiss
-  Twitter: @xsgames_
----------------------------------------------- */
 
-.slide-left{animation:slide-left 0.5s linear both}@keyframes slide-left{0%{transform:translateX(0)}100%{transform:translateX(-100px)}}
+.slide-left{
+  animation:slide-left 0.5s linear both
+}
+@keyframes slide-left{
+  0%{
+    transform:translateX(0)
+  }
+  100%{
+    transform:translateX(-100px)
+  }
+}
 
 </style>
