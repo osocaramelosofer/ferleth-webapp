@@ -2,9 +2,15 @@
 import { ref } from "vue";
 import { NForm,NCard,NFormItem,NInput, NSwitch, NUpload, UploadFileInfo, NModal, NButton } from "naive-ui"
 import { saveAsJpeg } from "save-html-as-image";
+import { toJpeg, toBlob } from 'html-to-image';
+
+import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
+
+// const storage = getStorage()
+// const testImageRef = storageRef(storage, 'test')
+// uploadBytes(testImageRef, )
 
 
-// import { getStorage, ref } from "firebase/storage";
 // Get a reference to the storage service, which is used to create references in your storage bucket
 // const storage = getStorage();
 // Create a storage reference from our storage service
@@ -41,10 +47,28 @@ const verticalYear = computed(()=>{
 // todo: check the year input just acept numbers and set a limit of characters
 // todo: set a limit of character in letters input
 
+async function createAndUploadImage() {
+  // const element = document.createElement("div");
+  // element.innerHTML = "<p>Hello, world!</p>";
+  const element = document.getElementById("imageToSave");
+  if(!element) return
+  try {
+    const blob = await toBlob(element);
+
+    // const storageRef = ref(storage, "images/generated-image.png");
+    const storage = getStorage()
+    const testImageRef = storageRef(storage, 'test')
+
+    // Sube el archivo Blob a Firebase Storage
+    const snapshot = await uploadBytes(testImageRef, blob);
+    console.log("Imagen subida:", snapshot);
+  } catch (error) {
+    console.error("Error al crear o subir la imagen:", error);
+  }
+}
 function saveImage(){
   const node = document.getElementById("imageToSave");
   saveAsJpeg(node, { filename: "test", printDate: false });
-
 }
 function handleImageUpload(event) {
   const file = event.target.files[0];
@@ -128,6 +152,7 @@ const previewFileList = ref<UploadFileInfo[]>([
           <img :src="previewImageUrl" style="width: 100%">
         </n-modal>
         <n-button type="primary" ghost @click="saveImage">Save Image</n-button>
+        <n-button type="primary" ghost @click="createAndUploadImage">Save Image2</n-button>
       </n-form>
     </n-card>
 

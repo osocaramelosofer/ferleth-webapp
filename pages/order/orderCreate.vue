@@ -45,7 +45,7 @@ const numberAnimationInstRef = ref<NumberAnimationInst | null>(null)
 function animateTotalCost () {
   setTimeout(() => {
     numberAnimationInstRef.value?.play();
-  }, 300);
+  }, 50);
 }
 // Limit to Total Cost Animation
 const totalCost = computed(()=>{
