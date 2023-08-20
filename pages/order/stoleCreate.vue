@@ -18,8 +18,7 @@ import  locales from "~/constants/locales/stoleForm";
 
 // Store stuff
 const store = useOrderStore()
-const { stoleForm } = storeToRefs(store)
-const { formValueOrder } = storeToRefs(store)
+const { stoleForm,orderForm } = storeToRefs(store)
 const showModal = ref(false)
 const {t} = translate(locales)
 
@@ -64,15 +63,17 @@ const handleValidateClick = () => {
 }
 
 // modal logic
-function onPositiveClick () {
-  submitStole(stoleForm.value)
-  submitOrder(formValueOrder.value)
-  message.success('La orden se ha creado exitosamente.')
-  navigateTo({path: '/',})
-}
-function onNegativeClick () {
-  // message.error('Cancel')
-  showModal.value = false
+ async function onPositiveClick () {
+  const orderUID = await submitOrder(orderForm.value)
+  stoleForm.value.orderUID = orderUID
+
+   if(submitStole(stoleForm.value)){
+    store.resetForms()
+    message.success('La orden se ha creado exitosamente.')
+    navigateTo({path: '/',})
+  } else {
+     message.error('Something went wront uploading the order and stole form')
+   }
 }
 
 function goBack(){
@@ -236,7 +237,7 @@ function goBack(){
         positive-text="Confirm"
         negative-text="Cancel"
         @positive-click="onPositiveClick"
-        @negative-click="onNegativeClick"
+        @negative-click="showModal = false"
     />
   </div>
 </template>
