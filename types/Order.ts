@@ -19,6 +19,7 @@ export interface Order{
   pieces: Number | null,
   quality: 'low' | 'medium' | 'high',
   costPerUnit: Number | null,
-  totalCost: Number | null
+  totalCost: Number | null,
+  stoleUID: String | null
 }
 
