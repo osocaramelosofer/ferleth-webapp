@@ -7,8 +7,9 @@ import {Order, Stole} from "~/types/Order";
 const submitOrder = async (order: Order) => {
   try {
     const docRef = await addDoc<Order>(collection(db, "orders"), order);
-    console.log("Document written with ID: ", docRef.id);
     await setOrderNumberUID(docRef, docRef.id)
+    console.log("Order submitted successfully, Document with ID: ", docRef.id);
+    return docRef.id
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -26,9 +27,9 @@ async function setOrderNumberUID(sfDocRef, orderUID){
       const newOrderNumber = sfDoc.data().orderNumber = orderUID;
       transaction.update(sfDocRef, { orderNumber: newOrderNumber });
     });
-    console.log("Transaction successfully committed!");
+    console.log("Transaction successfully committed!, orderNumberUID set correctly");
   } catch (e) {
-    console.log("Transaction failed: ", e);
+    console.log("Error setting up the orderNumberId to the Order: ", e);
   }
 }
 
@@ -37,9 +38,11 @@ async function setOrderNumberUID(sfDocRef, orderUID){
 const submitStole = async (stole: Stole) => {
   try{
     const docRef = await addDoc<Stole>(collection(db,"stoles"), stole);
-    console.log("Stole has added successfully. Stole id: ", docRef.id);
+    console.log("Stole was added successfully. Stole id: ", docRef.id);
+    return true
   }catch(e){
     console.error("There was an error adding the stole to firebase: ", e);
+    return false
   }
 }
 
