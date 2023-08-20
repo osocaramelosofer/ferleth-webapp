@@ -46,13 +46,17 @@ const handleValidateClick = (e: MouseEvent) => {
 const costPerPiece = computed(()=>{
   switch (orderForm.value.quality) {
     case "low":
+      orderForm.value.costPerUnit = 7.50
       return 7.50
     case "medium":
+      orderForm.value.costPerUnit = 11.00
       return 11.00
     case "high":
+      orderForm.value.costPerUnit = 14.50
       return 14.50
     default:
-      return 10
+      orderForm.value.costPerUnit = 14.50
+      return 14.50
   }
 })
 
