@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Naive ui Imports
 import {NForm, NFormItem, NInput, NButton, NDatePicker, NInputNumber, NSelect, NIcon, NumberAnimationInst,
-  NNumberAnimation, NStatistic,FormInst, useMessage, NSpace} from 'naive-ui'
+  FormInst, useMessage, NSpace, NCard} from 'naive-ui'
 import {ExtensionPuzzleOutline} from "@vicons/ionicons5";
 //Local Imports
 import {orderFormRules} from "~/helpers/order/orderFormRules"
@@ -21,12 +21,13 @@ definePageMeta({
 
 const globalStore = useAppStore()
 const { t } = translate(locales)
-
 const route = useRoute()
 const orderStore = useOrderStore()
 const { orderForm } = storeToRefs(orderStore)
 const formRef = ref<FormInst | null>(null)
 const message = useMessage()
+const totalCost = ref(0)
+const numberOfPieces = ref(orderForm.value.pieces)
 
 const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
@@ -40,22 +41,7 @@ const handleValidateClick = (e: MouseEvent) => {
   })
 }
 
-// Total Cost Animation
-const numberAnimationInstRef = ref<NumberAnimationInst | null>(null)
-function animateTotalCost () {
-  setTimeout(() => {
-    numberAnimationInstRef.value?.play();
-  }, 50);
-}
-// Limit to Total Cost Animation
-const totalCost = computed(()=>{
-  return orderForm.value.totalCost
-})
-// Watch Total Cost Animation
-watch([() => orderForm.value.quality, () => orderForm.value.pieces], () => {
-  orderForm.value.totalCost = costPerPiece.value * orderForm.value.pieces;
-  orderForm.value.costPerUnit = costPerPiece.value;
-});
+
 // Setting up the cost per piece base on the quality selected
 const costPerPiece = computed(()=>{
   switch (orderForm.value.quality) {
@@ -70,10 +56,26 @@ const costPerPiece = computed(()=>{
   }
 })
 
+watch([costPerPiece, numberOfPieces], ()=>{
+  console.log("watching and updating the total cost and the number of pieces")
+  totalCost.value = costPerPiece.value * numberOfPieces.value
+  orderForm.value.pieces = numberOfPieces.value
+  orderForm.value.totalCost = totalCost.value
+})
+const parseCurrency = (input: string) => {
+  const nums = input.replace(/(,|\$|\s)/g, '').trim()
+  if (/^\d+(\.(\d+)?)?$/.test(nums)) return Number(nums)
+  return nums === '' ? null : Number.NaN
+}
+
+const formatCurrency = (value: number | null) => {
+  if (value === null) return ''
+  return `${value.toLocaleString('en-US')} \u{24}`
+}
 </script>
 
 <template>
-  <div>
+  <n-card embedded >
     <h1 text-center>{{ t('titleForm')}}</h1>
       <n-form
           ref="formRef"
@@ -99,7 +101,7 @@ const costPerPiece = computed(()=>{
           </n-form-item>
 
           <n-form-item :label="t('numberOfPieces')" path="pieces">
-            <n-input-number v-model:value="orderForm.pieces" :step="500" :min="500" :max="10000"  @click="animateTotalCost">
+            <n-input-number v-model:value="numberOfPieces" :step="500" :min="500" :max="10000"  @click="animateTotalCost">
               <template #suffix>
                 pcs
                 <n-icon :component="ExtensionPuzzleOutline"/>
@@ -108,20 +110,21 @@ const costPerPiece = computed(()=>{
           </n-form-item>
 
           <n-form-item :label="t('quality')" path="">
-            <n-select v-model:value="orderForm.quality" :options="qualityOptions" @update:value="animateTotalCost" />
+            <n-select v-model:value="orderForm.quality" :options="qualityOptions" />
           </n-form-item>
 
-          <n-statistic :label="t('totalCost')" tabular-nums>
-            <n-number-animation
-                ref="numberAnimationInstRef"
-                show-separator
-                :from="0"
-                :to="totalCost"
-                :active="false"
+          <n-form-item :label="t('totalCost')">
+            <n-input-number
+                :value="totalCost"
+                :default-value="1075"
+                :parse="parseCurrency"
+                :format="formatCurrency"
+                :show-button="false"
+                size="large"
+                disabled
+                w-full
             />
-          </n-statistic>
-
-          <!--  TODO: Add inputs for images -->
+          </n-form-item>
           <n-space justify="center">
             <n-form-item>
               <n-button @click="handleValidateClick">
@@ -131,5 +134,5 @@ const costPerPiece = computed(()=>{
           </n-space>
         </n-space>
       </n-form>
-  </div>
+  </n-card>
 </template>
