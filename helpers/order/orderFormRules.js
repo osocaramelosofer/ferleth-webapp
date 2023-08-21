@@ -22,7 +22,7 @@ export const orderFormRules = {
     type: 'number',
     required: true,
     message: 'Please input the number of pieces.',
-    trigger: ['input', 'blur']
+    trigger: [ 'blur']
   }
 }
 

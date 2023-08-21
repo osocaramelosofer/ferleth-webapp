@@ -30,6 +30,10 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
       key: 'orderNumber'
     },
     {
+      title: 'School Name',
+      key: 'schoolName'
+    },
+    {
       title: 'Pieces',
       key: 'pieces'
     },
@@ -100,7 +104,6 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
             NButton,
             {
               strong: true,
-
               size: 'small',
               type: 'primary',
               onClick: () => play(row)
@@ -113,8 +116,8 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
 }
 
 const columns = createColumns({
-  play (row: Order) {
-    message.info(`Play ${row.schoolName}`)
+  play (order: Order) {
+    navigateTo({path: `/order/detail/${order.orderNumber}`,})
   }
 })
 

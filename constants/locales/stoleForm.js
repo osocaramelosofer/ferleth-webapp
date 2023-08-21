@@ -7,7 +7,10 @@ export default {
     stoleColorPlaceholder : 'Selecciona un color de estola',
     stoleLettering: "Letras de Estola",
     stoleLetteringPlaceholder: "Escribe las letras de la estola Ej. ECHS",
-
+    colorLettersAndNumbers: "Color of Letters and Numbers",
+    uploadPhotos: "Upload images for the stole",
+    submit: "Submit Order",
+    download: "download",
   },
   'en-US': {
     formTitle: 'Stole Characteristics',
@@ -17,6 +20,11 @@ export default {
     stoleColorPlaceholder : 'Pick a color stole',
     stoleLettering: "Stole Lettering",
     stoleLetteringPlaceholder: "Write stole's letters Ex. ECHS",
+    colorLettersAndNumbers: "Color de números y letras",
+    uploadPhotos: "Subir imagenes para la estola",
+    submit: "Enviar order",
+    download: "Descargar"
+
 
   }
 }
