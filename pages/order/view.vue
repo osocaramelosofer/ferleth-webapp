@@ -38,16 +38,8 @@ const createColumns = ({play}: { play: (row: Order) => void }): DataTableColumns
       key: 'pieces'
     },
     {
-      title: 'Order Creation Date',
-      key: 'timestampCreation'
-    },
-    {
       title: 'Fecha de entrega',
       key: 'dueTimestamp'
-    },
-    {
-      title: 'Quality',
-      key: 'quality'
     },
     {
       title: "Total Cost",

@@ -100,7 +100,7 @@ async function uploadStoleImage(orderUID: String, schoolName:String) {
     const blob = await toBlob(element);
     const storage = getStorage()
     const formattedSchoolName = schoolName.replace(/\s+/g, '_');
-    const testImageRef = storageRef(storage, `${formattedSchoolName}_${orderUID}_${+new Date}`)
+    const testImageRef = storageRef(storage, `stoles/${formattedSchoolName}_${orderUID}_${+new Date}`)
     // Upload the Blob file to Firebase Storage
     const snapshot = await uploadBytes(testImageRef, blob);
     console.log("Stole image uploaded successfully.", snapshot);
