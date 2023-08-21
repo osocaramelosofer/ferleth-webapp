@@ -7,7 +7,7 @@ import { stoleFormRules } from "~/helpers/order/orderFormRules"
 import { ref, watchEffect } from "vue";
 import {useOrderStore} from "~/stores/storeOrder";
 import { storeToRefs } from 'pinia'
-import {submitStole, submitOrder} from '@/firebase/order'
+import {submitStole, submitOrder, setStoleUID} from '~/services/order'
 import { translate } from "~/composables/usei18n";
 import { saveAsJpeg } from "save-html-as-image";
 // This is how import export default with a custom name
@@ -69,14 +69,15 @@ const validateForm = () => {
  async function onSubmitConfirm () {
   try{
     // upload order form and get the uid of the doc
-    const orderUID = await submitOrder(orderForm.value)
+    const orderDocRef = await submitOrder(orderForm.value)
 
     // set the orderUID to stole.orderUID and upload stole form
-    stoleForm.value.orderUID = orderUID
-    await submitStole(stoleForm.value)
+    stoleForm.value.orderUID = orderDocRef.id
+    const stoleDocRef = await submitStole(stoleForm.value)
+    await setStoleUID(orderDocRef, stoleDocRef.id)
 
     // upload stole image
-    await uploadStoleImage(orderUID, orderForm.value.schoolName)
+    await uploadStoleImage(orderDocRef.id, orderForm.value.schoolName)
 
     // Reset forms, show success message and redirect the user
     store.resetForms()
