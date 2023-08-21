@@ -1,8 +1,7 @@
 // Firebase Imports
-import {addDoc, collection, runTransaction, getDoc, doc} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, runTransaction} from "firebase/firestore";
 import {db} from "~/firebase";
 import {Order, Stole} from "~/types/Order";
-import {throws} from "assert";
 import {orderConverter} from "~/helpers/firebase-converters/orderConverter";
 import {stoleConverter} from "~/helpers/firebase-converters/stoleConverter";
 
@@ -86,6 +85,21 @@ const getStoleDetail = async (documentReference: String) => {
     throw "Document does not exist!";
   }
 }
+async function updateStoleImageUID(docUID, fullPathImage){
+  try {
+    await runTransaction(db, async (transaction)=>{
+      const docRef = doc(db, "stoles", docUID).withConverter(stoleConverter)
+      const docSnap = await getDoc(docRef)
+      if(!docSnap.exists()) {
+        return false
+      }
+      transaction.update(docRef, {stoleImageUID: fullPathImage})
+      return true
+    })
+  } catch (e) {
+    return false
+  }
+}
 
-
-export { setOrderNumberUID, submitOrder, submitStole, getOrderDetail, setStoleUID, getStoleDetail }
+export { setOrderNumberUID, submitOrder, submitStole, getOrderDetail, setStoleUID,
+  getStoleDetail, updateStoleImageUID}

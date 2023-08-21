@@ -7,7 +7,7 @@ import { stoleFormRules } from "~/helpers/order/orderFormRules"
 import { ref, watchEffect } from "vue";
 import {useOrderStore} from "~/stores/storeOrder";
 import { storeToRefs } from 'pinia'
-import {submitStole, submitOrder, setStoleUID} from '~/services/order'
+import {submitStole, submitOrder, setStoleUID, updateStoleImageUID} from '~/services/order'
 import { translate } from "~/composables/usei18n";
 import { saveAsJpeg } from "save-html-as-image";
 // This is how import export default with a custom name
@@ -77,8 +77,9 @@ const validateForm = () => {
     await setStoleUID(orderDocRef, stoleDocRef.id)
 
     // upload stole image
-    await uploadStoleImage(orderDocRef.id, orderForm.value.schoolName)
-
+    const { metadata } = await uploadStoleImage(orderDocRef.id, orderForm.value.schoolName)
+    const fullPath = metadata.fullPath
+    await updateStoleImageUID(stoleDocRef.id, fullPath)
     // Reset forms, show success message and redirect the user
     store.resetForms()
     message.success('La orden se ha creado exitosamente.')
@@ -104,6 +105,7 @@ async function uploadStoleImage(orderUID: String, schoolName:String) {
     // Upload the Blob file to Firebase Storage
     const snapshot = await uploadBytes(testImageRef, blob);
     console.log("Stole image uploaded successfully.", snapshot);
+    return snapshot
   } catch (error) {
     console.error("Something went wrong uploading the blob file of the stole image", error);
   }

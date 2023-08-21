@@ -10,7 +10,8 @@ export const stoleConverter = {
       letteringAndNumberColors: stole.letteringAndNumberColors,
       logoColor1: stole.logoColor1,
       logoColor2: stole.logoColor2,
-      orderUID: stole.orderUID
+      orderUID: stole.orderUID,
+      stoleImageUID: stole.stoleImageUID
     };
   },
   fromFirestore: (snapshot, options) => {
@@ -23,7 +24,8 @@ export const stoleConverter = {
       data.letteringAndNumberColors,
       data.logoColor1,
       data.logoColor2,
-      data.orderUID
+      data.orderUID,
+      data.stoleImageUID
   );
   }
 };

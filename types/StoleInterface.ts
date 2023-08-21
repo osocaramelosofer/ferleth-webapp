@@ -6,5 +6,6 @@ export interface StoleInterface {
   letteringAndNumberColors: String | null,
   logoColor1: String | null,
   logoColor2: String | null,
-  orderUID: String | Number | null
+  orderUID: String | Number | null,
+  stoleImageUID: String | null
 }

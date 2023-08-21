@@ -8,9 +8,10 @@ export class Stole implements  StoleInterface {
   logoColor1: String | null
   logoColor2: String | null
   orderUID: String | Number | null
+  stoleImageUID: String | null
 
   constructor(type, color, lettering, borderColor, letteringAndNumberColors,
-              logoColor1, logoColor2, orderUID) {
+              logoColor1, logoColor2, orderUID, stoleImageUID) {
     this.type = type;
     this.color = color;
     this.lettering = lettering;
@@ -19,5 +20,6 @@ export class Stole implements  StoleInterface {
     this.logoColor1 = logoColor1;
     this.logoColor2 = logoColor2;
     this.orderUID = orderUID;
+    this.stoleImageUID = stoleImageUID;
   }
 }
