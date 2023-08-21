@@ -31,7 +31,8 @@ export class Order implements  OrderInterface {
       const year = String(date.getFullYear()).slice(-2)
       return `${day}/${month}/${year}`
   }
-  hello(){
-    console.log("hello")
+  formatCurrency(value: number | null) {
+    if (value === null) return ''
+    return `${value.toLocaleString('en-US')} \u{24}`
   }
 }

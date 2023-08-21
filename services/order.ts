@@ -4,6 +4,7 @@ import {db} from "~/firebase";
 import {Order, Stole} from "~/types/Order";
 import {throws} from "assert";
 import {orderConverter} from "~/helpers/firebase-converters/orderConverter";
+import {stoleConverter} from "~/helpers/firebase-converters/stoleConverter";
 
 // Add a new order
 const submitOrder = async (order: Order) => {
@@ -76,7 +77,7 @@ const getOrderDetail = async( documentReference: String ) => {
 }
 const getStoleDetail = async (documentReference: String) => {
   try {
-    const docRef = doc(db,"stoles",documentReference)
+    const docRef = doc(db,"stoles",documentReference).withConverter(stoleConverter)
     const docSnap = await getDoc(docRef)
     if(docSnap.exists()){
       return docSnap.data()
